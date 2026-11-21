@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import { AppShell } from './components/layout/AppShell';
+import { ErrorBoundary } from './components/layout/ErrorBoundary';
 import { LoginPage } from './pages/LoginPage';
 import { LandingPage } from './pages/LandingPage';
 import { OrdersPage } from './pages/OrdersPage';
@@ -43,78 +44,80 @@ const ProtectedRoute: React.FC<{
 
 export const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Toaster position="top-right" richColors closeButton />
-        <Routes>
-          {/* Rute Publik (Langsung tampil instan tanpa cek sesi login) */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/landing" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AuthProvider>
+          <Toaster position="top-right" richColors closeButton />
+          <Routes>
+            {/* Rute Publik (Langsung tampil instan tanpa cek sesi login) */}
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
 
-          {/* Rute Terproteksi AppShell */}
-          <Route
-            path="/pesanan"
-            element={
-              <ProtectedRoute>
-                <OrdersPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/pesanan/baru"
-            element={
-              <ProtectedRoute allowedRoles={['Admin', 'Kasir']}>
-                <CreateOrderPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/pesanan/:id"
-            element={
-              <ProtectedRoute>
-                <OrderDetailPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/pelanggan"
-            element={
-              <ProtectedRoute allowedRoles={['Admin', 'Kasir']}>
-                <CustomersPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/layanan"
-            element={
-              <ProtectedRoute>
-                <ServicesPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/petugas"
-            element={
-              <ProtectedRoute allowedRoles={['Admin']}>
-                <StaffPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/laporan"
-            element={
-              <ProtectedRoute allowedRoles={['Admin']}>
-                <ReportPage />
-              </ProtectedRoute>
-            }
-          />
+            {/* Rute Terproteksi AppShell */}
+            <Route
+              path="/pesanan"
+              element={
+                <ProtectedRoute>
+                  <OrdersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/pesanan/baru"
+              element={
+                <ProtectedRoute allowedRoles={['Admin', 'Kasir']}>
+                  <CreateOrderPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/pesanan/:id"
+              element={
+                <ProtectedRoute>
+                  <OrderDetailPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/pelanggan"
+              element={
+                <ProtectedRoute allowedRoles={['Admin', 'Kasir']}>
+                  <CustomersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/layanan"
+              element={
+                <ProtectedRoute>
+                  <ServicesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/petugas"
+              element={
+                <ProtectedRoute allowedRoles={['Admin']}>
+                  <StaffPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/laporan"
+              element={
+                <ProtectedRoute allowedRoles={['Admin']}>
+                  <ReportPage />
+                </ProtectedRoute>
+              }
+            />
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 };
 

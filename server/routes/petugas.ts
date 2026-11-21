@@ -70,6 +70,9 @@ petugasRoute.post('/', zValidator('json', createPetugasSchema), async (c) => {
 // PATCH /api/petugas/:id
 petugasRoute.patch('/:id', zValidator('json', updatePetugasSchema), async (c) => {
   const id_ptgs = c.req.param('id');
+  if (!id_ptgs) {
+    return c.json({ error: 'ID petugas tidak valid' }, 400);
+  }
   const body = c.req.valid('json');
   const currentUser = c.get('user');
 

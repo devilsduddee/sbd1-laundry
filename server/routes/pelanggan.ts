@@ -67,6 +67,9 @@ pelangganRoute.post('/', zValidator('json', createPelangganSchema), async (c) =>
 // PATCH /api/pelanggan/:id
 pelangganRoute.patch('/:id', zValidator('json', updatePelangganSchema), async (c) => {
   const id_plgn = c.req.param('id');
+  if (!id_plgn) {
+    return c.json({ error: 'ID pelanggan tidak valid' }, 400);
+  }
   const body = c.req.valid('json');
 
   const existing = await db

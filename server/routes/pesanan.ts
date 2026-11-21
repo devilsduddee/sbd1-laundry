@@ -71,6 +71,9 @@ pesananRoute.get('/', authMiddleware, async (c) => {
 // GET /api/pesanan/lacak/:id (Pelacakan Publik Status Cucian untuk Pelanggan dengan Rate Limit)
 pesananRoute.get('/lacak/:id', trackingRateLimitMiddleware, async (c) => {
   const id_psn = c.req.param('id');
+  if (!id_psn) {
+    return c.json({ error: 'ID tiket pesanan tidak valid' }, 400);
+  }
   const psnRows = await db
     .select({
       id_psn: PSN.id_psn,
@@ -130,6 +133,9 @@ pesananRoute.get('/lacak/:id', trackingRateLimitMiddleware, async (c) => {
 // GET /api/pesanan/:id (Detail Tiket Pesanan Output 3 & 4)
 pesananRoute.get('/:id', authMiddleware, async (c) => {
   const id_psn = c.req.param('id');
+  if (!id_psn) {
+    return c.json({ error: 'ID tiket pesanan tidak valid' }, 400);
+  }
 
   // Ambil data PSN, PLGN, PTGS
   const psnRows = await db
@@ -383,6 +389,9 @@ pesananRoute.patch(
   zValidator('json', updateStatusPesananSchema),
   async (c) => {
     const id_psn = c.req.param('id');
+    if (!id_psn) {
+      return c.json({ error: 'ID tiket pesanan tidak valid' }, 400);
+    }
     const { sts_psn } = c.req.valid('json');
 
     const existing = await db
@@ -416,6 +425,9 @@ pesananRoute.patch(
   requireRole('Admin', 'Kasir'),
   async (c) => {
     const id_psn = c.req.param('id');
+    if (!id_psn) {
+      return c.json({ error: 'ID tiket pesanan tidak valid' }, 400);
+    }
 
     const psnRes = await db
       .select({ id_psn: PSN.id_psn, sts_psn: PSN.sts_psn })

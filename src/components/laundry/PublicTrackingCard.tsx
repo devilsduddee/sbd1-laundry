@@ -3,7 +3,7 @@ import { Clock, Shirt, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { StatusBadge } from './StatusBadge';
 import { formatRupiah, formatDateTime } from '@/lib/format';
-import type { StsPsn } from '@shared/schemas';
+import type { StsPsn, StsByr } from '@shared/schemas';
 
 export interface PublicTrackingData {
   id_psn: string;
@@ -12,7 +12,7 @@ export interface PublicTrackingData {
   est_sls: string;
   tot_hrg: number;
   sts_psn: StsPsn;
-  sts_byr: string;
+  sts_byr: StsByr | 'Belum Lunas';
   items: Array<{ nm_lyn: string; brt_kg: number; hrg_trans: number }>;
 }
 

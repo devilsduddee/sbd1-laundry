@@ -73,6 +73,9 @@ layananRoute.patch(
   zValidator('json', updateLayananSchema),
   async (c) => {
     const id_lyn = c.req.param('id');
+    if (!id_lyn) {
+      return c.json({ error: 'ID layanan tidak valid' }, 400);
+    }
     const body = c.req.valid('json');
 
     const existing = await db
@@ -121,6 +124,9 @@ layananRoute.patch(
 // DELETE /api/layanan/:id (Admin)
 layananRoute.delete('/:id', authMiddleware, requireRole('Admin'), async (c) => {
   const id_lyn = c.req.param('id');
+  if (!id_lyn) {
+    return c.json({ error: 'ID layanan tidak valid' }, 400);
+  }
 
   // Cegah hapus jika sudah dipakai di histori transaksi
   const check = await db
