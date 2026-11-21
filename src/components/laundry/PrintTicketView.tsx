@@ -1,6 +1,7 @@
 import React from 'react';
 import { Printer, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { QwashLogo } from './QwashLogo';
 import { StatusBadge } from './StatusBadge';
 import { formatRupiah, formatDateTime } from '@/lib/format';
 import type { PesananDetailResponse } from '@shared/schemas';
@@ -34,16 +35,21 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
       <div className="bg-white border border-[#E4E7F2] rounded-2xl p-6 md:p-8 shadow-xs print:border-none print:shadow-none print:p-0 text-[#1A1A2E] text-sm">
         {/* Header Usaha */}
         <div className="flex justify-between items-start pb-6 border-b border-[#E4E7F2]">
-          <div>
-            <h2 className="text-xl font-bold tracking-tight text-indigo-900">
-              QWASH LAUNDRY & DRY CLEANING
-            </h2>
-            <p className="text-xs text-[#6B7280] mt-0.5">
-              Layanan Cuci Higienis, Bersih, dan Terpercaya
-            </p>
-            <p className="text-xs text-[#6B7280]">
-              Jl. Margonda Raya No. 100, Depok • Telp: 0812-3456-7890
-            </p>
+          <div className="flex items-start gap-3">
+            <div className="size-11 rounded-xl bg-indigo-600 flex items-center justify-center text-white shrink-0 print:border print:border-indigo-600">
+              <QwashLogo variant="symbol" size="sm" className="text-white" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold tracking-tight text-indigo-900 leading-tight">
+                QWASH LAUNDRY & HYGIENIC CARE
+              </h2>
+              <p className="text-xs text-[#6B7280] mt-0.5">
+                Layanan Cuci Higienis, Bersih Presisi, dan Terpercaya
+              </p>
+              <p className="text-xs text-[#6B7280]">
+                Jl. Margonda Raya No. 100, Depok • Telp: 0812-3456-7890
+              </p>
+            </div>
           </div>
           <div className="text-right">
             <span className="text-xs uppercase tracking-wider text-[#6B7280] font-semibold">
