@@ -25,9 +25,86 @@ if (!authToken) {
 
 const normalizedUrl = databaseUrl.replace(/^libsql:\/\//, 'https://');
 
+/**
+ * Custom Fetch Handler untuk runtime Serverless Node.js (Vercel).
+ * Memastikan header Authorization: Bearer <token> diteruskan dengan utuh
+ * dan mencegah isu header-stripping pada instance Request di lingkungan Lambda.
+ */
+const customFetch = async (input: any, init?: any) => {
+  const token = authToken || '';
+
+  let targetUrl: string;
+  let method = 'POST';
+  let body: any = undefined;
+  const headers: Record<string, string> = {};
+
+  if (typeof input === 'string') {
+    targetUrl = input;
+  } else if (input instanceof URL) {
+    targetUrl = input.toString();
+  } else if (input && typeof input === 'object') {
+    targetUrl = input.url ? input.url.toString() : '';
+    method = input.method || 'POST';
+    if (input.headers && typeof input.headers.forEach === 'function') {
+      input.headers.forEach((v: string, k: string) => {
+        headers[k.toLowerCase()] = v;
+      });
+    }
+    if (typeof input.text === 'function') {
+      try {
+        body = await input.text();
+      } catch {
+        body = input.body;
+      }
+    } else if (input.body !== undefined) {
+      body = input.body;
+    }
+  } else {
+    targetUrl = String(input);
+  }
+
+  if (init) {
+    if (init.method) method = init.method;
+    if (init.body !== undefined) body = init.body;
+    if (init.headers) {
+      if (typeof init.headers.forEach === 'function') {
+        init.headers.forEach((v: string, k: string) => {
+          headers[k.toLowerCase()] = v;
+        });
+      } else if (Array.isArray(init.headers)) {
+        for (const [k, v] of init.headers) {
+          headers[k.toLowerCase()] = v;
+        }
+      } else if (typeof init.headers === 'object') {
+        for (const [k, v] of Object.entries(init.headers)) {
+          headers[k.toLowerCase()] = String(v);
+        }
+      }
+    }
+  }
+
+  if (token) {
+    headers['authorization'] = `Bearer ${token}`;
+  }
+  if (!headers['content-type']) {
+    headers['content-type'] = 'application/json';
+  }
+
+  const fetchOptions: RequestInit = {
+    method,
+    headers,
+  };
+  if (method !== 'GET' && method !== 'HEAD' && body !== undefined) {
+    fetchOptions.body = body;
+  }
+
+  return fetch(targetUrl, fetchOptions);
+};
+
 export const client: Client = createClient({
   url: normalizedUrl,
   authToken: authToken || undefined,
+  fetch: customFetch,
 });
 
 export const db = drizzle(client, { schema });

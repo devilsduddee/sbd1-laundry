@@ -48,51 +48,10 @@ app.use(
   })
 );
 
-// Health check & diagnostic endpoint
+// Health check endpoint
 app.get('/api/health', async (c) => {
-  const hasUrl = Boolean(process.env.TURSO_DATABASE_URL);
-  const hasToken = Boolean(process.env.TURSO_AUTH_TOKEN);
-  const tokenLen = process.env.TURSO_AUTH_TOKEN ? process.env.TURSO_AUTH_TOKEN.length : 0;
-  const tokenPrefix = process.env.TURSO_AUTH_TOKEN ? process.env.TURSO_AUTH_TOKEN.slice(0, 10) : 'none';
-  const tokenSuffix = process.env.TURSO_AUTH_TOKEN ? process.env.TURSO_AUTH_TOKEN.slice(-10) : 'none';
-  const url = process.env.TURSO_DATABASE_URL || 'none';
-
   let dbStatus = 'untested';
   let dbError: string | null = null;
-  let directStatus = 0;
-  let directBody = '';
-
-  try {
-    const rawUrl = (process.env.TURSO_DATABASE_URL || '').replace('libsql://', 'https://');
-    const directRes = await fetch(`${rawUrl}/v2/pipeline`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${(process.env.TURSO_AUTH_TOKEN || '').trim()}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ requests: [{ type: 'execute', stmt: { sql: 'SELECT 1' } }] }),
-    });
-    directStatus = directRes.status;
-    directBody = await directRes.text();
-  } catch (e: any) {
-    directBody = e.message || String(e);
-  }
-
-  let client2Status = 'untested';
-  let client2Error: string | null = null;
-  try {
-    const { createClient } = await import('@libsql/client');
-    const rawUrl = (process.env.TURSO_DATABASE_URL || '').replace('libsql://', 'https://');
-    const testClient = createClient({
-      url: rawUrl,
-      authToken: (process.env.TURSO_AUTH_TOKEN || '').trim(),
-    });
-    const res = await testClient.execute('SELECT 1 as test2');
-    client2Status = res.rows.length > 0 ? 'connected' : 'empty';
-  } catch (err: any) {
-    client2Status = 'error';
-    client2Error = err.message || String(err);
-  }
 
   try {
     const res = await client.execute('SELECT 1 as test');
@@ -102,14 +61,18 @@ app.get('/api/health', async (c) => {
     dbError = err.message || String(err);
   }
 
-  return c.json({
-    status: 'ok',
-    service: 'Sistem Pengelolaan Laundry API',
-    env: { hasUrl, hasToken, tokenLen, tokenPrefix, tokenSuffix, url },
-    direct: { status: directStatus, body: directBody },
-    clientWithHttps: { status: client2Status, error: client2Error },
-    database: { status: dbStatus, error: dbError },
-  });
+  const isHealthy = dbStatus === 'connected';
+  return c.json(
+    {
+      status: isHealthy ? 'ok' : 'degraded',
+      service: 'Sistem Pengelolaan Laundry API',
+      database: {
+        status: dbStatus,
+        ...(dbError ? { error: dbError } : {}),
+      },
+    },
+    isHealthy ? 200 : 503
+  );
 });
 app.get('/health', (c) => c.redirect('/api/health'));
 
