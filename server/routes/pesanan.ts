@@ -12,6 +12,7 @@ import {
   type StsPsn,
 } from '../../shared/schemas.js';
 import { authMiddleware, requireRole } from '../middleware/auth.js';
+import { trackingRateLimitMiddleware } from '../middleware/rateLimit.js';
 
 export const pesananRoute = new Hono();
 
@@ -67,8 +68,8 @@ pesananRoute.get('/', authMiddleware, async (c) => {
   return c.json({ data });
 });
 
-// GET /api/pesanan/lacak/:id (Pelacakan Publik Status Cucian untuk Pelanggan)
-pesananRoute.get('/lacak/:id', async (c) => {
+// GET /api/pesanan/lacak/:id (Pelacakan Publik Status Cucian untuk Pelanggan dengan Rate Limit)
+pesananRoute.get('/lacak/:id', trackingRateLimitMiddleware, async (c) => {
   const id_psn = c.req.param('id');
   const psnRows = await db
     .select({
@@ -374,7 +375,7 @@ pesananRoute.post(
   }
 );
 
-// PATCH /api/pesanan/:id/status (Prosedur 4 — Update status bertahap)
+// PATCH /api/pesanan/:id/status (Prosedur 4 - Update status bertahap)
 pesananRoute.patch(
   '/:id/status',
   authMiddleware,
@@ -408,7 +409,7 @@ pesananRoute.patch(
   }
 );
 
-// PATCH /api/pesanan/:id/ambil (Prosedur 6 — Ambil Cucian & Tutup Transaksi)
+// PATCH /api/pesanan/:id/ambil (Prosedur 6 - Ambil Cucian & Tutup Transaksi)
 pesananRoute.patch(
   '/:id/ambil',
   authMiddleware,

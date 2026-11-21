@@ -8,7 +8,7 @@ import { authMiddleware, requireRole } from '../middleware/auth.js';
 
 export const bayarRoute = new Hono();
 
-// POST /api/bayar (Prosedur 5 — Catat Pembayaran Lunas)
+// POST /api/bayar (Prosedur 5 - Catat Pembayaran Lunas)
 bayarRoute.post(
   '/',
   authMiddleware,

@@ -102,20 +102,20 @@ export interface PesananDetailResponse {
 
 // Auth
 export const loginSchema = z.object({
-  usernm: z.string().min(1, 'Username wajib diisi'),
-  passwd: z.string().min(1, 'Password wajib diisi'),
+  usernm: z.string().min(1, 'Username wajib diisi').max(50, 'Username maksimal 50 karakter'),
+  passwd: z.string().min(1, 'Password wajib diisi').max(100, 'Password maksimal 100 karakter'),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
 
 // Pelanggan (FR-02)
 export const createPelangganSchema = z.object({
-  nm_plgn: z.string().min(2, 'Nama pelanggan minimal 2 karakter'),
+  nm_plgn: z.string().min(2, 'Nama pelanggan minimal 2 karakter').max(100, 'Nama pelanggan maksimal 100 karakter'),
   no_hp: z
     .string()
     .min(8, 'Nomor HP minimal 8 digit')
     .max(16, 'Nomor HP maksimal 16 digit')
     .regex(/^[0-9+\s-]+$/, 'Format nomor HP tidak valid'),
-  alamat: z.string().min(3, 'Alamat minimal 3 karakter'),
+  alamat: z.string().min(3, 'Alamat minimal 3 karakter').max(255, 'Alamat maksimal 255 karakter'),
 });
 export type CreatePelangganInput = z.infer<typeof createPelangganSchema>;
 
@@ -124,9 +124,9 @@ export type UpdatePelangganInput = z.infer<typeof updatePelangganSchema>;
 
 // Layanan (FR-03)
 export const createLayananSchema = z.object({
-  nm_lyn: z.string().min(2, 'Nama layanan minimal 2 karakter'),
-  hrg_kg: z.coerce.number().int().positive('Harga per kg harus lebih dari 0'),
-  est_hari: z.coerce.number().int().min(1, 'Estimasi pengerjaan minimal 1 hari'),
+  nm_lyn: z.string().min(2, 'Nama layanan minimal 2 karakter').max(50, 'Nama layanan maksimal 50 karakter'),
+  hrg_kg: z.coerce.number().int().positive('Harga per kg harus lebih dari 0').max(10_000_000, 'Harga per kg melebihi batas wajar'),
+  est_hari: z.coerce.number().int().min(1, 'Estimasi pengerjaan minimal 1 hari').max(365, 'Estimasi pengerjaan maksimal 365 hari'),
 });
 export type CreateLayananInput = z.infer<typeof createLayananSchema>;
 
@@ -135,37 +135,38 @@ export type UpdateLayananInput = z.infer<typeof updateLayananSchema>;
 
 // Petugas (FR-01)
 export const createPetugasSchema = z.object({
-  nm_ptgs: z.string().min(2, 'Nama petugas minimal 2 karakter'),
+  nm_ptgs: z.string().min(2, 'Nama petugas minimal 2 karakter').max(100, 'Nama petugas maksimal 100 karakter'),
   usernm: z
     .string()
     .min(3, 'Username minimal 3 karakter')
+    .max(30, 'Username maksimal 30 karakter')
     .regex(/^[a-zA-Z0-9_]+$/, 'Username hanya boleh huruf, angka, dan underscore'),
-  passwd: z.string().min(6, 'Password minimal 6 karakter'),
+  passwd: z.string().min(6, 'Password minimal 6 karakter').max(100, 'Password maksimal 100 karakter'),
   level: z.enum(LEVEL_PTGS),
 });
 export type CreatePetugasInput = z.infer<typeof createPetugasSchema>;
 
 export const updatePetugasSchema = z.object({
-  nm_ptgs: z.string().min(2, 'Nama petugas minimal 2 karakter').optional(),
-  passwd: z.string().min(6, 'Password minimal 6 karakter').optional(),
+  nm_ptgs: z.string().min(2, 'Nama petugas minimal 2 karakter').max(100, 'Nama petugas maksimal 100 karakter').optional(),
+  passwd: z.string().min(6, 'Password minimal 6 karakter').max(100, 'Password maksimal 100 karakter').optional(),
   level: z.enum(LEVEL_PTGS).optional(),
 });
 export type UpdatePetugasInput = z.infer<typeof updatePetugasSchema>;
 
 // Pesanan & Detail Pesanan (FR-04)
 export const orderItemSchema = z.object({
-  id_lyn: z.string().min(1, 'Pilih jenis layanan'),
-  brt_kg: z.coerce.number().positive('Berat / kuantitas harus lebih dari 0'),
+  id_lyn: z.string().min(1, 'Pilih jenis layanan').max(20, 'ID layanan tidak valid'),
+  brt_kg: z.coerce.number().positive('Berat / kuantitas harus lebih dari 0').max(500, 'Maksimal 500 kg per layanan'),
 });
 export type OrderItemInput = z.infer<typeof orderItemSchema>;
 
 export const createPesananSchema = z.object({
-  id_plgn: z.string().min(1, 'Pelanggan wajib dipilih'),
-  items: z.array(orderItemSchema).min(1, 'Minimal pilih satu layanan'),
+  id_plgn: z.string().min(1, 'Pelanggan wajib dipilih').max(20, 'ID pelanggan tidak valid'),
+  items: z.array(orderItemSchema).min(1, 'Minimal pilih satu layanan').max(50, 'Maksimal 50 layanan per tiket'),
   bayar_langsung: z
     .object({
       met_byr: z.enum(MET_BYR),
-      jml_byr: z.coerce.number().positive(),
+      jml_byr: z.coerce.number().positive().max(1_000_000_000, 'Jumlah bayar melebihi batas wajar'),
     })
     .optional(),
 });
@@ -178,9 +179,9 @@ export type UpdateStatusPesananInput = z.infer<typeof updateStatusPesananSchema>
 
 // Pembayaran (FR-06)
 export const createBayarSchema = z.object({
-  id_psn: z.string().min(1, 'ID Pesanan wajib diisi'),
+  id_psn: z.string().min(1, 'ID Pesanan wajib diisi').max(30, 'ID pesanan tidak valid'),
   met_byr: z.enum(MET_BYR),
-  jml_byr: z.coerce.number().int().positive('Jumlah bayar harus lebih dari 0'),
+  jml_byr: z.coerce.number().int().positive('Jumlah bayar harus lebih dari 0').max(1_000_000_000, 'Jumlah bayar melebihi batas wajar'),
 });
 export type CreateBayarInput = z.infer<typeof createBayarSchema>;
 

@@ -12,7 +12,7 @@ import { authMiddleware, requireRole } from '../middleware/auth.js';
 
 export const laporanRoute = new Hono();
 
-// GET /api/laporan (Output 5 — Khusus Admin)
+// GET /api/laporan (Output 5 - Khusus Admin)
 laporanRoute.get(
   '/',
   authMiddleware,

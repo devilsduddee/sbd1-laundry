@@ -71,6 +71,15 @@ petugasRoute.post('/', zValidator('json', createPetugasSchema), async (c) => {
 petugasRoute.patch('/:id', zValidator('json', updatePetugasSchema), async (c) => {
   const id_ptgs = c.req.param('id');
   const body = c.req.valid('json');
+  const currentUser = c.get('user');
+
+  // Proteksi Self-Demotion: Admin tidak boleh mengubah level akunnya sendiri untuk mencegah kehilangan akses administrator
+  if (currentUser?.id_ptgs === id_ptgs && body.level && body.level !== 'Admin') {
+    return c.json(
+      { error: 'Anda tidak dapat mengubah level akun Admin Anda sendiri untuk menghindari hilangnya akses administrator.' },
+      403
+    );
+  }
 
   const existing = await db
     .select()
