@@ -137,7 +137,7 @@ export const ServicesPage: React.FC = () => {
           services.map((l) => (
             <Card
               key={l.id_lyn}
-              className="rounded-2xl border-[#E4E7F2] bg-white shadow-2xs hover:shadow-sm transition-shadow overflow-hidden flex flex-col justify-between"
+              className="hover-lift rounded-2xl border-[#E4E7F2] bg-white shadow-2xs overflow-hidden flex flex-col justify-between"
             >
               <CardHeader className="p-4 pb-2">
                 <div className="flex items-center justify-between">

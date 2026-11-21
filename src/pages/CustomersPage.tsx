@@ -204,6 +204,7 @@ export const CustomersPage: React.FC = () => {
                 value={nmPlgn}
                 onChange={(e) => setNmPlgn(e.target.value)}
                 placeholder="Contoh: Budi Santoso"
+                autoComplete="name"
                 required
                 className="rounded-xl border-[#E4E7F2]"
               />
@@ -212,6 +213,9 @@ export const CustomersPage: React.FC = () => {
               <Label htmlFor="cust-hp">Nomor HP</Label>
               <Input
                 id="cust-hp"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
                 value={noHp}
                 onChange={(e) => setNoHp(e.target.value)}
                 placeholder="081234567890"
@@ -226,6 +230,7 @@ export const CustomersPage: React.FC = () => {
                 value={alamat}
                 onChange={(e) => setAlamat(e.target.value)}
                 placeholder="Jl. Margonda Raya No. 12"
+                autoComplete="street-address"
                 required
                 className="rounded-xl border-[#E4E7F2]"
               />

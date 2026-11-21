@@ -267,7 +267,7 @@ export const CreateOrderPage: React.FC = () => {
                         <SelectContent>
                           {layananList.map((l) => (
                             <SelectItem key={l.id_lyn} value={l.id_lyn} className="text-xs">
-                              {l.nm_lyn} — {formatRupiah(l.hrg_kg)}/kg ({l.est_hari} Hari)
+                              {l.nm_lyn} • {formatRupiah(l.hrg_kg)}/kg ({l.est_hari} Hari)
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -281,6 +281,7 @@ export const CreateOrderPage: React.FC = () => {
                           type="number"
                           step="0.1"
                           min="0.1"
+                          inputMode="decimal"
                           value={it.brt_kg}
                           onChange={(e) =>
                             handleItemChange(idx, 'brt_kg', parseFloat(e.target.value) || 0)
@@ -437,6 +438,7 @@ export const CreateOrderPage: React.FC = () => {
                 value={newNmPlgn}
                 onChange={(e) => setNewNmPlgn(e.target.value)}
                 placeholder="Contoh: Siti Aisyah"
+                autoComplete="name"
                 required
                 className="rounded-xl border-[#E4E7F2]"
               />
@@ -445,6 +447,9 @@ export const CreateOrderPage: React.FC = () => {
               <Label htmlFor="new-hp">Nomor HP</Label>
               <Input
                 id="new-hp"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
                 value={newNoHp}
                 onChange={(e) => setNewNoHp(e.target.value)}
                 placeholder="081234567890"
@@ -459,6 +464,7 @@ export const CreateOrderPage: React.FC = () => {
                 value={newAlamat}
                 onChange={(e) => setNewAlamat(e.target.value)}
                 placeholder="Jl. Margonda No. 10"
+                autoComplete="street-address"
                 required
                 className="rounded-xl border-[#E4E7F2]"
               />

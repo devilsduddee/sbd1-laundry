@@ -85,6 +85,9 @@ export const LoginPage: React.FC = () => {
                   onChange={(e) => setUsernm(e.target.value)}
                   className="pl-9 rounded-xl border-[#E4E7F2] focus-visible:ring-indigo-600 text-sm"
                   autoComplete="username"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
                   disabled={loading}
                 />
               </div>

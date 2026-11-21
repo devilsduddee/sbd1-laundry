@@ -162,7 +162,7 @@ export const ReportPage: React.FC = () => {
       {/* 3 KPI Summary Cards */}
       {report && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="rounded-2xl border-[#E4E7F2] shadow-2xs">
+          <Card className="rounded-2xl border-[#E4E7F2] shadow-2xs hover-lift">
             <CardContent className="p-5 flex items-center gap-4">
               <div className="size-12 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
                 <BarChart3 className="size-6" />
@@ -176,7 +176,7 @@ export const ReportPage: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="rounded-2xl border-[#E4E7F2] shadow-2xs">
+          <Card className="rounded-2xl border-[#E4E7F2] shadow-2xs hover-lift">
             <CardContent className="p-5 flex items-center gap-4">
               <div className="size-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
                 <CheckCircle className="size-6" />
@@ -190,7 +190,7 @@ export const ReportPage: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="rounded-2xl border-[#E4E7F2] shadow-2xs">
+          <Card className="rounded-2xl border-[#E4E7F2] shadow-2xs hover-lift">
             <CardContent className="p-5 flex items-center gap-4">
               <div className="size-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
                 <Calendar className="size-6" />

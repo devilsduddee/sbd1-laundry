@@ -125,9 +125,9 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       </aside>
 
       {/* Mobile Header (print:hidden) */}
-      <header className="print:hidden md:hidden flex items-center justify-between bg-card border-b border-border px-4 py-3 sticky top-0 z-30">
+      <header className="print:hidden md:hidden flex items-center justify-between bg-card border-b border-border px-4 py-3 sticky top-0 z-30 pt-safe">
         <div className="flex items-center gap-2.5">
-          <div className="size-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
+          <div className="size-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-xs">
             <Sparkles className="size-4" />
           </div>
           <span className="font-bold text-sm text-[#1A1A2E]">Qwash Laundry</span>
@@ -135,11 +135,11 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="size-9">
+            <Button variant="ghost" size="icon" className="size-9 rounded-xl">
               <Menu className="size-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-72 p-5">
+          <SheetContent side="left" className="w-72 p-5 pt-safe pb-safe">
             {navContent}
           </SheetContent>
         </Sheet>

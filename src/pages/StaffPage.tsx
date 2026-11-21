@@ -202,6 +202,7 @@ export const StaffPage: React.FC = () => {
                 value={nmPtgs}
                 onChange={(e) => setNmPtgs(e.target.value)}
                 placeholder="Contoh: Rina Wahyuni"
+                autoComplete="name"
                 required
                 className="rounded-xl border-[#E4E7F2]"
               />
@@ -215,6 +216,10 @@ export const StaffPage: React.FC = () => {
                   value={usernm}
                   onChange={(e) => setUsernm(e.target.value)}
                   placeholder="rina_kasir"
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  autoComplete="username"
+                  spellCheck={false}
                   required
                   className="rounded-xl border-[#E4E7F2]"
                 />
@@ -231,6 +236,7 @@ export const StaffPage: React.FC = () => {
                 value={passwd}
                 onChange={(e) => setPasswd(e.target.value)}
                 placeholder={isEdit ? '******' : 'Minimal 6 karakter'}
+                autoComplete={isEdit ? 'new-password' : 'new-password'}
                 required={!isEdit}
                 className="rounded-xl border-[#E4E7F2]"
               />

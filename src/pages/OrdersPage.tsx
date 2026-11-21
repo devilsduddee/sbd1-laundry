@@ -114,7 +114,7 @@ export const OrdersPage: React.FC = () => {
 
       {/* KPI Cards Ringkas (Adaptasi Qwash) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <Card className="kpi-card border-[#E4E7F2] rounded-2xl shadow-2xs">
+        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs">
           <CardContent className="p-4 flex items-center gap-3.5">
             <div className="size-11 rounded-xl bg-gray-100 flex items-center justify-center text-gray-700">
               <Clock className="size-5" />
@@ -128,7 +128,7 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card border-[#E4E7F2] rounded-2xl shadow-2xs">
+        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs">
           <CardContent className="p-4 flex items-center gap-3.5">
             <div className="size-11 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
               <Sparkles className="size-5" />
@@ -142,7 +142,7 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card border-[#E4E7F2] rounded-2xl shadow-2xs">
+        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs">
           <CardContent className="p-4 flex items-center gap-3.5">
             <div className="size-11 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
               <Shirt className="size-5" />
@@ -156,7 +156,7 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card border-[#E4E7F2] rounded-2xl shadow-2xs">
+        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs">
           <CardContent className="p-4 flex items-center gap-3.5">
             <div className="size-11 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
               <CheckCircle2 className="size-5" />

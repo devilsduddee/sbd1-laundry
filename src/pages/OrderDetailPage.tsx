@@ -300,6 +300,7 @@ export const OrderDetailPage: React.FC = () => {
               <Input
                 id="pay-amount"
                 type="number"
+                inputMode="numeric"
                 value={jmlByr}
                 onChange={(e) => setJmlByr(parseInt(e.target.value) || 0)}
                 required
