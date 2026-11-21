@@ -401,25 +401,92 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="mt-auto bg-[#1E1B4B] text-white py-12 px-4 pb-safe border-t border-indigo-950">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-indigo-200">
-          <div className="flex items-center gap-3">
-            <QwashLogo variant="symbol" size="sm" className="text-white" />
-            <div>
-              <span className="font-bold text-white text-sm block">Qwash Laundry & Hygienic Care</span>
-              <span className="text-indigo-300 text-[11px]">Sistem Pengelolaan Operasional dan Basis Data Laundry</span>
+      {/* Footer Komprehensif */}
+      <footer className="mt-auto bg-[#1E1B4B] text-white pt-16 pb-12 px-4 pb-safe border-t border-indigo-950">
+        <div className="max-w-6xl mx-auto space-y-12">
+          {/* Main Footer Content */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 text-xs text-indigo-200">
+            {/* Brand Column */}
+            <div className="md:col-span-5 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="size-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shrink-0 shadow-md shadow-indigo-900/50">
+                  <QwashLogo variant="symbol" size="sm" className="text-white" />
+                </div>
+                <div>
+                  <span className="font-bold text-white text-base block tracking-tight">
+                    Qwash Laundry & Hygienic Care
+                  </span>
+                  <span className="text-indigo-300 text-xs">
+                    Sistem Pengelolaan Operasional dan Basis Data Laundry
+                  </span>
+                </div>
+              </div>
+              <p className="text-indigo-200/80 leading-relaxed max-w-sm text-xs">
+                Layanan perawatan pakaian kiloan dan satuan modern berstandar higienis. Dilengkapi transparansi pelacakan status cucian secara realtime untuk kepuasan pelanggan.
+              </p>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] text-emerald-300 font-medium">
+                <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                Sistem Aktif & Terhubung ke Basis Data
+              </div>
+            </div>
+
+            {/* Navigasi Tautan */}
+            <div className="md:col-span-3 space-y-3">
+              <h4 className="font-semibold text-white text-xs uppercase tracking-wider">
+                Navigasi Cepat
+              </h4>
+              <ul className="space-y-2 text-indigo-300">
+                <li>
+                  <a href="#lacak" className="hover:text-white transition-colors">
+                    Pelacakan Nomor Tiket
+                  </a>
+                </li>
+                <li>
+                  <a href="#layanan" className="hover:text-white transition-colors">
+                    Daftar Paket & Tarif Resmi
+                  </a>
+                </li>
+                <li>
+                  <a href="#higienis" className="hover:text-white transition-colors">
+                    Standar Sanitasi 5 Tahap
+                  </a>
+                </li>
+                <li>
+                  <a href="#lokasi" className="hover:text-white transition-colors">
+                    Lokasi Outlet & Kontak
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Portal Staf & Akses Khusus */}
+            <div className="md:col-span-4 space-y-3">
+              <h4 className="font-semibold text-white text-xs uppercase tracking-wider">
+                Akses Internal Staf
+              </h4>
+              <p className="text-indigo-200/80 text-xs leading-relaxed">
+                Pintu masuk khusus petugas kasir, tim operasional cuci-setrika, dan administrator outlet.
+              </p>
+              <div className="pt-1">
+                <Button
+                  onClick={() => navigate('/login')}
+                  className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs h-10 px-5 gap-2 shadow-md shadow-indigo-950 touch-manipulation active:scale-[0.98]"
+                >
+                  Masuk Portal Petugas
+                  <ArrowRight className="size-3.5" />
+                </Button>
+              </div>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <Button
-              onClick={() => navigate('/login')}
-              variant="outline"
-              size="sm"
-              className="border-indigo-400/40 text-white hover:bg-white/10 rounded-xl text-xs h-9 touch-manipulation"
-            >
-              Portal Petugas Kasir & Operasional
-            </Button>
+
+          {/* Bottom Copyright Bar */}
+          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-indigo-300/70">
+            <p>
+              © 2024 Qwash Hygienic Care. Hak cipta dilindungi undang-undang.
+            </p>
+            <p className="font-mono text-indigo-300/90">
+              Tugas Besar Sistem Basis Data Kelas 3IA01
+            </p>
           </div>
         </div>
       </footer>
