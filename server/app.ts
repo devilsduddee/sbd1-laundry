@@ -54,6 +54,7 @@ app.get('/api/health', async (c) => {
   const hasToken = Boolean(process.env.TURSO_AUTH_TOKEN);
   const tokenLen = process.env.TURSO_AUTH_TOKEN ? process.env.TURSO_AUTH_TOKEN.length : 0;
   const tokenPrefix = process.env.TURSO_AUTH_TOKEN ? process.env.TURSO_AUTH_TOKEN.slice(0, 10) : 'none';
+  const tokenSuffix = process.env.TURSO_AUTH_TOKEN ? process.env.TURSO_AUTH_TOKEN.slice(-10) : 'none';
   const url = process.env.TURSO_DATABASE_URL || 'none';
 
   let dbStatus = 'untested';
@@ -69,7 +70,7 @@ app.get('/api/health', async (c) => {
   return c.json({
     status: 'ok',
     service: 'Sistem Pengelolaan Laundry API',
-    env: { hasUrl, hasToken, tokenLen, tokenPrefix, url },
+    env: { hasUrl, hasToken, tokenLen, tokenPrefix, tokenSuffix, url },
     database: { status: dbStatus, error: dbError },
   });
 });
