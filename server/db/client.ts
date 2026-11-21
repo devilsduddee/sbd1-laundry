@@ -23,8 +23,10 @@ if (!authToken) {
   );
 }
 
+const normalizedUrl = databaseUrl.replace(/^libsql:\/\//, 'https://');
+
 export const client: Client = createClient({
-  url: databaseUrl,
+  url: normalizedUrl,
   authToken: authToken || undefined,
 });
 
