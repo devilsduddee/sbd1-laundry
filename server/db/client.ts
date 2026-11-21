@@ -64,6 +64,7 @@ export async function initDb() {
     }
 
     dbInitialized = true;
+    console.log('[DB] Inisialisasi basis data Turso berhasil.');
   } catch (err: any) {
     if (err?.status === 401 || err?.message?.includes('401')) {
       console.error(
