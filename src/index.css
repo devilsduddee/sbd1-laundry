@@ -95,6 +95,7 @@
 /* Design Taste: Subtle Card Lift for Precise Pointer Devices */
 @media (hover: hover) and (pointer: fine) {
   .hover-lift {
+    transform: translateY(0);
     transition: transform 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
   }
   .hover-lift:hover {

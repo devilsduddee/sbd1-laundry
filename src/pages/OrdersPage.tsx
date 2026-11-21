@@ -66,21 +66,26 @@ export const OrdersPage: React.FC = () => {
     fetchOrders();
   };
 
-  // GSAP animation for KPI cards
+  // GSAP animation for KPI cards (mount once, clearProps agar sejajar simetris)
   useGSAP(
     () => {
       const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!isReduced) {
-        gsap.from('.kpi-card', {
-          y: 12,
-          opacity: 0,
-          duration: 0.35,
-          stagger: 0.05,
-          ease: 'power2.out',
-        });
+        gsap.fromTo(
+          '.kpi-card',
+          { y: 12, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.35,
+            stagger: 0.05,
+            ease: 'power2.out',
+            clearProps: 'transform,opacity',
+          }
+        );
       }
     },
-    { scope: containerRef }
+    { scope: containerRef, dependencies: [] }
   );
 
   // Counts for KPI
@@ -113,14 +118,14 @@ export const OrdersPage: React.FC = () => {
       </div>
 
       {/* KPI Cards Ringkas (Adaptasi Qwash) */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs">
-          <CardContent className="p-4 flex items-center gap-3.5">
-            <div className="size-11 rounded-xl bg-gray-100 flex items-center justify-center text-gray-700">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 items-stretch">
+        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs h-full">
+          <CardContent className="p-4 flex items-center gap-3.5 h-full">
+            <div className="size-11 rounded-xl bg-gray-100 flex items-center justify-center text-gray-700 shrink-0">
               <Clock className="size-5" />
             </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-medium">Antrean</p>
+            <div className="min-w-0">
+              <p className="text-xs text-muted-foreground font-medium truncate">Antrean</p>
               <p className="text-xl font-extrabold text-[#1A1A2E] tabular-nums">
                 {countAntrean}
               </p>
@@ -128,13 +133,13 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs">
-          <CardContent className="p-4 flex items-center gap-3.5">
-            <div className="size-11 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs h-full">
+          <CardContent className="p-4 flex items-center gap-3.5 h-full">
+            <div className="size-11 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
               <Sparkles className="size-5" />
             </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-medium">Sedang Dicuci</p>
+            <div className="min-w-0">
+              <p className="text-xs text-muted-foreground font-medium truncate">Sedang Dicuci</p>
               <p className="text-xl font-extrabold text-[#1A1A2E] tabular-nums">
                 {countDicuci}
               </p>
@@ -142,13 +147,13 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs">
-          <CardContent className="p-4 flex items-center gap-3.5">
-            <div className="size-11 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
+        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs h-full">
+          <CardContent className="p-4 flex items-center gap-3.5 h-full">
+            <div className="size-11 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
               <Shirt className="size-5" />
             </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-medium">Sedang Disetrika</p>
+            <div className="min-w-0">
+              <p className="text-xs text-muted-foreground font-medium truncate">Sedang Disetrika</p>
               <p className="text-xl font-extrabold text-[#1A1A2E] tabular-nums">
                 {countDisetrika}
               </p>
@@ -156,13 +161,13 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs">
-          <CardContent className="p-4 flex items-center gap-3.5">
-            <div className="size-11 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+        <Card className="kpi-card hover-lift border-[#E4E7F2] rounded-2xl shadow-2xs h-full">
+          <CardContent className="p-4 flex items-center gap-3.5 h-full">
+            <div className="size-11 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shrink-0">
               <CheckCircle2 className="size-5" />
             </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-medium">Siap Diambil</p>
+            <div className="min-w-0">
+              <p className="text-xs text-muted-foreground font-medium truncate">Siap Diambil</p>
               <p className="text-xl font-extrabold text-purple-700 tabular-nums">
                 {countSiap}
               </p>
