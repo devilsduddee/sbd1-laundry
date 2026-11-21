@@ -2,7 +2,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { secureHeaders } from 'hono/secure-headers';
-import { initDb } from './db/client.js';
+import { initDb, client } from './db/client.js';
 import { authRoute } from './routes/auth.js';
 import { pelangganRoute } from './routes/pelanggan.js';
 import { layananRoute } from './routes/layanan.js';
@@ -48,18 +48,40 @@ app.use(
   })
 );
 
-// Pastikan DB siap
+// Health check & diagnostic endpoint
+app.get('/api/health', async (c) => {
+  const hasUrl = Boolean(process.env.TURSO_DATABASE_URL);
+  const hasToken = Boolean(process.env.TURSO_AUTH_TOKEN);
+  const tokenLen = process.env.TURSO_AUTH_TOKEN ? process.env.TURSO_AUTH_TOKEN.length : 0;
+  const tokenPrefix = process.env.TURSO_AUTH_TOKEN ? process.env.TURSO_AUTH_TOKEN.slice(0, 10) : 'none';
+  const url = process.env.TURSO_DATABASE_URL || 'none';
+
+  let dbStatus = 'untested';
+  let dbError: string | null = null;
+  try {
+    const res = await client.execute('SELECT 1 as test');
+    dbStatus = res.rows.length > 0 ? 'connected' : 'empty';
+  } catch (err: any) {
+    dbStatus = 'error';
+    dbError = err.message || String(err);
+  }
+
+  return c.json({
+    status: 'ok',
+    service: 'Sistem Pengelolaan Laundry API',
+    env: { hasUrl, hasToken, tokenLen, tokenPrefix, url },
+    database: { status: dbStatus, error: dbError },
+  });
+});
+app.get('/health', (c) => c.redirect('/api/health'));
+
+// Pastikan DB siap untuk rute data
 app.use('*', async (c, next) => {
+  if (c.req.path === '/api/health' || c.req.path === '/health') {
+    return next();
+  }
   await initDb();
   await next();
-});
-
-// Health check
-app.get('/api/health', (c) => {
-  return c.json({ status: 'ok', service: 'Sistem Pengelolaan Laundry API' });
-});
-app.get('/health', (c) => {
-  return c.json({ status: 'ok', service: 'Sistem Pengelolaan Laundry API' });
 });
 
 // Sub-router API
