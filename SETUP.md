@@ -37,14 +37,14 @@ npx shadcn@latest init
 # 4. Pasang komponen shadcn/ui yang dibutuhkan sesuai 05-design.md & 06-spec.md
 npx shadcn@latest add button card table badge tabs dialog alert-dialog select input label popover command sheet separator form sonner
 
-# 5. Pasang backend Hono + Turso + Auth dependencies
-npm install hono @hono/zod-validator @libsql/client bcryptjs
-npm install -D @hono/node-server @types/bcryptjs tsx concurrently
+# 5. Pasang backend Hono + Turso + Drizzle ORM + Auth dependencies
+npm install hono @hono/zod-validator @libsql/client drizzle-orm bcryptjs
+npm install -D @hono/node-server @types/bcryptjs tsx concurrently drizzle-kit
 ```
 
 ---
 
-## 3. Setup Database Turso (libSQL)
+## 3. Setup Database Turso (libSQL) & Drizzle ORM
 
 1. Install Turso CLI (atau gunakan Turso Web Dashboard):
    - Dokumentasi resmi: https://docs.turso.tech/cli/installation
@@ -57,11 +57,31 @@ npm install -D @hono/node-server @types/bcryptjs tsx concurrently
    ```bash
    turso db shell sistem-laundry < server/db/schema.sql
    ```
+   *Atau gunakan Drizzle Kit:*
+   ```bash
+   npm run db:push
+   ```
 4. Ambil URL dan Auth Token database:
    ```bash
    turso db show sistem-laundry --url
    turso db tokens create sistem-laundry
    ```
+
+### Konfigurasi Drizzle Kit (`drizzle.config.ts`)
+File `drizzle.config.ts` berada di root repository:
+```ts
+import { defineConfig } from 'drizzle-kit';
+
+export default defineConfig({
+  schema: './server/db/schema.ts',
+  out: './drizzle',
+  dialect: 'turso',
+  dbCredentials: {
+    url: process.env.TURSO_DATABASE_URL || '',
+    authToken: process.env.TURSO_AUTH_TOKEN,
+  },
+});
+```
 
 ---
 

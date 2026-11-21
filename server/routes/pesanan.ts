@@ -1,6 +1,8 @@
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
+import { eq, and, or, like, desc, asc, inArray, sql } from 'drizzle-orm';
 import { db } from '../db/client.js';
+import { PSN, PLGN, PTGS, DTL_PSN, LYN, BYR } from '../db/schema.js';
 import {
   createPesananSchema,
   updateStatusPesananSchema,
@@ -18,35 +20,49 @@ pesananRoute.get('/', authMiddleware, async (c) => {
   const sts = c.req.query('sts_psn');
   const q = c.req.query('q')?.trim();
 
-  let sql = `
-    SELECT 
-      p.id_psn, p.id_plgn, p.id_ptgs, p.tgl_msk, p.est_sls, p.tot_hrg, p.sts_psn,
-      c.nm_plgn, c.no_hp,
-      pt.nm_ptgs,
-      COALESCE(b.sts_byr, 'Belum Lunas') as sts_byr,
-      b.met_byr, b.tgl_byr
-    FROM PSN p
-    JOIN PLGN c ON p.id_plgn = c.id_plgn
-    JOIN PTGS pt ON p.id_ptgs = pt.id_ptgs
-    LEFT JOIN BYR b ON p.id_psn = b.id_psn AND b.sts_byr = 'Lunas'
-    WHERE 1=1
-  `;
-  const args: any[] = [];
+  const conditions = [];
 
   if (sts) {
-    sql += ' AND p.sts_psn = ?';
-    args.push(sts);
+    conditions.push(eq(PSN.sts_psn, sts as any));
   }
 
   if (q) {
-    sql += ' AND (p.id_psn LIKE ? OR c.nm_plgn LIKE ? OR c.no_hp LIKE ?)';
-    args.push(`%${q}%`, `%${q}%`, `%${q}%`);
+    const pattern = `%${q}%`;
+    conditions.push(
+      or(
+        like(PSN.id_psn, pattern),
+        like(PLGN.nm_plgn, pattern),
+        like(PLGN.no_hp, pattern)
+      )
+    );
   }
 
-  sql += ' ORDER BY p.tgl_msk DESC';
+  const query = db
+    .select({
+      id_psn: PSN.id_psn,
+      id_plgn: PSN.id_plgn,
+      id_ptgs: PSN.id_ptgs,
+      tgl_msk: PSN.tgl_msk,
+      est_sls: PSN.est_sls,
+      tot_hrg: PSN.tot_hrg,
+      sts_psn: PSN.sts_psn,
+      nm_plgn: PLGN.nm_plgn,
+      no_hp: PLGN.no_hp,
+      nm_ptgs: PTGS.nm_ptgs,
+      sts_byr: sql<string>`COALESCE(${BYR.sts_byr}, 'Belum Lunas')`,
+      met_byr: BYR.met_byr,
+      tgl_byr: BYR.tgl_byr,
+    })
+    .from(PSN)
+    .innerJoin(PLGN, eq(PSN.id_plgn, PLGN.id_plgn))
+    .innerJoin(PTGS, eq(PSN.id_ptgs, PTGS.id_ptgs))
+    .leftJoin(BYR, and(eq(PSN.id_psn, BYR.id_psn), eq(BYR.sts_byr, 'Lunas')));
 
-  const res = await db.execute({ sql, args });
-  const data = res.rows as unknown as PesananSummary[];
+  const data = (
+    conditions.length > 0
+      ? await query.where(and(...conditions)).orderBy(desc(PSN.tgl_msk))
+      : await query.orderBy(desc(PSN.tgl_msk))
+  ) as unknown as PesananSummary[];
 
   return c.json({ data });
 });
@@ -56,73 +72,89 @@ pesananRoute.get('/:id', authMiddleware, async (c) => {
   const id_psn = c.req.param('id');
 
   // Ambil data PSN, PLGN, PTGS
-  const psnRes = await db.execute({
-    sql: `
-      SELECT 
-        p.id_psn, p.id_plgn, p.id_ptgs, p.tgl_msk, p.est_sls, p.tot_hrg, p.sts_psn,
-        c.nm_plgn, c.no_hp, c.alamat,
-        pt.nm_ptgs, pt.usernm, pt.level
-      FROM PSN p
-      JOIN PLGN c ON p.id_plgn = c.id_plgn
-      JOIN PTGS pt ON p.id_ptgs = pt.id_ptgs
-      WHERE p.id_psn = ?
-    `,
-    args: [id_psn],
-  });
+  const psnRows = await db
+    .select({
+      id_psn: PSN.id_psn,
+      id_plgn: PSN.id_plgn,
+      id_ptgs: PSN.id_ptgs,
+      tgl_msk: PSN.tgl_msk,
+      est_sls: PSN.est_sls,
+      tot_hrg: PSN.tot_hrg,
+      sts_psn: PSN.sts_psn,
+      nm_plgn: PLGN.nm_plgn,
+      no_hp: PLGN.no_hp,
+      alamat: PLGN.alamat,
+      nm_ptgs: PTGS.nm_ptgs,
+      usernm: PTGS.usernm,
+      level: PTGS.level,
+    })
+    .from(PSN)
+    .innerJoin(PLGN, eq(PSN.id_plgn, PLGN.id_plgn))
+    .innerJoin(PTGS, eq(PSN.id_ptgs, PTGS.id_ptgs))
+    .where(eq(PSN.id_psn, id_psn))
+    .limit(1);
 
-  if (psnRes.rows.length === 0) {
+  if (psnRows.length === 0) {
     return c.json({ error: 'Pesanan tidak ditemukan' }, 404);
   }
 
-  const pRow = psnRes.rows[0];
+  const pRow = psnRows[0];
 
   // Ambil detail item DTL_PSN + LYN
-  const itemsRes = await db.execute({
-    sql: `
-      SELECT d.id_psn, d.id_lyn, d.brt_kg, d.hrg_trans, l.nm_lyn, l.est_hari
-      FROM DTL_PSN d
-      JOIN LYN l ON d.id_lyn = l.id_lyn
-      WHERE d.id_psn = ?
-      ORDER BY l.nm_lyn ASC
-    `,
-    args: [id_psn],
-  });
+  const itemsRows = await db
+    .select({
+      id_psn: DTL_PSN.id_psn,
+      id_lyn: DTL_PSN.id_lyn,
+      brt_kg: DTL_PSN.brt_kg,
+      hrg_trans: DTL_PSN.hrg_trans,
+      nm_lyn: LYN.nm_lyn,
+      est_hari: LYN.est_hari,
+    })
+    .from(DTL_PSN)
+    .innerJoin(LYN, eq(DTL_PSN.id_lyn, LYN.id_lyn))
+    .where(eq(DTL_PSN.id_psn, id_psn))
+    .orderBy(asc(LYN.nm_lyn));
 
   // Ambil pembayaran BYR jika sudah ada
-  const bayarRes = await db.execute({
-    sql: `
-      SELECT b.id_byr, b.id_psn, b.id_ptgs, b.tgl_byr, b.met_byr, b.jml_byr, b.sts_byr, pt.nm_ptgs
-      FROM BYR b
-      JOIN PTGS pt ON b.id_ptgs = pt.id_ptgs
-      WHERE b.id_psn = ?
-      LIMIT 1
-    `,
-    args: [id_psn],
-  });
+  const bayarRows = await db
+    .select({
+      id_byr: BYR.id_byr,
+      id_psn: BYR.id_psn,
+      id_ptgs: BYR.id_ptgs,
+      tgl_byr: BYR.tgl_byr,
+      met_byr: BYR.met_byr,
+      jml_byr: BYR.jml_byr,
+      sts_byr: BYR.sts_byr,
+      nm_ptgs: PTGS.nm_ptgs,
+    })
+    .from(BYR)
+    .innerJoin(PTGS, eq(BYR.id_ptgs, PTGS.id_ptgs))
+    .where(eq(BYR.id_psn, id_psn))
+    .limit(1);
 
   const response: PesananDetailResponse = {
     psn: {
-      id_psn: pRow.id_psn as string,
-      id_plgn: pRow.id_plgn as string,
-      id_ptgs: pRow.id_ptgs as string,
-      tgl_msk: pRow.tgl_msk as string,
-      est_sls: pRow.est_sls as string,
+      id_psn: pRow.id_psn,
+      id_plgn: pRow.id_plgn,
+      id_ptgs: pRow.id_ptgs,
+      tgl_msk: pRow.tgl_msk,
+      est_sls: pRow.est_sls,
       tot_hrg: Number(pRow.tot_hrg),
       sts_psn: pRow.sts_psn as StsPsn,
     },
     plgn: {
-      id_plgn: pRow.id_plgn as string,
-      nm_plgn: pRow.nm_plgn as string,
-      no_hp: pRow.no_hp as string,
-      alamat: pRow.alamat as string,
+      id_plgn: pRow.id_plgn,
+      nm_plgn: pRow.nm_plgn,
+      no_hp: pRow.no_hp,
+      alamat: pRow.alamat,
     },
     ptgs: {
-      id_ptgs: pRow.id_ptgs as string,
-      nm_ptgs: pRow.nm_ptgs as string,
-      usernm: pRow.usernm as string,
+      id_ptgs: pRow.id_ptgs,
+      nm_ptgs: pRow.nm_ptgs,
+      usernm: pRow.usernm,
       level: pRow.level as any,
     },
-    items: itemsRes.rows.map((r: any) => ({
+    items: itemsRows.map((r) => ({
       id_psn: r.id_psn,
       id_lyn: r.id_lyn,
       brt_kg: Number(r.brt_kg),
@@ -131,16 +163,16 @@ pesananRoute.get('/:id', authMiddleware, async (c) => {
       est_hari: Number(r.est_hari),
     })),
     bayar:
-      bayarRes.rows.length > 0
+      bayarRows.length > 0
         ? {
-            id_byr: bayarRes.rows[0].id_byr as string,
-            id_psn: bayarRes.rows[0].id_psn as string,
-            id_ptgs: bayarRes.rows[0].id_ptgs as string,
-            tgl_byr: bayarRes.rows[0].tgl_byr as string,
-            met_byr: bayarRes.rows[0].met_byr as any,
-            jml_byr: Number(bayarRes.rows[0].jml_byr),
-            sts_byr: bayarRes.rows[0].sts_byr as any,
-            nm_ptgs: bayarRes.rows[0].nm_ptgs as string,
+            id_byr: bayarRows[0].id_byr,
+            id_psn: bayarRows[0].id_psn,
+            id_ptgs: bayarRows[0].id_ptgs,
+            tgl_byr: bayarRows[0].tgl_byr,
+            met_byr: bayarRows[0].met_byr as any,
+            jml_byr: Number(bayarRows[0].jml_byr),
+            sts_byr: bayarRows[0].sts_byr as any,
+            nm_ptgs: bayarRows[0].nm_ptgs,
           }
         : null,
   };
@@ -159,11 +191,13 @@ pesananRoute.post(
     const { id_plgn, items, bayar_langsung } = c.req.valid('json');
 
     // 1. Cek validitas pelanggan
-    const plgnCheck = await db.execute({
-      sql: 'SELECT id_plgn FROM PLGN WHERE id_plgn = ?',
-      args: [id_plgn],
-    });
-    if (plgnCheck.rows.length === 0) {
+    const plgnCheck = await db
+      .select({ id_plgn: PLGN.id_plgn })
+      .from(PLGN)
+      .where(eq(PLGN.id_plgn, id_plgn))
+      .limit(1);
+
+    if (plgnCheck.length === 0) {
       return c.json({ error: 'Pelanggan tidak valid' }, 404);
     }
 
@@ -175,19 +209,22 @@ pesananRoute.post(
     }
 
     const uniqueLynIds = Array.from(mergedMap.keys());
-    const placeholders = uniqueLynIds.map(() => '?').join(',');
-    const lynRes = await db.execute({
-      sql: `SELECT id_lyn, hrg_kg, est_hari FROM LYN WHERE id_lyn IN (${placeholders})`,
-      args: uniqueLynIds,
-    });
+    const lynRows = await db
+      .select({
+        id_lyn: LYN.id_lyn,
+        hrg_kg: LYN.hrg_kg,
+        est_hari: LYN.est_hari,
+      })
+      .from(LYN)
+      .where(inArray(LYN.id_lyn, uniqueLynIds));
 
-    if (lynRes.rows.length !== uniqueLynIds.length) {
+    if (lynRows.length !== uniqueLynIds.length) {
       return c.json({ error: 'Satu atau lebih layanan tidak ditemukan di master data' }, 400);
     }
 
     const lynMap = new Map<string, { hrg_kg: number; est_hari: number }>();
-    for (const r of lynRes.rows) {
-      lynMap.set(r.id_lyn as string, {
+    for (const r of lynRows) {
+      lynMap.set(r.id_lyn, {
         hrg_kg: Number(r.hrg_kg),
         est_hari: Number(r.est_hari),
       });
@@ -216,21 +253,28 @@ pesananRoute.post(
     const rand = Math.floor(1000 + Math.random() * 9000);
     const id_psn = `PSN-${dateStr}-${rand}`;
 
-    // 4. Batch Atomic Transaction
+    // 4. Batch Atomic Transaction via Drizzle
     const batchStmts: any[] = [
-      {
-        sql: `INSERT INTO PSN (id_psn, id_plgn, id_ptgs, tgl_msk, est_sls, tot_hrg, sts_psn)
-              VALUES (?, ?, ?, ?, ?, ?, 'Antrean')`,
-        args: [id_psn, id_plgn, user.id_ptgs, tgl_msk, est_sls, tot_hrg],
-      },
+      db.insert(PSN).values({
+        id_psn,
+        id_plgn,
+        id_ptgs: user.id_ptgs,
+        tgl_msk,
+        est_sls,
+        tot_hrg,
+        sts_psn: 'Antrean',
+      }),
     ];
 
     for (const it of finalItems) {
-      batchStmts.push({
-        sql: `INSERT INTO DTL_PSN (id_psn, id_lyn, brt_kg, hrg_trans)
-              VALUES (?, ?, ?, ?)`,
-        args: [id_psn, it.id_lyn, it.brt_kg, it.hrg_trans],
-      });
+      batchStmts.push(
+        db.insert(DTL_PSN).values({
+          id_psn,
+          id_lyn: it.id_lyn,
+          brt_kg: it.brt_kg,
+          hrg_trans: it.hrg_trans,
+        })
+      );
     }
 
     // Jika bayar di awal sekaligus
@@ -242,21 +286,20 @@ pesananRoute.post(
         );
       }
       const id_byr = `BYR-${dateStr}-${rand}`;
-      batchStmts.push({
-        sql: `INSERT INTO BYR (id_byr, id_psn, id_ptgs, tgl_byr, met_byr, jml_byr, sts_byr)
-              VALUES (?, ?, ?, ?, ?, ?, 'Lunas')`,
-        args: [
+      batchStmts.push(
+        db.insert(BYR).values({
           id_byr,
           id_psn,
-          user.id_ptgs,
-          tgl_msk,
-          bayar_langsung.met_byr,
-          bayar_langsung.jml_byr,
-        ],
-      });
+          id_ptgs: user.id_ptgs,
+          tgl_byr: tgl_msk,
+          met_byr: bayar_langsung.met_byr,
+          jml_byr: bayar_langsung.jml_byr,
+          sts_byr: 'Lunas',
+        })
+      );
     }
 
-    await db.batch(batchStmts, 'write');
+    await db.batch(batchStmts as [any, ...any[]]);
 
     const createdPsn: Pesanan = {
       id_psn,
@@ -282,16 +325,15 @@ pesananRoute.patch(
     const id_psn = c.req.param('id');
     const { sts_psn } = c.req.valid('json');
 
-    const existing = await db.execute({
-      sql: 'SELECT id_psn, sts_psn FROM PSN WHERE id_psn = ?',
-      args: [id_psn],
-    });
+    const existing = await db
+      .select({ id_psn: PSN.id_psn, sts_psn: PSN.sts_psn })
+      .from(PSN)
+      .where(eq(PSN.id_psn, id_psn))
+      .limit(1);
 
-    if (existing.rows.length === 0) {
+    if (existing.length === 0) {
       return c.json({ error: 'Pesanan tidak ditemukan' }, 404);
     }
-
-    const cur = existing.rows[0].sts_psn as StsPsn;
 
     // Transisi 'Sudah Diambil' wajib via /ambil
     if (sts_psn === 'Sudah Diambil') {
@@ -301,10 +343,7 @@ pesananRoute.patch(
       );
     }
 
-    await db.execute({
-      sql: 'UPDATE PSN SET sts_psn = ? WHERE id_psn = ?',
-      args: [sts_psn, id_psn],
-    });
+    await db.update(PSN).set({ sts_psn }).where(eq(PSN.id_psn, id_psn));
 
     return c.json({ ok: true, id_psn, sts_psn });
   }
@@ -318,16 +357,17 @@ pesananRoute.patch(
   async (c) => {
     const id_psn = c.req.param('id');
 
-    const psnRes = await db.execute({
-      sql: 'SELECT id_psn, sts_psn FROM PSN WHERE id_psn = ?',
-      args: [id_psn],
-    });
+    const psnRes = await db
+      .select({ id_psn: PSN.id_psn, sts_psn: PSN.sts_psn })
+      .from(PSN)
+      .where(eq(PSN.id_psn, id_psn))
+      .limit(1);
 
-    if (psnRes.rows.length === 0) {
+    if (psnRes.length === 0) {
       return c.json({ error: 'Pesanan tidak ditemukan' }, 404);
     }
 
-    const curSts = psnRes.rows[0].sts_psn as string;
+    const curSts = psnRes[0].sts_psn;
 
     if (curSts !== 'Siap Diambil') {
       return c.json(
@@ -337,22 +377,20 @@ pesananRoute.patch(
     }
 
     // Validasi Pembayaran Lunas
-    const byrRes = await db.execute({
-      sql: "SELECT id_byr FROM BYR WHERE id_psn = ? AND sts_byr = 'Lunas'",
-      args: [id_psn],
-    });
+    const byrRes = await db
+      .select({ id_byr: BYR.id_byr })
+      .from(BYR)
+      .where(and(eq(BYR.id_psn, id_psn), eq(BYR.sts_byr, 'Lunas')))
+      .limit(1);
 
-    if (byrRes.rows.length === 0) {
+    if (byrRes.length === 0) {
       return c.json(
         { error: 'Pesanan belum lunas! Wajib mencatat pembayaran lunas terlebih dahulu sebelum menyerahkan cucian.' },
         409
       );
     }
 
-    await db.execute({
-      sql: "UPDATE PSN SET sts_psn = 'Sudah Diambil' WHERE id_psn = ?",
-      args: [id_psn],
-    });
+    await db.update(PSN).set({ sts_psn: 'Sudah Diambil' }).where(eq(PSN.id_psn, id_psn));
 
     return c.json({ ok: true, id_psn, sts_psn: 'Sudah Diambil' });
   }

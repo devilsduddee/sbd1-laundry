@@ -1,6 +1,8 @@
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
+import { eq, and } from 'drizzle-orm';
 import { db } from '../db/client.js';
+import { PSN, BYR } from '../db/schema.js';
 import { createBayarSchema, type Bayar } from '../../shared/schemas.js';
 import { authMiddleware, requireRole } from '../middleware/auth.js';
 
@@ -17,24 +19,26 @@ bayarRoute.post(
     const { id_psn, met_byr, jml_byr } = c.req.valid('json');
 
     // 1. Ambil data pesanan
-    const psnRes = await db.execute({
-      sql: 'SELECT id_psn, tot_hrg FROM PSN WHERE id_psn = ?',
-      args: [id_psn],
-    });
+    const psnRes = await db
+      .select({ id_psn: PSN.id_psn, tot_hrg: PSN.tot_hrg })
+      .from(PSN)
+      .where(eq(PSN.id_psn, id_psn))
+      .limit(1);
 
-    if (psnRes.rows.length === 0) {
+    if (psnRes.length === 0) {
       return c.json({ error: 'Pesanan tidak ditemukan' }, 404);
     }
 
-    const tot_hrg = Number(psnRes.rows[0].tot_hrg);
+    const tot_hrg = Number(psnRes[0].tot_hrg);
 
     // 2. Cek apakah pesanan sudah lunas
-    const existingBayar = await db.execute({
-      sql: "SELECT id_byr FROM BYR WHERE id_psn = ? AND sts_byr = 'Lunas'",
-      args: [id_psn],
-    });
+    const existingBayar = await db
+      .select({ id_byr: BYR.id_byr })
+      .from(BYR)
+      .where(and(eq(BYR.id_psn, id_psn), eq(BYR.sts_byr, 'Lunas')))
+      .limit(1);
 
-    if (existingBayar.rows.length > 0) {
+    if (existingBayar.length > 0) {
       return c.json({ error: 'Pesanan ini sudah berstatus Lunas.' }, 409);
     }
 
@@ -54,10 +58,14 @@ bayarRoute.post(
     const rand = Math.floor(1000 + Math.random() * 9000);
     const id_byr = `BYR-${dateStr}-${rand}`;
 
-    await db.execute({
-      sql: `INSERT INTO BYR (id_byr, id_psn, id_ptgs, tgl_byr, met_byr, jml_byr, sts_byr)
-            VALUES (?, ?, ?, ?, ?, ?, 'Lunas')`,
-      args: [id_byr, id_psn, user.id_ptgs, tgl_byr, met_byr, jml_byr],
+    await db.insert(BYR).values({
+      id_byr,
+      id_psn,
+      id_ptgs: user.id_ptgs,
+      tgl_byr,
+      met_byr,
+      jml_byr,
+      sts_byr: 'Lunas',
     });
 
     const data: Bayar = {

@@ -12,7 +12,7 @@ Aplikasi ini mengintegrasikan pencatatan pelanggan, pembuatan tiket pesanan, pem
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com/) + [Lucide React](https://lucide.dev/)
 - **Micro-Interactions & Animation:** [GSAP](https://gsap.com/) (`@gsap/react`)
 - **Backend API:** [Hono](https://hono.dev/) on Node.js (Local) & Vercel Serverless Functions (`hono/vercel`)
-- **Database:** [Turso](https://turso.tech/) (libSQL / SQLite engine) dengan `PRAGMA foreign_keys = ON;`
+- **Database & ORM:** [Turso](https://turso.tech/) (libSQL / SQLite engine) + [Drizzle ORM](https://orm.drizzle.team/) (`drizzle-orm` & `drizzle-kit`) dengan `PRAGMA foreign_keys = ON;`
 - **Autentikasi:** Stateless JWT (`hono/jwt`) disimpan di `HttpOnly Cookie` + password hash `bcryptjs`
 - **Deployment Target:** [Vercel](https://vercel.com/) (Single-repo: SPA Frontend + Serverless `/api/*`)
 
@@ -54,10 +54,19 @@ JWT_SECRET="sbd-laundry-secret-key-super-secure-min-32-chars-long"
 PORT=3001
 ```
 
-### 4. Seeding Data Awal
+### 4. Seeding Data Awal & Drizzle Tools
 Untuk mengisi akun default dan master layanan awal ke database:
 ```bash
 npm run db:seed
+```
+
+Untuk sinkronisasi skema atau membuka visual Drizzle Studio:
+```bash
+# Push perubahan skema langsung ke Turso Cloud
+npm run db:push
+
+# Buka Drizzle Studio web GUI
+npm run db:studio
 ```
 
 ### 5. Menjalankan Aplikasi
@@ -96,10 +105,11 @@ Lihat bagian panduan lengkap di chat atau ikuti ringkasan:
 
 ```text
 ├── api/index.ts              # Entrypoint Vercel Serverless Function
+├── drizzle.config.ts         # Konfigurasi Drizzle Kit untuk Turso
 ├── server/
 │   ├── app.ts                # Inisialisasi Hono & rute /api/*
 │   ├── dev.ts                # Server lokal Hono @hono/node-server
-│   ├── db/                   # Koneksi @libsql/client, schema.sql, seed.ts
+│   ├── db/                   # Koneksi @libsql/client, schema.ts (Drizzle), schema.sql, seed.ts
 │   ├── middleware/           # authMiddleware (JWT Cookie) & roleGuard
 │   └── routes/               # auth, pelanggan, layanan, petugas, pesanan, bayar, laporan
 ├── shared/schemas.ts         # Zod schemas & TypeScript types (shared FE + BE)

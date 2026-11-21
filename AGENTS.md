@@ -11,8 +11,8 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
   1. `docs/04-prd.md`: Functional requirements (`FR-01` s.d. `FR-08`) & batasan scope.
   2. `docs/05-design.md`: Visual theme *Qwash Hygienic*, palet warna, tipografi, dan pemetaan `shadcn/ui`.
   3. `docs/06-spec.md`: Use case, alur proses, kontrak API Hono, edge cases, dan arsitektur Vercel.
-  4. `docs/07-vibe-rules.md` & `server/db/schema.sql`: Guardrails & skema database Turso.
-- **ATURAN KERAS DATABASE PROPOSAL:** Nama tabel (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) dan nama seluruh kolom **TIDAK BOLEH diubah, diganti bahasa Inggris, atau ditambah kolom baru** di luar `server/db/schema.sql`:
+  4. `docs/07-vibe-rules.md` & `server/db/schema.sql` / `server/db/schema.ts`: Guardrails & skema database Turso.
+- **ATURAN KERAS DATABASE PROPOSAL:** Nama tabel (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) dan nama seluruh kolom **TIDAK BOLEH diubah, diganti bahasa Inggris, atau ditambah kolom baru** di luar `server/db/schema.sql` dan `server/db/schema.ts`:
   - `PLGN`: `id_plgn`, `nm_plgn`, `no_hp`, `alamat`
   - `PTGS`: `id_ptgs`, `nm_ptgs`, `usernm`, `passwd`, `level`
   - `LYN`: `id_lyn`, `nm_lyn`, `hrg_kg`, `est_hari`
@@ -39,20 +39,25 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
 
 ---
 
-## 2. Tech Stack & Arsitektur (Vite + React + Hono + Turso + Vercel)
+## 2. Tech Stack & Arsitektur (Vite + React + Hono + Turso + Drizzle ORM + Vercel)
 
 - **Frontend:** Vite + React (TypeScript) + Tailwind CSS + `shadcn/ui` + `gsap` (`@gsap/react`) + `react-router-dom` + `react-hook-form` + `zod`.
 - **Backend API:** Hono (TypeScript) di `server/`, diekspor sebagai Vercel Serverless Function via `api/index.ts` (`hono/vercel`).
-- **Database:** Turso / libSQL (`@libsql/client`).
+- **Database & ORM:** Turso / libSQL (`@libsql/client`) dikelola menggunakan **Drizzle ORM** (`drizzle-orm` + `drizzle-kit`).
 - **Auth:** Stateless JWT (`hono/jwt`) di *HttpOnly Cookie* (`auth_token`) + password hashing dengan `bcryptjs` (pure JS agar aman di Vercel Serverless).
 
 ### Struktur Direktori Wajib
 ```text
 ├── api/index.ts              # Entrypoint Vercel Serverless Function (handle(app))
+├── drizzle.config.ts         # Konfigurasi Drizzle Kit untuk Turso
 ├── server/
 │   ├── app.ts                # Hono app utama (/api/*)
 │   ├── dev.ts                # Local dev server (@hono/node-server)
-│   ├── db/client.ts          # Koneksi @libsql/client
+│   ├── db/
+│   │   ├── client.ts         # Koneksi @libsql/client & instance Drizzle db
+│   │   ├── schema.ts         # Skema Drizzle ORM (PLGN, PTGS, LYN, PSN, DTL_PSN, BYR)
+│   │   ├── schema.sql        # Skema DDL SQLite murni
+│   │   └── seed.ts           # Seeding data akun awal & master layanan
 │   ├── middleware/auth.ts    # Guard JWT cookie & role PTGS.level
 │   └── routes/*.ts           # auth, pelanggan, layanan, petugas, pesanan, bayar, laporan
 ├── shared/schemas.ts         # Zod schemas & types bersama (FE + BE)

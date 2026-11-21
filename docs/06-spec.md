@@ -1,16 +1,16 @@
 # Spec Teknis: Sistem Pengelolaan Laundry
 
-- **Versi:** 1.1
-- **Tanggal:** 2026-11-20
+- **Versi:** 1.2
+- **Tanggal:** 2026-11-21
 - **Status:** Approved (Gate 3)
 - **Sumber input:** `04-prd.md` v1.1 (Approved), `05-design.md` v1.1, `project-context.md`, dan dokumen ERD Proposal Tugas Kuliah Sistem Basis Data.
 - **Skill digunakan:** `spec-writer`
 
 ## TL;DR
 
-Dokumen ini menerjemahkan `04-prd.md` v1.1 dan `05-design.md` v1.0 menjadi spesifikasi teknis siap implementasi (*vibecoding*) menggunakan stack **Vite + React + `shadcn/ui` + Hono + Turso (libSQL)** dengan deployment di **Vercel**.
+Dokumen ini menerjemahkan `04-prd.md` v1.1 dan `05-design.md` v1.0 menjadi spesifikasi teknis siap implementasi (*vibecoding*) menggunakan stack **Vite + React + `shadcn/ui` + Hono + Turso (libSQL) + Drizzle ORM** dengan deployment di **Vercel**.
 
-Seluruh skema basis data mempertahankan **100% nama tabel dan nama field asli proposal** (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) tanpa penambahan atau perubahan nama kolom. Bagian paling kritis yang dijaga di backend Hono adalah transaksi atomik pembuatan tiket (`PSN` + `DTL_PSN`), penguncian harga `hrg_trans` di server, autentikasi stateless via JWT *HttpOnly cookie* untuk Vercel Serverless, serta blokir mutlak pengambilan cucian jika `BYR.sts_byr` belum `Lunas`.
+Seluruh skema basis data mempertahankan **100% nama tabel dan nama field asli proposal** (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) tanpa penambahan atau perubahan nama kolom, didefinisikan secara type-safe via Drizzle ORM (`server/db/schema.ts`). Bagian paling kritis yang dijaga di backend Hono adalah transaksi atomik pembuatan tiket (`PSN` + `DTL_PSN`), penguncian harga `hrg_trans` di server, autentikasi stateless via JWT *HttpOnly cookie* untuk Vercel Serverless, serta blokir mutlak pengambilan cucian jika `BYR.sts_byr` belum `Lunas`.
 
 ---
 
@@ -29,7 +29,7 @@ Seluruh skema basis data mempertahankan **100% nama tabel dan nama field asli pr
 - **Tech stack (Dikunci):**
   - **Frontend:** Vite + React (TypeScript) + Tailwind CSS + `shadcn/ui` + `lucide-react` + `react-router-dom` + `gsap` (`@gsap/react`).
   - **Backend API:** Hono (TypeScript) berjalan sebagai Vercel Serverless Function (`api/index.ts` via `hono/vercel`).
-  - **Database:** Turso / libSQL (`@libsql/client`) dengan SQLite relational schema + `PRAGMA foreign_keys = ON`.
+  - **Database & ORM:** Turso / libSQL (`@libsql/client`) dikelola menggunakan Drizzle ORM (`drizzle-orm` + `drizzle-kit`) dengan SQLite relational schema + `PRAGMA foreign_keys = ON`.
   - **Deployment:** Vercel (single project: static SPA Vite di `dist/` + serverless API di `/api/*`).
 
 ---
@@ -466,11 +466,15 @@ flowchart TD
 sistem-laundry/
 ├── api/
 │   └── index.ts                 # Entrypoint Vercel Serverless: export handle(app) dari hono/vercel
+├── drizzle.config.ts            # Konfigurasi Drizzle Kit untuk Turso
 ├── server/
 │   ├── app.ts                   # Instance Hono utama + registrasi middleware & routes (/api/*)
+│   ├── dev.ts                   # Local dev server (@hono/node-server)
 │   ├── db/
-│   │   ├── client.ts            # Inisialisasi @libsql/client (TURSO_DATABASE_URL & TURSO_AUTH_TOKEN)
-│   │   └── schema.sql           # DDL 6 tabel persis ERD + index + seed admin awal
+│   │   ├── client.ts            # Inisialisasi @libsql/client & Drizzle db instance
+│   │   ├── schema.ts            # Drizzle ORM schema 6 tabel persis ERD proposal
+│   │   ├── schema.sql           # DDL 6 tabel persis ERD + index
+│   │   └── seed.ts              # Seeding akun petugas awal & master layanan
 │   ├── middleware/
 │   │   └── auth.ts              # Verifikasi JWT cookie & guard level (Admin/Kasir/Operasional)
 │   └── routes/
@@ -575,3 +579,4 @@ sistem-laundry/
 |---|---|---|
 | 1.0 | 2026-11-20 | Draft awal Spec Teknis (`06-spec.md`) dengan stack Vite + React + `shadcn/ui` + Hono + Turso (Vercel deployment) dan kepatuhan penuh pada 6 tabel & nama field asli proposal. |
 | 1.1 | 2026-11-20 | Menambahkan `gsap` + `@gsap/react` untuk animasi UI halus sesuai pembaruan `05-design.md` v1.1. |
+| 1.2 | 2026-11-21 | Mengintegrasikan Drizzle ORM (`drizzle-orm` + `drizzle-kit`) untuk mempermudah query builder type-safe dan pengelolaan skema Turso/libSQL dengan tetap menjaga 100% nama tabel & kolom asli proposal. |

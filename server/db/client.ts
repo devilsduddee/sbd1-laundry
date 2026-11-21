@@ -1,6 +1,8 @@
 import { createClient, type Client } from '@libsql/client';
+import { drizzle } from 'drizzle-orm/libsql';
 import fs from 'fs';
 import path from 'path';
+import * as schema from './schema.js';
 
 const databaseUrl = process.env.TURSO_DATABASE_URL;
 const authToken = process.env.TURSO_AUTH_TOKEN;
@@ -11,19 +13,21 @@ if (!databaseUrl) {
   );
 }
 
-export const db: Client = createClient({
+export const client: Client = createClient({
   url: databaseUrl,
   authToken: authToken,
 });
+
+export const db = drizzle(client, { schema });
 
 /**
  * Memastikan skema basis data awal dan constraint foreign keys aktif di Turso.
  */
 export async function initDb() {
-  await db.execute('PRAGMA foreign_keys = ON;');
+  await client.execute('PRAGMA foreign_keys = ON;');
 
   // Cek apakah tabel PLGN sudah ada di Turso
-  const check = await db.execute(
+  const check = await client.execute(
     "SELECT name FROM sqlite_master WHERE type='table' AND name='PLGN';"
   );
 
@@ -38,7 +42,7 @@ export async function initDb() {
         .filter((s) => s.length > 0);
 
       for (const statement of statements) {
-        await db.execute(statement);
+        await client.execute(statement);
       }
     }
   }

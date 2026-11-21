@@ -1,7 +1,9 @@
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
 import bcrypt from 'bcryptjs';
+import { eq, asc, desc } from 'drizzle-orm';
 import { db } from '../db/client.js';
+import { PTGS } from '../db/schema.js';
 import {
   createPetugasSchema,
   updatePetugasSchema,
@@ -16,10 +18,16 @@ petugasRoute.use('*', authMiddleware, requireRole('Admin'));
 
 // GET /api/petugas
 petugasRoute.get('/', async (c) => {
-  const res = await db.execute(
-    'SELECT id_ptgs, nm_ptgs, usernm, level FROM PTGS ORDER BY nm_ptgs ASC'
-  );
-  const data = res.rows as unknown as Petugas[];
+  const data = (await db
+    .select({
+      id_ptgs: PTGS.id_ptgs,
+      nm_ptgs: PTGS.nm_ptgs,
+      usernm: PTGS.usernm,
+      level: PTGS.level,
+    })
+    .from(PTGS)
+    .orderBy(asc(PTGS.nm_ptgs))) as Petugas[];
+
   return c.json({ data });
 });
 
@@ -27,30 +35,33 @@ petugasRoute.get('/', async (c) => {
 petugasRoute.post('/', zValidator('json', createPetugasSchema), async (c) => {
   const { nm_ptgs, usernm, passwd, level } = c.req.valid('json');
 
-  const check = await db.execute({
-    sql: 'SELECT id_ptgs FROM PTGS WHERE usernm = ?',
-    args: [usernm],
-  });
+  const check = await db
+    .select({ id_ptgs: PTGS.id_ptgs })
+    .from(PTGS)
+    .where(eq(PTGS.usernm, usernm))
+    .limit(1);
 
-  if (check.rows.length > 0) {
+  if (check.length > 0) {
     return c.json({ error: 'Username sudah digunakan' }, 409);
   }
 
   // Buat ID baru PTG-XXX berdasarkan ID numerik terbesar
-  const lastRes = await db.execute('SELECT id_ptgs FROM PTGS ORDER BY id_ptgs DESC LIMIT 1');
+  const lastRes = await db
+    .select({ id_ptgs: PTGS.id_ptgs })
+    .from(PTGS)
+    .orderBy(desc(PTGS.id_ptgs))
+    .limit(1);
+
   let nextNum = 1;
-  if (lastRes.rows.length > 0) {
-    const match = String(lastRes.rows[0].id_ptgs).match(/\d+$/);
+  if (lastRes.length > 0) {
+    const match = String(lastRes[0].id_ptgs).match(/\d+$/);
     if (match) nextNum = parseInt(match[0], 10) + 1;
   }
   const id_ptgs = `PTG-${String(nextNum).padStart(3, '0')}`;
 
   const hash = bcrypt.hashSync(passwd, 10);
 
-  await db.execute({
-    sql: 'INSERT INTO PTGS (id_ptgs, nm_ptgs, usernm, passwd, level) VALUES (?, ?, ?, ?, ?)',
-    args: [id_ptgs, nm_ptgs, usernm, hash, level],
-  });
+  await db.insert(PTGS).values({ id_ptgs, nm_ptgs, usernm, passwd: hash, level });
 
   const created: Petugas = { id_ptgs, nm_ptgs, usernm, level };
   return c.json({ data: created }, 201);
@@ -61,36 +72,37 @@ petugasRoute.patch('/:id', zValidator('json', updatePetugasSchema), async (c) =>
   const id_ptgs = c.req.param('id');
   const body = c.req.valid('json');
 
-  const existing = await db.execute({
-    sql: 'SELECT id_ptgs, nm_ptgs, usernm, level FROM PTGS WHERE id_ptgs = ?',
-    args: [id_ptgs],
-  });
+  const existing = await db
+    .select()
+    .from(PTGS)
+    .where(eq(PTGS.id_ptgs, id_ptgs))
+    .limit(1);
 
-  if (existing.rows.length === 0) {
+  if (existing.length === 0) {
     return c.json({ error: 'Petugas tidak ditemukan' }, 404);
   }
 
-  const current = existing.rows[0];
-  const nm_ptgs = body.nm_ptgs ?? (current.nm_ptgs as string);
-  const level = body.level ?? (current.level as any);
+  const current = existing[0];
+  const nm_ptgs = body.nm_ptgs ?? current.nm_ptgs;
+  const level = body.level ?? current.level;
 
   if (body.passwd) {
     const hash = bcrypt.hashSync(body.passwd, 10);
-    await db.execute({
-      sql: 'UPDATE PTGS SET nm_ptgs = ?, passwd = ?, level = ? WHERE id_ptgs = ?',
-      args: [nm_ptgs, hash, level, id_ptgs],
-    });
+    await db
+      .update(PTGS)
+      .set({ nm_ptgs, passwd: hash, level })
+      .where(eq(PTGS.id_ptgs, id_ptgs));
   } else {
-    await db.execute({
-      sql: 'UPDATE PTGS SET nm_ptgs = ?, level = ? WHERE id_ptgs = ?',
-      args: [nm_ptgs, level, id_ptgs],
-    });
+    await db
+      .update(PTGS)
+      .set({ nm_ptgs, level })
+      .where(eq(PTGS.id_ptgs, id_ptgs));
   }
 
   const updated: Petugas = {
     id_ptgs,
     nm_ptgs,
-    usernm: current.usernm as string,
+    usernm: current.usernm,
     level,
   };
 

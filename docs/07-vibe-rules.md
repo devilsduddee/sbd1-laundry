@@ -1,16 +1,16 @@
 # 07 - Vibe Rules: Sistem Pengelolaan Laundry
 
-- **Versi:** 1.1
-- **Tanggal:** 2026-11-20
+- **Versi:** 1.2
+- **Tanggal:** 2026-11-21
 - **Status:** Approved
-- **Sumber input:** `04-prd.md` v1.1, `05-design.md` v1.1, `06-spec.md` v1.1 (Gate 3 Approved), dan `profile.md` bagian 9.
+- **Sumber input:** `04-prd.md` v1.1, `05-design.md` v1.1, `06-spec.md` v1.2 (Gate 3 Approved), dan `profile.md` bagian 9.
 - **Skill digunakan:** `vibe-rules`
 
 ---
 
 ## TL;DR
 
-Dokumen ini menjadi pagar teknis (*guardrails*) bagi coding agent (Antigravity) saat membangun aplikasi web **Sistem Pengelolaan Laundry** di repositori terpisah dengan stack **Vite + React + `shadcn/ui` + Hono + Turso (libSQL)** untuk deployment **Vercel**.
+Dokumen ini menjadi pagar teknis (*guardrails*) bagi coding agent (Antigravity) saat membangun aplikasi web **Sistem Pengelolaan Laundry** di repositori terpisah dengan stack **Vite + React + `shadcn/ui` + Hono + Turso (libSQL) + Drizzle ORM** untuk deployment **Vercel**.
 
 Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan keras mengubah/menambah nama tabel maupun kolom ERD proposal**, batas ukuran maksimal 500 baris per file, wajib memakai komponen standar `shadcn/ui` tanpa bikin komponen custom dari nol, dan larangan keras menjalankan `git push` otomatis tanpa perintah eksplisit user.
 
@@ -19,7 +19,7 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 ## 1. Golden Rules untuk Coding Agent
 
 ### Aturan 1: Patuh Mutlak pada Dokumen & Skema Proposal
-- Coding agent **wajib** membaca `04-prd.md`, `05-design.md`, `06-spec.md`, dan `schema.sql` sebelum menulis kode.
+- Coding agent **wajib** membaca `04-prd.md`, `05-design.md`, `06-spec.md`, dan `server/db/schema.ts` / `server/db/schema.sql` sebelum menulis kode.
 - **Aturan Keras Basis Data (Tugas Kuliah):** Nama tabel (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) dan seluruh nama kolom (`id_psn`, `tgl_msk`, `est_sls`, `tot_hrg`, `sts_psn`, `id_plgn`, `nm_plgn`, `no_hp`, `alamat`, `id_ptgs`, `nm_ptgs`, `usernm`, `passwd`, `level`, `id_lyn`, `nm_lyn`, `hrg_kg`, `est_hari`, `brt_kg`, `hrg_trans`, `id_byr`, `tgl_byr`, `met_byr`, `jml_byr`, `sts_byr`) **TIDAK BOLEH diubah, diterjemahkan ke bahasa Inggris, atau ditambah kolom baru**.
 - **Dilarang berimprovisasi** menambah fitur di luar MVP (misal portal login pelanggan, QRIS payment gateway, notif WA otomatis, atau skema cicilan).
 
@@ -91,3 +91,4 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 |---|---|---|
 | 1.0 | 2026-11-20 | Penyusunan `07-vibe-rules.md` dan paket `handoff/` untuk stack Vite + React + `shadcn/ui` + Hono + Turso (Vercel). |
 | 1.1 | 2026-11-20 | Menambahkan aturan GSAP (`gsap` + `@gsap/react`) untuk animasi halus dengan `useGSAP`, durasi singkat, dan print safety. |
+| 1.2 | 2026-11-21 | Menambahkan Drizzle ORM (`drizzle-orm` + `drizzle-kit`) untuk query builder type-safe dan pengelolaan skema Turso/libSQL dengan tetap menjaga 100% kepatuhan proposal. |

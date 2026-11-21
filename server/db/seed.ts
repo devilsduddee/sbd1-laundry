@@ -1,5 +1,7 @@
 import bcrypt from 'bcryptjs';
+import { eq } from 'drizzle-orm';
 import { db, initDb } from './client.js';
+import { PTGS, LYN, PLGN } from './schema.js';
 
 async function seed() {
   console.log('--- Memulai Seeding Basis Data Laundry ---');
@@ -12,35 +14,39 @@ async function seed() {
       nm_ptgs: 'Administrator Laundry',
       usernm: 'admin',
       passwd: 'admin123',
-      level: 'Admin',
+      level: 'Admin' as const,
     },
     {
       id_ptgs: 'PTG-002',
       nm_ptgs: 'Kasir Meja Depan',
       usernm: 'kasir',
       passwd: 'kasir123',
-      level: 'Kasir',
+      level: 'Kasir' as const,
     },
     {
       id_ptgs: 'PTG-003',
       nm_ptgs: 'Petugas Cuci & Setrika',
       usernm: 'operasional',
       passwd: 'opera123',
-      level: 'Operasional',
+      level: 'Operasional' as const,
     },
   ];
 
   for (const u of users) {
-    const existing = await db.execute({
-      sql: 'SELECT id_ptgs FROM PTGS WHERE usernm = ?',
-      args: [u.usernm],
-    });
+    const existing = await db
+      .select({ id_ptgs: PTGS.id_ptgs })
+      .from(PTGS)
+      .where(eq(PTGS.usernm, u.usernm))
+      .limit(1);
 
-    if (existing.rows.length === 0) {
+    if (existing.length === 0) {
       const hash = bcrypt.hashSync(u.passwd, 10);
-      await db.execute({
-        sql: 'INSERT INTO PTGS (id_ptgs, nm_ptgs, usernm, passwd, level) VALUES (?, ?, ?, ?, ?)',
-        args: [u.id_ptgs, u.nm_ptgs, u.usernm, hash, u.level],
+      await db.insert(PTGS).values({
+        id_ptgs: u.id_ptgs,
+        nm_ptgs: u.nm_ptgs,
+        usernm: u.usernm,
+        passwd: hash,
+        level: u.level,
       });
       console.log(`+ Petugas dibuat: ${u.usernm} (${u.level})`);
     } else {
@@ -57,10 +63,7 @@ async function seed() {
   ];
 
   for (const l of layanans) {
-    await db.execute({
-      sql: 'INSERT OR IGNORE INTO LYN (id_lyn, nm_lyn, hrg_kg, est_hari) VALUES (?, ?, ?, ?)',
-      args: [l.id_lyn, l.nm_lyn, l.hrg_kg, l.est_hari],
-    });
+    await db.insert(LYN).values(l).onConflictDoNothing();
     console.log(`+ Layanan: ${l.nm_lyn}`);
   }
 
@@ -72,10 +75,7 @@ async function seed() {
     alamat: 'Jl. Margonda Raya No. 12, Depok',
   };
 
-  await db.execute({
-    sql: 'INSERT OR IGNORE INTO PLGN (id_plgn, nm_plgn, no_hp, alamat) VALUES (?, ?, ?, ?)',
-    args: [pelanggan.id_plgn, pelanggan.nm_plgn, pelanggan.no_hp, pelanggan.alamat],
-  });
+  await db.insert(PLGN).values(pelanggan).onConflictDoNothing();
   console.log(`+ Contoh Pelanggan: ${pelanggan.nm_plgn}`);
 
   console.log('--- Seeding Selesai Sukses ---');

@@ -3,7 +3,9 @@ import { setCookie, deleteCookie } from 'hono/cookie';
 import { sign } from 'hono/jwt';
 import { zValidator } from '@hono/zod-validator';
 import bcrypt from 'bcryptjs';
+import { eq } from 'drizzle-orm';
 import { db } from '../db/client.js';
+import { PTGS } from '../db/schema.js';
 import { loginSchema } from '../../shared/schemas.js';
 import { authMiddleware, COOKIE_NAME, JWT_SECRET } from '../middleware/auth.js';
 
@@ -13,25 +15,32 @@ export const authRoute = new Hono();
 authRoute.post('/login', zValidator('json', loginSchema), async (c) => {
   const { usernm, passwd } = c.req.valid('json');
 
-  const res = await db.execute({
-    sql: 'SELECT id_ptgs, nm_ptgs, usernm, passwd, level FROM PTGS WHERE usernm = ?',
-    args: [usernm],
-  });
+  const rows = await db
+    .select({
+      id_ptgs: PTGS.id_ptgs,
+      nm_ptgs: PTGS.nm_ptgs,
+      usernm: PTGS.usernm,
+      passwd: PTGS.passwd,
+      level: PTGS.level,
+    })
+    .from(PTGS)
+    .where(eq(PTGS.usernm, usernm))
+    .limit(1);
 
-  if (res.rows.length === 0) {
+  if (rows.length === 0) {
     return c.json({ error: 'Username atau password salah' }, 401);
   }
 
-  const row = res.rows[0];
-  const isValid = bcrypt.compareSync(passwd, row.passwd as string);
+  const row = rows[0];
+  const isValid = bcrypt.compareSync(passwd, row.passwd);
   if (!isValid) {
     return c.json({ error: 'Username atau password salah' }, 401);
   }
 
   const user = {
-    id_ptgs: row.id_ptgs as string,
-    nm_ptgs: row.nm_ptgs as string,
-    usernm: row.usernm as string,
+    id_ptgs: row.id_ptgs,
+    nm_ptgs: row.nm_ptgs,
+    usernm: row.usernm,
     level: row.level as any,
   };
 
