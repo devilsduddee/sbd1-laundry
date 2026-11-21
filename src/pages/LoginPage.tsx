@@ -60,8 +60,14 @@ const DEMO_ACCOUNTS: DemoAccount[] = [
 ];
 
 export const LoginPage: React.FC = () => {
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/pesanan', { replace: true });
+    }
+  }, [user, navigate]);
 
   const [usernm, setUsernm] = useState('');
   const [passwd, setPasswd] = useState('');
@@ -81,7 +87,7 @@ export const LoginPage: React.FC = () => {
       setLoading(true);
       setError(null);
       await login(usernm.trim(), passwd);
-      navigate('/');
+      navigate('/pesanan');
     } catch (err: any) {
       setError(err.message || 'Login gagal. Periksa kembali username dan password.');
     } finally {

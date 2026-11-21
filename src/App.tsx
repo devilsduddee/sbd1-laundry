@@ -35,30 +35,10 @@ const ProtectedRoute: React.FC<{
   }
 
   if (allowedRoles && !allowedRoles.includes(user.level)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/pesanan" replace />;
   }
 
   return <AppShell>{children}</AppShell>;
-};
-
-const HomeRoute: React.FC = () => {
-  const { user, loading } = useAuth();
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F5F6FA] text-xs text-muted-foreground">
-        <Loader2 className="mr-2 size-5 animate-spin text-indigo-600" />
-        Memeriksa sesi login...
-      </div>
-    );
-  }
-  if (!user) {
-    return <LandingPage />;
-  }
-  return (
-    <AppShell>
-      <OrdersPage />
-    </AppShell>
-  );
 };
 
 export const App: React.FC = () => {
@@ -67,8 +47,8 @@ export const App: React.FC = () => {
       <AuthProvider>
         <Toaster position="top-right" richColors closeButton />
         <Routes>
-          {/* Rute Publik */}
-          <Route path="/" element={<HomeRoute />} />
+          {/* Rute Publik (Langsung tampil instan tanpa cek sesi login) */}
+          <Route path="/" element={<LandingPage />} />
           <Route path="/landing" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
 

@@ -165,7 +165,7 @@ export const CreateOrderPage: React.FC = () => {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/pesanan')}
           className="rounded-xl border-[#E4E7F2] h-9 gap-1 text-xs"
         >
           <ArrowLeft className="size-3.5" />

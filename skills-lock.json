@@ -92,6 +92,13 @@
       "skillPath": "skills/planning-and-task-breakdown/SKILL.md",
       "computedHash": "e4ef8d478d672103693af0cab5a97a1914f776099ef0756c2a093d9ae061f024"
     },
+    "security-and-hardening": {
+      "source": "addyosmani/agent-skills",
+      "commit": "8c99fa36d90068c82d547f7c12a9d67a3e95f4ee",
+      "sourceType": "github",
+      "skillPath": "skills/security-and-hardening/SKILL.md",
+      "computedHash": "9bfc78e1ee2e23f3d226f610d8ed8e0cf6fb4f7e90a44db0a41b636735a24767"
+    },
     "shadcn": {
       "source": "shadcn-ui/ui",
       "commit": "968d8cb9dc42ae5d52e8fd356cf84596ec832a26",

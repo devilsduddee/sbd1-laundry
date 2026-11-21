@@ -24,7 +24,7 @@ interface NavItem {
 }
 
 const DESKTOP_NAV_ITEMS: NavItem[] = [
-  { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
+  { to: '/pesanan', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
   { to: '/pesanan/baru', label: 'Buat Pesanan', shortLabel: 'Buat Baru', icon: PlusCircle, allowedRoles: ['Admin', 'Kasir'] },
   { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users, allowedRoles: ['Admin', 'Kasir'] },
   { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
@@ -35,7 +35,7 @@ const DESKTOP_NAV_ITEMS: NavItem[] = [
 const getMobileNavItems = (role?: LevelPtgs): NavItem[] => {
   if (role === 'Admin') {
     return [
-      { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
+      { to: '/pesanan', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
       { to: '/pesanan/baru', label: 'Buat Pesanan', shortLabel: 'Buat Baru', icon: PlusCircle },
       { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users },
       { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
@@ -46,7 +46,7 @@ const getMobileNavItems = (role?: LevelPtgs): NavItem[] => {
 
   if (role === 'Kasir') {
     return [
-      { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
+      { to: '/pesanan', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
       { to: '/pesanan/baru', label: 'Buat Pesanan', shortLabel: 'Buat Baru', icon: PlusCircle },
       { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users },
       { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
@@ -55,7 +55,7 @@ const getMobileNavItems = (role?: LevelPtgs): NavItem[] => {
 
   // Operasional: Khusus Pantau Cucian & Katalog Layanan (Tanpa Akses Pembuatan Tiket)
   return [
-    { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
+    { to: '/pesanan', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
     { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
   ];
 };
@@ -99,8 +99,8 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             {desktopFilteredItems.map((item) => {
               const Icon = item.icon;
               const isActive =
-                item.to === '/'
-                  ? location.pathname === '/' || location.pathname === '/pesanan'
+                item.to === '/pesanan'
+                  ? location.pathname === '/pesanan'
                   : location.pathname.startsWith(item.to);
 
               return (
@@ -214,8 +214,8 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
           {mobileNavItems.map((item) => {
             const Icon = item.icon;
             const isActive =
-              item.to === '/'
-                ? location.pathname === '/' || location.pathname === '/pesanan'
+              item.to === '/pesanan'
+                ? location.pathname === '/pesanan'
                 : location.pathname.startsWith(item.to);
 
             return (
