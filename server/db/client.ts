@@ -2,8 +2,14 @@ import { createClient, type Client } from '@libsql/client';
 import fs from 'fs';
 import path from 'path';
 
-const databaseUrl = process.env.TURSO_DATABASE_URL || 'file:local.db';
+const databaseUrl = process.env.TURSO_DATABASE_URL;
 const authToken = process.env.TURSO_AUTH_TOKEN;
+
+if (!databaseUrl) {
+  throw new Error(
+    'TURSO_DATABASE_URL belum dikonfigurasi. Seluruh data wajib tersimpan di database Turso Cloud.'
+  );
+}
 
 export const db: Client = createClient({
   url: databaseUrl,
@@ -11,12 +17,12 @@ export const db: Client = createClient({
 });
 
 /**
- * Memastikan skema basis data awal dan constraint foreign keys aktif.
+ * Memastikan skema basis data awal dan constraint foreign keys aktif di Turso.
  */
 export async function initDb() {
   await db.execute('PRAGMA foreign_keys = ON;');
 
-  // Cek apakah tabel PLGN sudah ada
+  // Cek apakah tabel PLGN sudah ada di Turso
   const check = await db.execute(
     "SELECT name FROM sqlite_master WHERE type='table' AND name='PLGN';"
   );

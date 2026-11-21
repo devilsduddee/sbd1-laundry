@@ -36,9 +36,14 @@ petugasRoute.post('/', zValidator('json', createPetugasSchema), async (c) => {
     return c.json({ error: 'Username sudah digunakan' }, 409);
   }
 
-  const countRes = await db.execute('SELECT COUNT(*) as count FROM PTGS');
-  const count = Number(countRes.rows[0].count) + 1;
-  const id_ptgs = `PTG-${String(count).padStart(3, '0')}`;
+  // Buat ID baru PTG-XXX berdasarkan ID numerik terbesar
+  const lastRes = await db.execute('SELECT id_ptgs FROM PTGS ORDER BY id_ptgs DESC LIMIT 1');
+  let nextNum = 1;
+  if (lastRes.rows.length > 0) {
+    const match = String(lastRes.rows[0].id_ptgs).match(/\d+$/);
+    if (match) nextNum = parseInt(match[0], 10) + 1;
+  }
+  const id_ptgs = `PTG-${String(nextNum).padStart(3, '0')}`;
 
   const hash = bcrypt.hashSync(passwd, 10);
 

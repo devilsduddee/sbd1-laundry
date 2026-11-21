@@ -47,10 +47,14 @@ pelangganRoute.post('/', zValidator('json', createPelangganSchema), async (c) =>
     return c.json({ error: 'Nomor HP pelanggan sudah terdaftar' }, 409);
   }
 
-  // Buat ID baru PLG-XXXX
-  const countRes = await db.execute('SELECT COUNT(*) as count FROM PLGN');
-  const count = Number(countRes.rows[0].count) + 1;
-  const id_plgn = `PLG-${String(count).padStart(4, '0')}`;
+  // Buat ID baru PLG-XXXX berdasarkan ID numerik terbesar
+  const lastRes = await db.execute('SELECT id_plgn FROM PLGN ORDER BY id_plgn DESC LIMIT 1');
+  let nextNum = 1;
+  if (lastRes.rows.length > 0) {
+    const match = String(lastRes.rows[0].id_plgn).match(/\d+$/);
+    if (match) nextNum = parseInt(match[0], 10) + 1;
+  }
+  const id_plgn = `PLG-${String(nextNum).padStart(4, '0')}`;
 
   await db.execute({
     sql: 'INSERT INTO PLGN (id_plgn, nm_plgn, no_hp, alamat) VALUES (?, ?, ?, ?)',

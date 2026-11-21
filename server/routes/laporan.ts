@@ -47,7 +47,7 @@ laporanRoute.get(
     sql += ' ORDER BY p.tgl_msk DESC';
 
     const res = await db.execute({ sql, args });
-    const rows = res.rows as unknown as (PesananSummary & { jml_byr?: number })[];
+    const rows = res.rows as unknown as PesananSummary[];
 
     let total_pesanan = rows.length;
     let total_lunas = 0;

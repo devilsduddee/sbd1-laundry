@@ -38,9 +38,14 @@ layananRoute.post(
       return c.json({ error: 'Nama layanan sudah ada' }, 409);
     }
 
-    const countRes = await db.execute('SELECT COUNT(*) as count FROM LYN');
-    const count = Number(countRes.rows[0].count) + 1;
-    const id_lyn = `LYN-${String(count).padStart(3, '0')}`;
+    // Buat ID baru LYN-XXX berdasarkan ID numerik terbesar
+    const lastRes = await db.execute('SELECT id_lyn FROM LYN ORDER BY id_lyn DESC LIMIT 1');
+    let nextNum = 1;
+    if (lastRes.rows.length > 0) {
+      const match = String(lastRes.rows[0].id_lyn).match(/\d+$/);
+      if (match) nextNum = parseInt(match[0], 10) + 1;
+    }
+    const id_lyn = `LYN-${String(nextNum).padStart(3, '0')}`;
 
     await db.execute({
       sql: 'INSERT INTO LYN (id_lyn, nm_lyn, hrg_kg, est_hari) VALUES (?, ?, ?, ?)',

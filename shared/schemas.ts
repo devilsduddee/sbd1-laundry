@@ -85,6 +85,7 @@ export interface PesananSummary extends Pesanan {
   sts_byr: StsByr | 'Belum Lunas';
   met_byr?: MetByr;
   tgl_byr?: string;
+  jml_byr?: number;
 }
 
 export interface PesananDetailResponse {
