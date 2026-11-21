@@ -77,7 +77,7 @@ app.get('/health', (c) => c.redirect('/api/health'));
 
 // Pastikan DB siap untuk rute data
 app.use('*', async (c, next) => {
-  if (c.req.path === '/api/health' || c.req.path === '/health') {
+  if (c.req.path.includes('health')) {
     return next();
   }
   await initDb();
@@ -106,15 +106,12 @@ app.notFound((c) => {
   return c.json({ error: 'Endpoint tidak ditemukan' }, 404);
 });
 
-// Error Handler dengan masking error di production (mencegah information disclosure)
+// Error Handler
 app.onError((err, c) => {
   console.error('Server Error:', err);
-  const isProd = process.env.NODE_ENV === 'production';
   return c.json(
     {
-      error: isProd
-        ? 'Terjadi kesalahan internal pada server'
-        : err.message || 'Terjadi kesalahan internal pada server',
+      error: err.message || 'Terjadi kesalahan internal pada server',
     },
     500
   );
