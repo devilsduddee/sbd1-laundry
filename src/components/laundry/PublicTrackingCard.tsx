@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, Shirt, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Clock, Shirt } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { StatusBadge } from './StatusBadge';
 import { formatRupiah, formatDateTime } from '@/lib/format';

@@ -99,9 +99,6 @@ api.route('/laporan', laporanRoute);
 app.route('/api', api);
 app.route('/', api);
 
-// Alias publik untuk katalog layanan
-app.route('/publik', layananRoute);
-
 // 404 Handler
 app.notFound((c) => {
   return c.json({ error: 'Endpoint tidak ditemukan' }, 404);

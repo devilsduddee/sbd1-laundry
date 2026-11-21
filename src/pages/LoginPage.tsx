@@ -8,12 +8,8 @@ import {
   Eye,
   EyeOff,
   ShieldCheck,
-  CheckCircle2,
   AlertCircle,
   Sparkles,
-  ClipboardList,
-  Shirt,
-  ShieldAlert,
 } from 'lucide-react';
 import { QwashLogo } from '@/components/laundry/QwashLogo';
 import { useAuth } from '@/hooks/useAuth';

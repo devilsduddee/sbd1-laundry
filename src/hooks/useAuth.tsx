@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { api, ApiError } from '../lib/api.js';
+import { api } from '../lib/api.js';
 import type { Petugas } from '@shared/schemas';
 
 interface AuthContextType {

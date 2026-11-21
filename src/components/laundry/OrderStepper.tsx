@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Check, Clock, Sparkles, Shirt, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { STS_PSN, type StsPsn } from '@shared/schemas';
+import type { StsPsn } from '@shared/schemas';
 
 interface OrderStepperProps {
   currentStatus: StsPsn;
