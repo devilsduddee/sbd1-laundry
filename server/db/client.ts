@@ -20,10 +20,15 @@ export const client: Client = createClient({
 
 export const db = drizzle(client, { schema });
 
+let dbInitialized = false;
+
 /**
  * Memastikan skema basis data awal dan constraint foreign keys aktif di Turso.
+ * Dilengkapi in-memory flag agar tidak melakukan roundtrip SELECT berulang ke Turso pada warmed container.
  */
 export async function initDb() {
+  if (dbInitialized) return;
+
   await client.execute('PRAGMA foreign_keys = ON;');
 
   // Cek apakah tabel PLGN sudah ada di Turso
@@ -46,4 +51,6 @@ export async function initDb() {
       }
     }
   }
+
+  dbInitialized = true;
 }

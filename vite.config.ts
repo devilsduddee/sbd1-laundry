@@ -26,9 +26,7 @@ export default defineConfig({
           'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-radix': [
             '@radix-ui/react-dialog',
-            '@radix-ui/react-alert-dialog',
             '@radix-ui/react-select',
-            '@radix-ui/react-popover',
             '@radix-ui/react-tabs',
             '@radix-ui/react-slot',
           ],
