@@ -59,6 +59,25 @@ app.get('/api/health', async (c) => {
 
   let dbStatus = 'untested';
   let dbError: string | null = null;
+  let directStatus = 0;
+  let directBody = '';
+
+  try {
+    const rawUrl = (process.env.TURSO_DATABASE_URL || '').replace('libsql://', 'https://');
+    const directRes = await fetch(`${rawUrl}/v2/pipeline`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${(process.env.TURSO_AUTH_TOKEN || '').trim()}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ requests: [{ type: 'execute', stmt: { sql: 'SELECT 1' } }] }),
+    });
+    directStatus = directRes.status;
+    directBody = await directRes.text();
+  } catch (e: any) {
+    directBody = e.message || String(e);
+  }
+
   try {
     const res = await client.execute('SELECT 1 as test');
     dbStatus = res.rows.length > 0 ? 'connected' : 'empty';
@@ -71,6 +90,7 @@ app.get('/api/health', async (c) => {
     status: 'ok',
     service: 'Sistem Pengelolaan Laundry API',
     env: { hasUrl, hasToken, tokenLen, tokenPrefix, tokenSuffix, url },
+    direct: { status: directStatus, body: directBody },
     database: { status: dbStatus, error: dbError },
   });
 });
