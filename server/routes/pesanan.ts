@@ -243,7 +243,7 @@ pesananRoute.get('/:id', authMiddleware, async (c) => {
 pesananRoute.post(
   '/',
   authMiddleware,
-  requireRole('Admin', 'Kasir'),
+  requireRole('Admin', 'Kasir', 'Operasional'),
   zValidator('json', createPesananSchema),
   async (c) => {
     const user = c.get('user');
@@ -412,7 +412,7 @@ pesananRoute.patch(
 pesananRoute.patch(
   '/:id/ambil',
   authMiddleware,
-  requireRole('Admin', 'Kasir'),
+  requireRole('Admin', 'Kasir', 'Operasional'),
   async (c) => {
     const id_psn = c.req.param('id');
 

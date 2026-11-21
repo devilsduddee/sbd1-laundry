@@ -12,8 +12,8 @@ import { authMiddleware, requireRole } from '../middleware/auth.js';
 
 export const pelangganRoute = new Hono();
 
-// Seluruh endpoint pelanggan memerlukan login Admin atau Kasir
-pelangganRoute.use('*', authMiddleware, requireRole('Admin', 'Kasir'));
+// Seluruh endpoint pelanggan memerlukan login Admin, Kasir, atau Operasional
+pelangganRoute.use('*', authMiddleware, requireRole('Admin', 'Kasir', 'Operasional'));
 
 // GET /api/pelanggan (Output 1)
 pelangganRoute.get('/', async (c) => {

@@ -84,7 +84,7 @@ export const App: React.FC = () => {
           <Route
             path="/pesanan/baru"
             element={
-              <ProtectedRoute allowedRoles={['Admin', 'Kasir']}>
+              <ProtectedRoute allowedRoles={['Admin', 'Kasir', 'Operasional']}>
                 <CreateOrderPage />
               </ProtectedRoute>
             }
@@ -100,7 +100,7 @@ export const App: React.FC = () => {
           <Route
             path="/pelanggan"
             element={
-              <ProtectedRoute allowedRoles={['Admin', 'Kasir']}>
+              <ProtectedRoute allowedRoles={['Admin', 'Kasir', 'Operasional']}>
                 <CustomersPage />
               </ProtectedRoute>
             }

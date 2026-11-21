@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   ClipboardList,
@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   BarChart3,
   LogOut,
-  Sparkles,
 } from 'lucide-react';
 import { QwashLogo } from '@/components/laundry/QwashLogo';
 import { useAuth } from '@/hooks/useAuth';
@@ -22,17 +21,54 @@ interface NavItem {
   shortLabel: string;
   icon: React.ElementType;
   allowedRoles?: LevelPtgs[];
-  isAction?: boolean;
 }
 
-const NAV_ITEMS: NavItem[] = [
+const DESKTOP_NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
-  { to: '/pesanan/baru', label: 'Buat Pesanan', shortLabel: 'Buat Baru', icon: PlusCircle, allowedRoles: ['Admin', 'Kasir'], isAction: true },
-  { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users, allowedRoles: ['Admin', 'Kasir'] },
+  { to: '/pesanan/baru', label: 'Buat Pesanan', shortLabel: 'Buat Baru', icon: PlusCircle },
+  { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users },
   { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
   { to: '/laporan', label: 'Laporan Transaksi', shortLabel: 'Laporan', icon: BarChart3, allowedRoles: ['Admin'] },
   { to: '/petugas', label: 'Kelola Petugas', shortLabel: 'Petugas', icon: ShieldCheck, allowedRoles: ['Admin'] },
 ];
+
+const getMobileNavSlices = (role?: LevelPtgs) => {
+  if (role === 'Admin') {
+    return {
+      left: [
+        { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
+        { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users },
+      ],
+      right: [
+        { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
+        { to: '/laporan', label: 'Laporan Transaksi', shortLabel: 'Laporan', icon: BarChart3 },
+        { to: '/petugas', label: 'Kelola Petugas', shortLabel: 'Petugas', icon: ShieldCheck },
+      ],
+    };
+  }
+
+  if (role === 'Kasir') {
+    return {
+      left: [
+        { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
+        { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users },
+      ],
+      right: [
+        { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
+      ],
+    };
+  }
+
+  // Operasional
+  return {
+    left: [
+      { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
+    ],
+    right: [
+      { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
+    ],
+  };
+};
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, logout } = useAuth();
@@ -44,8 +80,74 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
     navigate('/login');
   };
 
-  const filteredNavItems = NAV_ITEMS.filter(
+  const desktopFilteredItems = DESKTOP_NAV_ITEMS.filter(
     (item) => !item.allowedRoles || (user && item.allowedRoles.includes(user.level))
+  );
+
+  const mobileSlices = getMobileNavSlices(user?.level);
+  const isCreateActive = location.pathname.startsWith('/pesanan/baru');
+
+  const renderRegularNavItem = (item: NavItem) => {
+    const Icon = item.icon;
+    const isActive =
+      item.to === '/'
+        ? location.pathname === '/' || location.pathname === '/pesanan'
+        : location.pathname.startsWith(item.to);
+
+    return (
+      <NavLink
+        key={item.to}
+        to={item.to}
+        className={cn(
+          'flex flex-col items-center justify-center flex-1 h-full py-1 px-0.5 touch-manipulation active:scale-[0.94] transition-all select-none min-w-0',
+          isActive ? 'text-indigo-600' : 'text-[#6B7280] hover:text-[#1A1A2E]'
+        )}
+      >
+        <div
+          className={cn(
+            'p-1.5 rounded-xl transition-all duration-150',
+            isActive ? 'bg-indigo-50 text-indigo-600 shadow-xs' : 'text-[#6B7280]'
+          )}
+        >
+          <Icon className="size-5 shrink-0" />
+        </div>
+        <span
+          className={cn(
+            'text-[10px] tracking-tight leading-none mt-0.5 text-center truncate max-w-full px-0.5',
+            isActive ? 'font-bold text-indigo-600' : 'font-medium'
+          )}
+        >
+          {item.shortLabel}
+        </span>
+      </NavLink>
+    );
+  };
+
+  const renderCenterButton = () => (
+    <NavLink
+      to="/pesanan/baru"
+      aria-label="Buat Tiket Pesanan Baru"
+      className="flex flex-col items-center justify-center -mt-5 touch-manipulation active:scale-[0.92] transition-transform shrink-0 px-1 group"
+    >
+      <div
+        className={cn(
+          'size-12 rounded-2xl flex items-center justify-center text-white shadow-lg transition-all duration-200',
+          isCreateActive
+            ? 'bg-indigo-700 shadow-indigo-400/50 ring-4 ring-indigo-100 scale-105'
+            : 'bg-indigo-600 shadow-indigo-300 hover:bg-indigo-700 hover:shadow-indigo-400/40'
+        )}
+      >
+        <PlusCircle className="size-6 text-white stroke-[2.2]" />
+      </div>
+      <span
+        className={cn(
+          'text-[10px] mt-1 font-bold tracking-tight',
+          isCreateActive ? 'text-indigo-600' : 'text-[#4B5563]'
+        )}
+      >
+        Buat Baru
+      </span>
+    </NavLink>
   );
 
   return (
@@ -68,7 +170,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
           {/* Navigation Links */}
           <nav className="flex flex-col gap-1">
-            {filteredNavItems.map((item) => {
+            {desktopFilteredItems.map((item) => {
               const Icon = item.icon;
               const isActive =
                 item.to === '/'
@@ -135,16 +237,33 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
           </div>
         </div>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleLogout}
-          className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 px-2.5 text-xs rounded-lg gap-1.5 font-medium touch-manipulation"
-          title="Keluar dari sesi"
-        >
-          <LogOut className="size-3.5" />
-          <span className="text-[11px]">Keluar</span>
-        </Button>
+        <div className="flex items-center gap-2">
+          {user?.level === 'Admin' && (
+            <NavLink
+              to="/petugas"
+              className={cn(
+                'flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all touch-manipulation',
+                location.pathname.startsWith('/petugas')
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200/60'
+              )}
+            >
+              <ShieldCheck className="size-3.5 shrink-0" />
+              <span className="text-[11px]">Petugas</span>
+            </NavLink>
+          )}
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 px-2.5 text-xs rounded-lg gap-1.5 font-medium touch-manipulation"
+            title="Keluar dari sesi"
+          >
+            <LogOut className="size-3.5" />
+            <span className="text-[11px]">Keluar</span>
+          </Button>
+        </div>
       </header>
 
       {/* Main Content Area (diberi pb-24 pada mobile agar tidak tertutup Bottom Bar) */}
@@ -152,77 +271,26 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
         {children}
       </main>
 
-      {/* Mobile Bottom Navigation Bar (Thumb-Friendly, print:hidden) */}
+      {/* Mobile Bottom Navigation Bar (Symmetrical Centered, print:hidden) */}
       <nav
         aria-label="Navigasi Bawah Ponsel"
         className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-[#E4E7F2] pb-safe shadow-lg shadow-black/5"
       >
-        <div className="flex items-center justify-around h-16 px-1 max-w-md mx-auto">
-          {filteredNavItems.map((item) => {
-            const Icon = item.icon;
-            const isActive =
-              item.to === '/'
-                ? location.pathname === '/' || location.pathname === '/pesanan'
-                : location.pathname.startsWith(item.to);
+        <div className="flex items-center justify-between h-16 px-1 max-w-lg mx-auto relative">
+          {/* Left Flank */}
+          <div className="flex-1 flex items-center justify-around h-full">
+            {mobileSlices.left.map(renderRegularNavItem)}
+          </div>
 
-            // Tombol Khusus "Buat Baru" jika di tengah
-            if (item.isAction) {
-              return (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  className="flex flex-col items-center justify-center -mt-4 touch-manipulation active:scale-[0.92] transition-transform"
-                >
-                  <div
-                    className={cn(
-                      'size-12 rounded-2xl flex items-center justify-center text-white shadow-md transition-colors',
-                      isActive
-                        ? 'bg-indigo-700 shadow-indigo-300 ring-4 ring-white'
-                        : 'bg-indigo-600 shadow-indigo-200'
-                    )}
-                  >
-                    <Icon className="size-6 text-white" />
-                  </div>
-                  <span
-                    className={cn(
-                      'text-[10px] mt-1 font-semibold tracking-tight',
-                      isActive ? 'text-indigo-600' : 'text-[#6B7280]'
-                    )}
-                  >
-                    {item.shortLabel}
-                  </span>
-                </NavLink>
-              );
-            }
+          {/* Center Action (Buat Baru) - Terkunci 50% Presisi di Tengah */}
+          <div className="shrink-0 flex items-center justify-center h-full px-1">
+            {renderCenterButton()}
+          </div>
 
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={cn(
-                  'flex flex-col items-center justify-center flex-1 h-full py-1 px-1 touch-manipulation active:scale-[0.95] transition-all select-none',
-                  isActive ? 'text-indigo-600' : 'text-[#6B7280] hover:text-[#1A1A2E]'
-                )}
-              >
-                <div
-                  className={cn(
-                    'p-1 rounded-xl transition-colors',
-                    isActive ? 'bg-indigo-50 text-indigo-600' : 'text-[#6B7280]'
-                  )}
-                >
-                  <Icon className="size-5 shrink-0" />
-                </div>
-                <span
-                  className={cn(
-                    'text-[10px] tracking-tight leading-none mt-0.5',
-                    isActive ? 'font-bold text-indigo-600' : 'font-medium'
-                  )}
-                >
-                  {item.shortLabel}
-                </span>
-              </NavLink>
-            );
-          })}
+          {/* Right Flank */}
+          <div className="flex-1 flex items-center justify-around h-full">
+            {mobileSlices.right.map(renderRegularNavItem)}
+          </div>
         </div>
       </nav>
     </div>
