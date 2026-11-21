@@ -12,6 +12,12 @@ import { authMiddleware, requireRole } from '../middleware/auth.js';
 
 export const layananRoute = new Hono();
 
+// Endpoint publik untuk landing page (daftar harga layanan resmi)
+layananRoute.get('/publik', async (c) => {
+  const data = (await db.select().from(LYN).orderBy(asc(LYN.hrg_kg))) as Layanan[];
+  return c.json({ data });
+});
+
 // Semua yang login bisa melihat daftar layanan
 layananRoute.get('/', authMiddleware, async (c) => {
   const data = (await db.select().from(LYN).orderBy(asc(LYN.nm_lyn))) as Layanan[];

@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import { AppShell } from './components/layout/AppShell';
 import { LoginPage } from './pages/LoginPage';
+import { LandingPage } from './pages/LandingPage';
 import { OrdersPage } from './pages/OrdersPage';
 import { CreateOrderPage } from './pages/CreateOrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
@@ -40,6 +41,26 @@ const ProtectedRoute: React.FC<{
   return <AppShell>{children}</AppShell>;
 };
 
+const HomeRoute: React.FC = () => {
+  const { user, loading } = useAuth();
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F5F6FA] text-xs text-muted-foreground">
+        <Loader2 className="mr-2 size-5 animate-spin text-indigo-600" />
+        Memeriksa sesi login...
+      </div>
+    );
+  }
+  if (!user) {
+    return <LandingPage />;
+  }
+  return (
+    <AppShell>
+      <OrdersPage />
+    </AppShell>
+  );
+};
+
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
@@ -47,11 +68,13 @@ export const App: React.FC = () => {
         <Toaster position="top-right" richColors closeButton />
         <Routes>
           {/* Rute Publik */}
+          <Route path="/" element={<HomeRoute />} />
+          <Route path="/landing" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
 
           {/* Rute Terproteksi AppShell */}
           <Route
-            path="/"
+            path="/pesanan"
             element={
               <ProtectedRoute>
                 <OrdersPage />

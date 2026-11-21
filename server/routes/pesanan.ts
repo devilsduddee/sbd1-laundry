@@ -67,6 +67,65 @@ pesananRoute.get('/', authMiddleware, async (c) => {
   return c.json({ data });
 });
 
+// GET /api/pesanan/lacak/:id (Pelacakan Publik Status Cucian untuk Pelanggan)
+pesananRoute.get('/lacak/:id', async (c) => {
+  const id_psn = c.req.param('id');
+  const psnRows = await db
+    .select({
+      id_psn: PSN.id_psn,
+      tgl_msk: PSN.tgl_msk,
+      est_sls: PSN.est_sls,
+      tot_hrg: PSN.tot_hrg,
+      sts_psn: PSN.sts_psn,
+      nm_plgn: PLGN.nm_plgn,
+    })
+    .from(PSN)
+    .innerJoin(PLGN, eq(PSN.id_plgn, PLGN.id_plgn))
+    .where(eq(PSN.id_psn, id_psn))
+    .limit(1);
+
+  if (psnRows.length === 0) {
+    return c.json({ error: 'Tiket pesanan tidak ditemukan. Periksa kembali ID tiket Anda.' }, 404);
+  }
+
+  const p = psnRows[0];
+  const items = await db
+    .select({
+      nm_lyn: LYN.nm_lyn,
+      brt_kg: DTL_PSN.brt_kg,
+      hrg_trans: DTL_PSN.hrg_trans,
+    })
+    .from(DTL_PSN)
+    .innerJoin(LYN, eq(DTL_PSN.id_lyn, LYN.id_lyn))
+    .where(eq(DTL_PSN.id_psn, id_psn));
+
+  const bayar = await db
+    .select({ sts_byr: BYR.sts_byr, met_byr: BYR.met_byr })
+    .from(BYR)
+    .where(eq(BYR.id_psn, id_psn))
+    .limit(1);
+
+  const words = p.nm_plgn.trim().split(' ');
+  const maskedName = words.length > 1
+    ? `${words[0]} ${words[1][0]}***`
+    : `${p.nm_plgn.slice(0, 3)}***`;
+
+  return c.json({
+    id_psn: p.id_psn,
+    nm_plgn: maskedName,
+    tgl_msk: p.tgl_msk,
+    est_sls: p.est_sls,
+    tot_hrg: Number(p.tot_hrg),
+    sts_psn: p.sts_psn,
+    sts_byr: bayar.length > 0 ? bayar[0].sts_byr : 'Belum Lunas',
+    items: items.map((it) => ({
+      nm_lyn: it.nm_lyn,
+      brt_kg: Number(it.brt_kg),
+      hrg_trans: Number(it.hrg_trans),
+    })),
+  });
+});
+
 // GET /api/pesanan/:id (Detail Tiket Pesanan Output 3 & 4)
 pesananRoute.get('/:id', authMiddleware, async (c) => {
   const id_psn = c.req.param('id');

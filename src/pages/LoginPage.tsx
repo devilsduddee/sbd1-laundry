@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Lock, User, Loader2 } from 'lucide-react';
+import { Lock, User, Loader2 } from 'lucide-react';
+import { QwashLogo } from '@/components/laundry/QwashLogo';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -45,8 +46,8 @@ export const LoginPage: React.FC = () => {
       <Card className="w-full max-w-md shadow-lg border-[#E4E7F2] rounded-2xl overflow-hidden">
         {/* Header Biru Gelap Aksen Qwash */}
         <div className="bg-[#1E1B4B] p-6 text-white text-center">
-          <div className="inline-flex size-12 rounded-2xl bg-indigo-600 items-center justify-center mb-3 shadow-md">
-            <Sparkles className="size-6 text-white" />
+          <div className="inline-flex size-14 rounded-2xl bg-indigo-600 items-center justify-center mb-3 shadow-md">
+            <QwashLogo variant="symbol" size="md" className="text-white" />
           </div>
           <h2 className="text-xl font-bold tracking-tight">Qwash Laundry</h2>
           <p className="text-xs text-indigo-200 mt-1">

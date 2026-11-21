@@ -11,6 +11,7 @@ import {
   LogOut,
   Menu,
 } from 'lucide-react';
+import { QwashLogo } from '@/components/laundry/QwashLogo';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -49,8 +50,8 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       <div className="flex flex-col gap-6">
         {/* Brand Header */}
         <div className="flex items-center gap-3 px-2 py-1">
-          <div className="size-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200">
-            <Sparkles className="size-5" />
+          <div className="size-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200 shrink-0">
+            <QwashLogo variant="symbol" size="sm" className="text-white" />
           </div>
           <div>
             <h1 className="font-bold text-base text-[#1A1A2E] leading-tight tracking-tight">
