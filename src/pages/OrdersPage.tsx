@@ -35,7 +35,7 @@ const STATUS_TABS = [
 export const OrdersPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const canCreateOrder = Boolean(user);
+  const canCreateOrder = user?.level === 'Admin' || user?.level === 'Kasir';
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [orders, setOrders] = useState<PesananSummary[]>([]);

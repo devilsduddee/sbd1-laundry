@@ -25,8 +25,8 @@ interface NavItem {
 
 const DESKTOP_NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
-  { to: '/pesanan/baru', label: 'Buat Pesanan', shortLabel: 'Buat Baru', icon: PlusCircle },
-  { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users },
+  { to: '/pesanan/baru', label: 'Buat Pesanan', shortLabel: 'Buat Baru', icon: PlusCircle, allowedRoles: ['Admin', 'Kasir'] },
+  { to: '/pelanggan', label: 'Data Pelanggan', shortLabel: 'Pelanggan', icon: Users, allowedRoles: ['Admin', 'Kasir'] },
   { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
   { to: '/laporan', label: 'Laporan Transaksi', shortLabel: 'Laporan', icon: BarChart3, allowedRoles: ['Admin'] },
   { to: '/petugas', label: 'Kelola Petugas', shortLabel: 'Petugas', icon: ShieldCheck, allowedRoles: ['Admin'] },
@@ -53,10 +53,9 @@ const getMobileNavItems = (role?: LevelPtgs): NavItem[] => {
     ];
   }
 
-  // Operasional
+  // Operasional: Khusus Pantau Cucian & Katalog Layanan (Tanpa Akses Pembuatan Tiket)
   return [
     { to: '/', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
-    { to: '/pesanan/baru', label: 'Buat Pesanan', shortLabel: 'Buat Baru', icon: PlusCircle },
     { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
   ];
 };
@@ -208,7 +207,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             'grid items-center h-16 px-1 max-w-md mx-auto',
             user?.level === 'Admin' && 'grid-cols-6',
             user?.level === 'Kasir' && 'grid-cols-4',
-            user?.level === 'Operasional' && 'grid-cols-3',
+            user?.level === 'Operasional' && 'grid-cols-2',
             !user && 'grid-cols-2'
           )}
         >
