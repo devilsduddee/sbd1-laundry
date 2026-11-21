@@ -12,8 +12,12 @@ import { ServicesPage } from './pages/ServicesPage';
 import { StaffPage } from './pages/StaffPage';
 import { ReportPage } from './pages/ReportPage';
 import { Loader2 } from 'lucide-react';
+import type { LevelPtgs } from '@shared/schemas';
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const ProtectedRoute: React.FC<{
+  children: React.ReactNode;
+  allowedRoles?: LevelPtgs[];
+}> = ({ children, allowedRoles }) => {
   const { user, loading } = useAuth();
 
   if (loading) {
@@ -27,6 +31,10 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
   if (!user) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(user.level)) {
+    return <Navigate to="/" replace />;
   }
 
   return <AppShell>{children}</AppShell>;
@@ -53,7 +61,7 @@ export const App: React.FC = () => {
           <Route
             path="/pesanan/baru"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={['Admin', 'Kasir']}>
                 <CreateOrderPage />
               </ProtectedRoute>
             }
@@ -69,7 +77,7 @@ export const App: React.FC = () => {
           <Route
             path="/pelanggan"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={['Admin', 'Kasir']}>
                 <CustomersPage />
               </ProtectedRoute>
             }
@@ -85,7 +93,7 @@ export const App: React.FC = () => {
           <Route
             path="/petugas"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={['Admin']}>
                 <StaffPage />
               </ProtectedRoute>
             }
@@ -93,7 +101,7 @@ export const App: React.FC = () => {
           <Route
             path="/laporan"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={['Admin']}>
                 <ReportPage />
               </ProtectedRoute>
             }

@@ -15,21 +15,22 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import type { LevelPtgs } from '@shared/schemas';
 
 interface NavItem {
   to: string;
   label: string;
   icon: React.ElementType;
-  adminOnly?: boolean;
+  allowedRoles?: LevelPtgs[];
 }
 
 const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'Daftar Pesanan', icon: ClipboardList },
-  { to: '/pesanan/baru', label: 'Buat Pesanan', icon: PlusCircle },
-  { to: '/pelanggan', label: 'Data Pelanggan', icon: Users },
+  { to: '/pesanan/baru', label: 'Buat Pesanan', icon: PlusCircle, allowedRoles: ['Admin', 'Kasir'] },
+  { to: '/pelanggan', label: 'Data Pelanggan', icon: Users, allowedRoles: ['Admin', 'Kasir'] },
   { to: '/layanan', label: 'Data Layanan', icon: Shirt },
-  { to: '/petugas', label: 'Kelola Petugas', icon: ShieldCheck, adminOnly: true },
-  { to: '/laporan', label: 'Laporan Transaksi', icon: BarChart3, adminOnly: true },
+  { to: '/petugas', label: 'Kelola Petugas', icon: ShieldCheck, allowedRoles: ['Admin'] },
+  { to: '/laporan', label: 'Laporan Transaksi', icon: BarChart3, allowedRoles: ['Admin'] },
 ];
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -61,7 +62,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
         {/* Navigation Links */}
         <nav className="flex flex-col gap-1">
-          {NAV_ITEMS.filter((item) => !item.adminOnly || user?.level === 'Admin').map(
+          {NAV_ITEMS.filter((item) => !item.allowedRoles || (user && item.allowedRoles.includes(user.level))).map(
             (item) => {
               const Icon = item.icon;
               const isActive =

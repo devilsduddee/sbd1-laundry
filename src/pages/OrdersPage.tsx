@@ -18,6 +18,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { StatusBadge } from '@/components/laundry/StatusBadge';
+import { useAuth } from '@/hooks/useAuth';
 import { api } from '@/lib/api';
 import { formatRupiah, formatDateTime } from '@/lib/format';
 import type { PesananSummary, StsPsn } from '@shared/schemas';
@@ -33,6 +34,8 @@ const STATUS_TABS = [
 
 export const OrdersPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const canCreateOrder = user?.level === 'Admin' || user?.level === 'Kasir';
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [orders, setOrders] = useState<PesananSummary[]>([]);
@@ -98,13 +101,15 @@ export const OrdersPage: React.FC = () => {
             Pantau dan kelola seluruh antrean pengerjaan cucian pelanggan
           </p>
         </div>
-        <Button
-          onClick={() => navigate('/pesanan/baru')}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl gap-2 shadow-sm font-semibold"
-        >
-          <PlusCircle className="size-4" />
-          Buat Tiket Baru
-        </Button>
+        {canCreateOrder && (
+          <Button
+            onClick={() => navigate('/pesanan/baru')}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl gap-2 shadow-sm font-semibold"
+          >
+            <PlusCircle className="size-4" />
+            Buat Tiket Baru
+          </Button>
+        )}
       </div>
 
       {/* KPI Cards Ringkas (Adaptasi Qwash) */}
