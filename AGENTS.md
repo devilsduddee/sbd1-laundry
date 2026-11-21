@@ -11,8 +11,8 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
   1. `docs/04-prd.md`: Functional requirements (`FR-01` s.d. `FR-08`) & batasan scope.
   2. `docs/05-design.md`: Visual theme *Qwash Hygienic*, palet warna, tipografi, dan pemetaan `shadcn/ui`.
   3. `docs/06-spec.md`: Use case, alur proses, kontrak API Hono, edge cases, dan arsitektur Vercel.
-  4. `docs/07-vibe-rules.md` & `schema.sql`: Guardrails & skema database Turso.
-- **ATURAN KERAS DATABASE PROPOSAL:** Nama tabel (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) dan nama seluruh kolom **TIDAK BOLEH diubah, diganti bahasa Inggris, atau ditambah kolom baru** di luar `schema.sql`:
+  4. `docs/07-vibe-rules.md` & `server/db/schema.sql`: Guardrails & skema database Turso.
+- **ATURAN KERAS DATABASE PROPOSAL:** Nama tabel (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) dan nama seluruh kolom **TIDAK BOLEH diubah, diganti bahasa Inggris, atau ditambah kolom baru** di luar `server/db/schema.sql`:
   - `PLGN`: `id_plgn`, `nm_plgn`, `no_hp`, `alamat`
   - `PTGS`: `id_ptgs`, `nm_ptgs`, `usernm`, `passwd`, `level`
   - `LYN`: `id_lyn`, `nm_lyn`, `hrg_kg`, `est_hari`
