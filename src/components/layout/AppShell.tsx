@@ -77,7 +77,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const mobileNavItems = getMobileNavItems(user?.level);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#020617] flex flex-col md:flex-row font-sans">
+    <div className="min-h-[100dvh] bg-[#F8FAFC] text-[#020617] flex flex-col md:flex-row font-sans">
       {/* Desktop Sidebar (print:hidden) */}
       <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#E2E8F0] p-5 sticky top-0 h-screen shrink-0 justify-between">
         <div className="flex flex-col gap-6">
