@@ -9,7 +9,7 @@ import {
   EyeOff,
   ShieldCheck,
   AlertCircle,
-  Sparkles,
+  Terminal,
 } from 'lucide-react';
 import { QwashLogo } from '@/components/laundry/QwashLogo';
 import { useAuth } from '@/hooks/useAuth';
@@ -99,89 +99,83 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F6FA] text-[#1A1A2E] flex flex-col justify-center overflow-x-clip select-none font-sans">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#020617] flex flex-col justify-center overflow-x-clip font-sans">
       <div className="w-full min-h-screen grid grid-cols-1 lg:grid-cols-12 bg-white">
-        {/* Kolom Kiri: Brand Hero & Live System Preview (Khusus Desktop & Tablet Lebar) */}
-        <div className="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-[#1E1B4B] text-white p-10 xl:p-16 flex-col justify-between relative overflow-hidden">
-          {/* Subtle Geometric Background Waves */}
-          <div className="absolute -top-24 -left-24 size-96 rounded-full bg-indigo-600/15 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 size-96 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
-
+        {/* Kolom Kiri: Swiss Slate Navy Brand & Spec Summary */}
+        <div className="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-[#0F172A] text-white p-10 xl:p-16 flex-col justify-between relative">
           {/* Top Brand Logo */}
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-3">
-              <div className="size-11 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-950/60">
-                <QwashLogo variant="symbol" size="sm" className="text-white" />
-              </div>
-              <div>
-                <span className="font-extrabold text-lg tracking-tight block text-white leading-tight">
-                  Qwash Laundry
-                </span>
-                <span className="text-indigo-300 text-xs tracking-wider uppercase font-semibold">
-                  Hygienic Care Portal
-                </span>
-              </div>
+          <div className="flex items-center gap-3">
+            <div className="size-10 rounded-md bg-[#0369A1] flex items-center justify-center text-white shrink-0">
+              <QwashLogo variant="symbol" size="sm" className="text-white" />
+            </div>
+            <div>
+              <span className="font-heading font-bold text-lg tracking-tight block text-white leading-tight">
+                Qwash Laundry
+              </span>
+              <span className="font-mono text-slate-400 text-xs tracking-wider uppercase">
+                Operational POS Portal
+              </span>
             </div>
           </div>
 
-          {/* Middle Value Proposition & Mockup Card */}
-          <div className="relative z-10 space-y-8 max-w-lg my-auto py-8">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-900/60 border border-indigo-700/50 text-xs font-semibold text-indigo-200">
-                <Sparkles className="size-3.5 text-cyan-400" />
-                <span>Sistem Pengelolaan Terintegrasi</span>
+          {/* Middle Value Proposition & Technical Spec Box */}
+          <div className="space-y-8 max-w-lg my-auto py-8">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-slate-800 border border-slate-700 text-xs font-mono text-sky-300">
+                <Terminal className="size-3.5 text-[#38BDF8]" aria-hidden="true" />
+                <span>SISTEM PENGELOLAAN BASIS DATA LAUNDRY</span>
               </div>
-              <h1 className="text-3xl xl:text-4xl font-extrabold tracking-tight leading-tight text-white">
-                Operasional Laundry Cepat, Terdata, dan Transparan
+              <h1 className="font-heading text-3xl xl:text-4xl font-bold tracking-tight leading-tight text-white">
+                Operasional Cepat, Terdata, dan Presisi.
               </h1>
-              <p className="text-sm text-indigo-200/80 leading-relaxed">
-                Kendali penuh siklus cucian mulai dari penerimaan kasir, penimbangan berat kiloan akurat, pelacakan proses cuci-setrika, hingga serah terima lunas.
+              <p className="text-sm text-slate-300 leading-relaxed">
+                Kendali penuh siklus cucian mulai dari penerimaan kasir, penimbangan kiloan akurat, pelacakan proses cuci-setrika, hingga serah terima lunas.
               </p>
             </div>
 
-            {/* Live System Preview Card (Design Taste Standout Moment) */}
-            <div className="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm space-y-4 shadow-xl shadow-black/20">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
+            {/* Technical Matrix Card (Swiss Grid Style) */}
+            <div className="p-5 rounded-lg bg-slate-900 border border-slate-800 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-xs">
                 <div className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="font-mono text-indigo-200 text-[11px]">Sesi Operasional Aktif</span>
+                  <span className="size-2 rounded-full bg-emerald-400" />
+                  <span className="font-mono text-slate-300 text-xs">SYSTEM_STATUS: READY</span>
                 </div>
-                <span className="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-[10px] font-semibold uppercase tracking-wider">
+                <span className="px-2 py-0.5 rounded-sm bg-sky-950 text-sky-300 border border-sky-800 text-xs font-mono font-medium">
                   Turso libSQL
                 </span>
               </div>
 
-              <div className="grid grid-cols-3 gap-2.5 text-center">
-                <div className="p-3 rounded-xl bg-white/5 border border-white/5 space-y-1">
-                  <span className="text-[10px] text-indigo-300 block">Antrean</span>
-                  <span className="text-base font-extrabold text-white font-mono">Real-time</span>
+              <div className="grid grid-cols-3 gap-3">
+                <div className="p-3 rounded-md bg-slate-800/60 border border-slate-800 space-y-1">
+                  <span className="text-xs text-slate-400 block">Antrean</span>
+                  <span className="text-sm font-bold text-white font-mono block">Real-time</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/5 border border-white/5 space-y-1">
-                  <span className="text-[10px] text-indigo-300 block">Kalkulasi</span>
-                  <span className="text-base font-extrabold text-white font-mono">Server-side</span>
+                <div className="p-3 rounded-md bg-slate-800/60 border border-slate-800 space-y-1">
+                  <span className="text-xs text-slate-400 block">Kalkulasi</span>
+                  <span className="text-sm font-bold text-white font-mono block">Server-side</span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/5 border border-white/5 space-y-1">
-                  <span className="text-[10px] text-indigo-300 block">Keamanan</span>
-                  <span className="text-base font-extrabold text-white font-mono">Stateless JWT</span>
+                <div className="p-3 rounded-md bg-slate-800/60 border border-slate-800 space-y-1">
+                  <span className="text-xs text-slate-400 block">Keamanan</span>
+                  <span className="text-sm font-bold text-white font-mono block">Stateless JWT</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-xs text-indigo-300/80 pt-1">
-                <ShieldCheck className="size-4 text-emerald-400 shrink-0" />
+              <div className="flex items-center gap-2 text-xs text-slate-300 pt-1">
+                <ShieldCheck className="size-4 text-emerald-400 shrink-0" aria-hidden="true" />
                 <span>3 Peran Terpisah: Kasir, Tim Operasional Cuci, dan Administrator</span>
               </div>
             </div>
           </div>
 
           {/* Bottom Academic Credits */}
-          <div className="relative z-10 pt-4 border-t border-white/10 flex justify-between items-center text-[11px] text-indigo-300/60 font-mono">
+          <div className="pt-4 border-t border-slate-800 flex justify-between items-center text-xs text-slate-400 font-mono">
             <span>Tugas Besar Sistem Basis Data</span>
             <span>Kelas 3IA01</span>
           </div>
         </div>
 
         {/* Kolom Kanan: Form Autentikasi Staf */}
-        <div className="col-span-1 lg:col-span-6 xl:col-span-5 p-6 sm:p-10 xl:p-14 flex flex-col justify-between max-w-md mx-auto w-full pt-safe pb-safe">
+        <div className="col-span-1 lg:col-span-6 xl:col-span-5 p-6 sm:p-10 xl:p-14 flex flex-col justify-between max-w-md mx-auto w-full pt-safe pb-safe bg-white">
           {/* Header Bar dengan Tombol Kembali ke Landing Page */}
           <div className="flex items-center justify-between">
             <Button
@@ -189,31 +183,34 @@ export const LoginPage: React.FC = () => {
               variant="ghost"
               size="sm"
               onClick={() => navigate('/')}
-              className="rounded-xl text-xs gap-1.5 text-[#6B7280] hover:text-indigo-600 hover:bg-[#F5F6FA] h-9 font-medium px-2.5 -ml-2.5 touch-manipulation"
+              className="rounded-md text-xs gap-1.5 text-[#475569] hover:text-[#0F172A] hover:bg-[#E8ECF1] h-9 font-medium px-2.5 -ml-2.5 touch-manipulation"
             >
-              <ArrowLeft className="size-3.5" />
+              <ArrowLeft className="size-3.5" aria-hidden="true" />
               <span>Beranda Publik</span>
             </Button>
 
-            <span className="text-[11px] font-mono font-medium text-[#9CA3AF]">
-              Qwash v1.0
+            <span className="text-xs font-mono font-medium text-[#475569]">
+              Qwash v2.0
             </span>
           </div>
 
           {/* Form Container */}
           <div className="my-auto py-8 space-y-6">
             <div className="space-y-1.5">
-              <h2 className="text-2xl font-extrabold text-[#1A1A2E] tracking-tight">
+              <h2 className="font-heading text-2xl font-bold text-[#0F172A] tracking-tight">
                 Masuk ke Portal Petugas
               </h2>
-              <p className="text-xs text-[#6B7280]">
+              <p className="text-xs text-[#475569]">
                 Masukkan kredensial akun staf untuk memulai pengerjaan
               </p>
             </div>
 
             {error && (
-              <div className="p-3.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-medium flex items-center gap-2.5 animate-in fade-in duration-200">
-                <AlertCircle className="size-4 shrink-0 text-red-600" />
+              <div
+                role="alert"
+                className="p-3.5 bg-[#FEE2E2] border border-[#FECACA] text-[#B91C1C] text-xs rounded-md font-medium flex items-center gap-2.5"
+              >
+                <AlertCircle className="size-4 shrink-0 text-[#DC2626]" aria-hidden="true" />
                 <span>{error}</span>
               </div>
             )}
@@ -221,11 +218,14 @@ export const LoginPage: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Input Username */}
               <div className="space-y-1.5">
-                <Label htmlFor="usernm" className="text-xs font-semibold text-[#1A1A2E]">
+                <Label htmlFor="usernm" className="text-xs font-semibold text-[#020617]">
                   Username Petugas
                 </Label>
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#9CA3AF]" />
+                  <User
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
+                    aria-hidden="true"
+                  />
                   <Input
                     id="usernm"
                     type="text"
@@ -235,7 +235,7 @@ export const LoginPage: React.FC = () => {
                       setUsernm(e.target.value);
                       setActiveRole(null);
                     }}
-                    className="pl-10 h-11 rounded-xl border-[#E4E7F2] focus-visible:ring-indigo-600 text-xs sm:text-sm font-medium"
+                    className="pl-10 h-11 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-sm font-medium text-[#020617]"
                     autoComplete="username"
                     autoCapitalize="none"
                     autoCorrect="off"
@@ -248,11 +248,14 @@ export const LoginPage: React.FC = () => {
 
               {/* Input Password */}
               <div className="space-y-1.5">
-                <Label htmlFor="passwd" className="text-xs font-semibold text-[#1A1A2E]">
+                <Label htmlFor="passwd" className="text-xs font-semibold text-[#020617]">
                   Kata Sandi
                 </Label>
                 <div className="relative">
-                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#9CA3AF]" />
+                  <Lock
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
+                    aria-hidden="true"
+                  />
                   <Input
                     id="passwd"
                     type={showPassword ? 'text' : 'password'}
@@ -262,7 +265,7 @@ export const LoginPage: React.FC = () => {
                       setPasswd(e.target.value);
                       setActiveRole(null);
                     }}
-                    className="pl-10 pr-10 h-11 rounded-xl border-[#E4E7F2] focus-visible:ring-indigo-600 text-xs sm:text-sm font-medium"
+                    className="pl-10 pr-10 h-11 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-sm font-medium text-[#020617]"
                     autoComplete="current-password"
                     disabled={loading}
                     required
@@ -270,14 +273,13 @@ export const LoginPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF] hover:text-[#4B5563] p-1 rounded-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-indigo-600"
-                    tabIndex={-1}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#475569] hover:text-[#0F172A] p-1 rounded-sm"
                     aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
                   >
                     {showPassword ? (
-                      <EyeOff className="size-4" />
+                      <EyeOff className="size-4" aria-hidden="true" />
                     ) : (
-                      <Eye className="size-4" />
+                      <Eye className="size-4" aria-hidden="true" />
                     )}
                   </button>
                 </div>
@@ -285,9 +287,9 @@ export const LoginPage: React.FC = () => {
 
               {/* Akun Demo Cepat (Quick Login Tabs) */}
               <div className="pt-2 space-y-2">
-                <div className="flex justify-between items-center text-[11px]">
-                  <span className="font-semibold text-[#4B5563]">Pilih Akun Demo Cepat:</span>
-                  <span className="text-[#9CA3AF] text-[10px]">1-klik langsung terisi</span>
+                <div className="flex justify-between items-center text-xs">
+                  <span className="font-semibold text-[#334155]">Pilih Akun Demo Cepat:</span>
+                  <span className="text-[#475569]">1-klik langsung terisi</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   {DEMO_ACCOUNTS.map((acc) => {
@@ -297,16 +299,16 @@ export const LoginPage: React.FC = () => {
                         key={acc.role}
                         type="button"
                         onClick={() => handleSelectDemo(acc)}
-                        className={`p-2.5 rounded-xl border text-left flex flex-col justify-between transition-all touch-manipulation active:scale-[0.97] cursor-pointer ${
+                        className={`p-2.5 rounded-md border text-left flex flex-col justify-between transition-colors touch-manipulation active:scale-[0.97] cursor-pointer ${
                           isSelected
-                            ? 'border-indigo-600 bg-indigo-50/70 text-indigo-900 ring-1 ring-indigo-600'
-                            : 'border-[#E4E7F2] bg-[#F8FAFC] text-[#4B5563] hover:border-indigo-300 hover:bg-white'
+                            ? 'border-[#0F172A] bg-[#F1F5F9] text-[#0F172A] ring-1 ring-[#0F172A]'
+                            : 'border-[#E2E8F0] bg-[#F8FAFC] text-[#334155] hover:border-[#0369A1] hover:bg-white'
                         }`}
                       >
                         <span className="text-xs font-bold leading-tight truncate">
                           {acc.title}
                         </span>
-                        <span className="text-[10px] font-mono text-[#9CA3AF] mt-1">
+                        <span className="text-xs font-mono text-[#475569] mt-1">
                           @{acc.user}
                         </span>
                       </button>
@@ -315,16 +317,16 @@ export const LoginPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Tombol Submit Utama */}
+              {/* Tombol Submit Utama (Ocean Action Blue #0369A1) */}
               <div className="pt-3">
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl h-11 text-xs sm:text-sm font-semibold shadow-md shadow-indigo-100 touch-manipulation active:scale-[0.98]"
+                  className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md h-11 text-sm font-semibold touch-manipulation active:scale-[0.98]"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="mr-2 size-4 animate-spin" />
+                      <Loader2 className="mr-2 size-4 animate-spin" aria-hidden="true" />
                       Memverifikasi Sesi...
                     </>
                   ) : (
@@ -336,8 +338,8 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* Footer Bawah */}
-          <div className="text-center text-[11px] text-[#9CA3AF] pt-4 border-t border-[#E4E7F2]">
-            <span>&copy; 2024 Qwash Laundry &amp; Hygienic Care. Hak cipta dilindungi.</span>
+          <div className="text-center text-xs text-[#475569] pt-4 border-t border-[#E2E8F0]">
+            <span>&copy; 2026 Qwash Laundry &amp; Hygienic Care. Sistem Basis Data.</span>
           </div>
         </div>
       </div>

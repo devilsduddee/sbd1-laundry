@@ -1,166 +1,215 @@
 # 05 - Design System: Sistem Pengelolaan Laundry
 
-- **Versi:** 1.1
-- **Tanggal:** 2026-11-20
+- **Versi:** 2.0
+- **Tanggal:** 2026-11-26
 - **Status:** Approved
-- **Sumber input:** `04-prd.md` v1.1 (Approved), referensi visual Dribbble Shot #27031424 (*Qwash*), dan permintaan GSAP animation user.
-- **Skill digunakan:** `design-md` *(diadaptasi dari tangkapan layar referensi Dribbble karena bukan proyek Stitch MCP)*
+- **Sumber input:** `04-prd.md` v1.1 (Approved), riset `ui-ux-pro-max` (`--design-system`, `--tokens css`, `--domain ux`, `--domain gsap`, `--stack shadcn`, `--stack react`), dan keputusan Lead PM memilih tema **Minimalism & Swiss Style**.
+- **Skill digunakan:** `ui-ux-pro-max`
 
 ## TL;DR
 
-Design system ini mengadaptasi nuansa **bersih, higienis, dan terstruktur** dari referensi *Qwash*: kanvas abu-abu es (`#F5F6FA`), kartu putih bersih (`#FFFFFF`), aksen **Deep Twilight Indigo** (`#4F46E5` / `#2B285A`) untuk navigasi dan CTA utama, serta *status tracker* progres cucian bergaya pill & garis progres yang langsung terbaca sekilas.
+Design system v2.0 mengganti arah visual sebelumnya (*Qwash*) menjadi **Minimalism & Swiss Style** hasil riset `ui-ux-pro-max` yang jauh lebih tegas, berwibawa, dan optimal untuk operasional kasir/dashboard data. Palet menggunakan jangkar **Deep Slate Navy** (`#0F172A`), CTA **Ocean Blue** (`#0369A1`), kanvas dingin (`#F8FAFC`), kartu putih bersih (`#FFFFFF`), serta pasangan tipografi presisi **`Fira Code`** (heading, ID tiket, nominal angka) + **`Fira Sans`** (teks UI & form).
 
-Karena aplikasi ini adalah **web operasional internal petugas laundry** (bukan aplikasi konsumen seperti *Qwash*) dan harus tetap ringan, seluruh komponen dibangun menggunakan **`shadcn/ui` + Tailwind CSS + Lucide React**. Fitur non-PRD di referensi seperti *AI Search*, *Special Offer*, *Saved Cards*, dan gambar 3D/foto berat tidak diadopsi.
+Seluruh komponen dibangun memakai **`shadcn/ui` + Tailwind CSS + `lucide-react`** ditambah animasi **`gsap` (`@gsap/react`)** terkontrol, sambil menegakkan aturan prioritas `ui-ux-pro-max` (kontras >= 4.5:1, *preserve input* saat error submit, semantic `<Table>` dengan `overflow-x-auto`, dan *Pre-Delivery Checklist*).
 
 ---
 
-## Konteks Adaptasi Referensi
+## Konteks Perubahan Arah Desain (v1.1 → v2.0)
 
-Referensi *Qwash* dipilih karena terasa segar, rapi untuk alur layanan laundry, dan punya pola **Active Orders progress bar** serta kartu layanan dengan badge estimasi (`ETA`) yang sangat cocok untuk tiket pesanan & daftar layanan. Agar selaras dengan `04-prd.md` v1.1 dan prinsip `profile.md` bagian 9:
+Pada evaluasi ulang menggunakan alur wajib `ui-ux-pro-max`, gaya *Qwash* (v1.0–v1.1) dinilai kurang kuat dan terlalu menyerupai aplikasi konsumen mobile, sementara produk ini adalah **sistem basis data & operasional kasir/admin berbasis tabel dan tiket**. Oleh karena itu:
 
-- **Diadopsi:**
-  - Palet dasar dingin & bersih (kanvas `#F5F6FA`, kartu `#FFFFFF`, aksen indigo-violet, teks dark charcoal `#1A1A2E`).
-  - Kartu layanan ringkas berisi nama layanan (`nm_lyn`), badge estimasi hari (`est_hari`), dan harga (`hrg_kg`).
-  - **Order Status Stepper / Progress Tracker** horizontal bertahap (`Antrean` → `Sedang Dicuci` → `Sedang Disetrika` → `Siap Diambil` → `Sudah Diambil`) plus badge status pembayaran (`Lunas` vs `Belum Lunas`).
-  - Hierarki angka yang tegas untuk harga, berat (`brt_kg`), dan ID pesanan.
-- **Ditolak (Out of Scope & Efisiensi Teknis):**
-  - *QWASH AI Search*, *Quick Suggestion* chips, *Special Offer* (`Free Ironing`, `50% OFF`), *Service Bundle*, *Saved Cards* / *Delivery Address* kurir, dan *Profile Completion ring*.
-  - Aset foto/3D render mesin cuci, keranjang cucian, dan setrika (diganti ikon garis seragam dari `lucide-react` agar ringan dan cepat di-load).
-  - Tata letak *mobile-only bottom bar*: diganti menjadi **App Shell Sidebar + Topbar responsif** (optimal untuk layar desktop kasir sekaligus nyaman dibuka di tablet/HP petugas operasional).
+- **Diadopsi (Minimalism & Swiss Style):**
+  - Hierarki kontras tajam (`#0F172A` navy gelap, `#0369A1` ocean blue CTA, `#F8FAFC` kanvas, `#E2E8F0` border presisi `1px`).
+  - Tipografi teknis-presisi (`Fira Code` + `Fira Sans`) dengan `tabular-nums` agar ID tiket (`PSN-...`), berat (`brt_kg`), dan harga (`tot_hrg`) sejajar sempurna.
+  - Bentuk kartu & input lebih tegas (`8px–12px` radius) dibanding *pill* membulat besar, memberi kesan software operasional profesional (*enterprise POS*).
+  - **Order Status Stepper** dipertahankan sebagai komponen kunci pelacakan `sts_psn`, namun kini mengikuti estetika Swiss (garis presisi + badge kontras tinggi dengan ikon).
+- **Ditolak (Out of Scope):**
+  - Dekorasi consumer app (gradient header berat, sudut ultra-bulat `24px`, foto/3D render mesin cuci, AI search, promo banners).
+  - Animasi *overshoot* (`back.out`) pada tabel data padat agar tampilan tetap profesional dan cepat dibaca.
 
 ---
 
 ## 1. Visual Theme & Atmosphere
 
-Antarmuka mengusung karakter **Hygienic Clinical Modern** — bersih seperti ruang laundry yang rapi, minim dekorasi, dengan fokus pada **kecepatan baca dan akurasi input kasir**. Permukaan utama menggunakan kanvas netral sejuk (`#F5F6FA`) sehingga kartu putih (`#FFFFFF`) dan tabel data terasa terpisah jelas tanpa garis tebal atau bayangan berat.
+Antarmuka mengusung karakter **Swiss Utilitarian Precision** — bersih, terstruktur berbasis grid, tanpa noise visual, dengan kontras tinggi agar petugas kasir bisa bekerja cepat berjam-jam tanpa kelelahan mata.
 
-Warna **Deep Twilight Indigo** berperan sebagai jangkar identitas (header/sidebar aktif dan tombol CTA utama seperti *"Buat Pesanan"* atau *"Catat Pembayaran"*), sementara warna semantik lembut (mint hijau, kuning amber, biru langit, ungu violet) dipakai secara terkontrol khusus pada badge status `sts_psn` dan `sts_byr` agar petugas bisa langsung membedakan cucian yang masih di antrean, siap diambil, atau belum lunas dalam satu lirikan.
+Permukaan latar menggunakan **Cool Off-White (`#F8FAFC`)** dengan kartu putih murni (`#FFFFFF`) dan garis batas tipis (`1px solid #E2E8F0`) alih-alih bayangan tebal. Fokus pengguna diarahkan secara tegas melalui kontras antara struktur navigasi gelap/netral (`#0F172A`), tombol aksi utama biru laut (`#0369A1`), dan badge status semantik yang selalu memasangkan warna dengan label teks & ikon (*never color alone*).
 
 ---
 
-## 2. Color Palette & Roles
+## 2. Color Palette & Design Tokens (`ui-ux-pro-max`)
 
-Nilai warna diekstraksi dari referensi *Qwash* dan dipetakan langsung ke token tema **`shadcn/ui`** agar mudah dikonfigurasi di `index.css` tanpa custom CSS rumit:
+Token di bawah diekspor langsung dari `ui-ux-pro-max` (`--tokens css`) dan dipetakan ke variabel `shadcn/ui`:
 
-| Nama Deskriptif | Hex Code | Token `shadcn/ui` | Peran Fungsional |
+```css
+:root {
+  --color-primary: #0F172A;
+  --color-on-primary: #FFFFFF;
+  --color-secondary: #334155;
+  --color-on-secondary: #FFFFFF;
+  --color-accent: #0369A1;
+  --color-on-accent: #FFFFFF;
+  --color-background: #F8FAFC;
+  --color-foreground: #020617;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #020617;
+  --color-muted: #E8ECF1;
+  --color-muted-foreground: #475569;
+  --color-border: #E2E8F0;
+  --color-destructive: #DC2626;
+  --color-on-destructive: #FFFFFF;
+  --color-ring: #0F172A;
+  --font-heading: "Fira Code", monospace;
+  --font-body: "Fira Sans", sans-serif;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+}
+```
+
+| Nama Peran | Hex Code | Token `shadcn/ui` | Peran Fungsional |
 |---|---|---|---|
-| **Ice Mist Canvas** | `#F5F6FA` | `--background` | Latar belakang utama halaman agar kartu dan tabel putih terlihat kontras secara halus. |
-| **Pure Laundry White** | `#FFFFFF` | `--card` / `--popover` | Permukaan kartu ringkasan, tabel transaksi, form input pesanan, dan dialog modal. |
-| **Deep Charcoal Ink** | `#1A1A2E` | `--foreground` | Teks judul utama, angka total harga (`tot_hrg`), dan label utama. |
-| **Cool Slate Muted** | `#6B7280` | `--muted-foreground` | Teks pendukung (no HP, alamat, tanggal masuk/estimasi, label kolom sekunder). |
-| **Soft Periwinkle Surface** | `#EEF0F8` | `--muted` / `--secondary` | Permukaan elemen sekunder, baris hover tabel, latar badge netral, dan tombol sekunder. |
-| **Royal Indigo Primary** | `#4F46E5` | `--primary` | Tombol aksi utama (*Simpan Pesanan*, *Bayar Lunas*, *Serahkan Cucian*), menu sidebar aktif, dan fokus ring. |
-| **Midnight Indigo Anchor** | `#1E1B4B` | *Brand Accent (Header/Struk)* | Aksen gelap untuk header ringkasan kasir atau aksen identitas di kartu ringkas/login (adaptasi header gelap *Qwash*). |
-| **Hairline Cloud Border** | `#E4E7F2` | `--border` / `--input` | Garis tepi tipis (`1px`) pada kartu, kolom input form, dan pemisah baris tabel. |
-| **Coral Danger Red** | `#EF4444` | `--destructive` | Badge `Belum Lunas`, peringatan blokir pengambilan cucian (Prosedur 6), error validasi, dan aksi hapus. |
+| **Swiss Slate Navy** | `#0F172A` | `--primary` | Header tabel/navbar aktif, tombol utama struktural, dan focus ring (`--ring`). |
+| **Ocean Action Blue** | `#0369A1` | `--accent` / CTA | Tombol CTA konversi tinggi (*+ Buat Pesanan*, *Catat Pembayaran Lunas*, *Serahkan Cucian*), link aktif. |
+| **Deep Slate Secondary** | `#334155` | `--secondary` | Elemen pendukung struktural, sub-header, tombol sekunder gelap. |
+| **Cool Alabaster Canvas** | `#F8FAFC` | `--background` | Latar belakang utama halaman agar kartu putih terpisah tajam. |
+| **Pure White Surface** | `#FFFFFF` | `--card` / `--popover` | Kartu KPI, tabel transaksi, form tiket, modal `Dialog`, dan layout cetak struk. |
+| **Obsidian Ink** | `#020617` | `--foreground` | Teks judul utama, angka tagihan (`tot_hrg`), dan sel tabel utama (kontras > 15:1 di atas putih). |
+| **Slate Gray Muted** | `#475569` | `--muted-foreground` | Metadata sekunder (`no_hp`, `alamat`, tanggal, label kolom; kontras >= 4.5:1 di atas `#FFFFFF` & `#F8FAFC`). |
+| **Soft Slate Tint** | `#E8ECF1` | `--muted` | Latar tombol sekunder netral, badge netral, dan hover row ringan. |
+| **Hairline Slate Border** | `#E2E8F0` | `--border` / `--input` | Garis tepi `1px` presisi khas Swiss Style pada kartu, tabel, dan input form. |
+| **Crimson Alert Red** | `#DC2626` | `--destructive` | Alert blokir pengambilan sebelum lunas (Prosedur 6), error validasi form, dan aksi hapus. |
 
 ### Token Semantik Status (`sts_psn` & `sts_byr`)
 
-Khusus untuk badge status di daftar pesanan & tracker, gunakan kombinasi warna lembut dengan kontras teks tinggi (tidak boleh teks putih di atas pastel):
+Seluruh badge status wajib memenuhi rasio kontras teks >= 4.5:1 dan selalu menyertakan **teks + ikon/dot** (`color-not-only`):
 
-| Status | Latar Badge | Teks & Dot Indikator | Keterangan |
-|---|---|---|---|
-| `Antrean` | `#F3F4F6` (Soft Gray) | `#374151` | Pesanan baru masuk, menunggu dicuci. |
-| `Sedang Dicuci` | `#DBEAFE` (Sky Blue Tint) | `#1D4ED8` | Sedang dalam proses cuci. |
-| `Sedang Disetrika` | `#FEF3C7` (Warm Amber Tint) | `#B45309` | Sedang disetrika / finishing. |
-| `Siap Diambil` | `#EDE9FE` (Lavender Tint) | `#6D28D9` | Selesai produksi, siap diambil pelanggan. |
-| `Sudah Diambil` | `#DCFCE7` (Mint Green Tint) | `#15803D` | Siklus pesanan ditutup (Prosedur 6). |
-| `Lunas` (`sts_byr`) | `#DCFCE7` (Mint Green Tint) | `#15803D` | Pembayaran terverifikasi lunas. |
-| `Belum Lunas` | `#FEE2E2` (Soft Coral Tint) | `#B91C1C` | Belum ada pembayaran lunas (blokir ambil). |
-
----
-
-## 3. Typography Rules
-
-- **Font Family:** **Plus Jakarta Sans** (Google Fonts — selaras dengan karakter geometris ramah pada referensi *Qwash*) dengan fallback `Inter, system-ui, sans-serif`.
-- **Angka Tabular:** Wajib mengaktifkan `tabular-nums` pada seluruh nominal Rupiah (`tot_hrg`, `hrg_kg`, `jml_byr`), berat (`brt_kg`), tanggal, dan `id_psn` agar kolom tabel dan struk sejajar rapi.
-- **Hierarki & Skala:**
-  - **Judul Halaman (`22px–24px`, Bold 700, tracking `-0.02em`):** Contoh: *"Daftar Pesanan"*, *"Buat Tiket Baru"*, *"Laporan Transaksi"*.
-  - **Angka KPI / Total Bayar (`24px–28px`, ExtraBold 800, `tabular-nums`):** Untuk angka ringkasan dashboard, total pendapatan periode, dan total tagihan pesanan.
-  - **Judul Kartu / Section (`16px`, SemiBold 600):** Contoh: *"Rincian Cucian"*, *"Informasi Pelanggan"*.
-  - **Body & Sel Tabel (`14px`, Regular/Medium 400–500):** Nyaman dibaca berjam-jam oleh petugas kasir.
-  - **Metadata & Badge (`12px`, Medium 500–600):** Untuk status pill, `est_hari`, dan timestamp.
+| Status | Latar Badge | Teks | Border | Ikon Lucide |
+|---|---|---|---|---|
+| `Antrean` | `#F1F5F9` | `#334155` | `#CBD5E1` | `Clock` |
+| `Sedang Dicuci` | `#E0F2FE` | `#0369A1` | `#BAE6FD` | `Waves` / `Droplets` |
+| `Sedang Disetrika` | `#FEF3C7` | `#B45309` | `#FDE68A` | `Flame` / `Sparkles` |
+| `Siap Diambil` | `#EDE9FE` | `#6D28D9` | `#DDD6FE` | `PackageCheck` |
+| `Sudah Diambil` | `#DCFCE7` | `#15803D` | `#BBF7D0` | `CheckCircle2` |
+| `Lunas` (`sts_byr`) | `#DCFCE7` | `#15803D` | `#BBF7D0` | `BadgeCheck` |
+| `Belum Lunas` | `#FEE2E2` | `#B91C1C` | `#FECACA` | `AlertCircle` |
 
 ---
 
-## 4. Pemetaan Komponen ke `shadcn/ui` (Component Stylings)
+## 3. Typography Rules (`Fira Code` + `Fira Sans`)
 
-Sesuai arahan user dan `profile.md` bagian 9, seluruh UI dibangun menggunakan komponen standar **`shadcn/ui`** dengan kustomisasi ringan via token Tailwind (tanpa membuat library komponen custom dari nol):
+- **Font Pairing (dari `ui-ux-pro-max`):**
+  - **Heading, ID Tiket, & Angka Keuangan:** `Fira Code` (`400, 500, 600, 700`) — memberi kesan teknis, presisi basis data, dan angka yang langsung sejajar (`tabular-nums`).
+  - **Body, Label Form, & Sel Teks:** `Fira Sans` (`300, 400, 500, 600, 700`) — sangat jernih dan nyaman dibaca di tabel operasional maupun layar ponsel.
+- **Google Fonts Import:**
+  ```css
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap');
+  ```
+- **Hierarki & Skala (`--density 7` Dashboard Ops):**
+  - **Judul Halaman (`24px`, `Fira Code`, Bold 700, tracking `-0.02em`):** Contoh: *"Daftar Pesanan"*, *"Laporan Transaksi"*.
+  - **Angka KPI & Total Tagihan (`24px–28px`, `Fira Code`, Bold 700, `tabular-nums`):** Untuk `tot_hrg`, `jml_byr`, dan ringkasan pendapatan.
+  - **Judul Kartu / Section (`16px`, `Fira Sans` / `Fira Code`, SemiBold 600).**
+  - **Body & Sel Tabel (`14px–16px`, `Fira Sans`, Regular 400 / Medium 500, line-height `1.5`):** Di mobile, input form minimal `16px` untuk mencegah *auto-zoom* iOS.
+  - **Label & Metadata (`12px`, `Fira Sans`, Medium 500):** Tidak boleh di bawah `12px` untuk teks isi.
 
-| Kebutuhan UI | Komponen `shadcn/ui` / Library | Styling & Aturan Adaptasi *Qwash* |
+---
+
+## 4. Pemetaan Komponen ke `shadcn/ui` & Aturan Stack
+
+Seluruh komponen menggunakan library standar **`shadcn/ui`** + **`lucide-react`** + **`gsap`** tanpa merancang komponen custom dari nol:
+
+| Kebutuhan UI | Komponen `shadcn/ui` / Library | Aturan Implementasi (`ui-ux-pro-max`) |
 |---|---|---|
-| **App Shell / Navigasi** | `Sidebar` (atau layout flex + `Sheet` di mobile) | Sidebar kiri bersih dengan ikon `lucide-react`; kolaps otomatis jadi `Sheet` drawer di layar tablet/HP. |
-| **Tombol & CTA** | `Button` | `rounded-xl` (atau `rounded-full` khusus CTA utama seperti *"Catat Pembayaran"* / *"+ Pesanan Baru"*). Variant `default` (`#4F46E5`), `secondary` (`#EEF0F8`), `destructive` (`#EF4444`). |
-| **Kartu Ringkasan & Layanan** | `Card` (`CardHeader`, `CardContent`, `CardFooter`) | Sudut membulat `rounded-2xl` (`16px`), latar `#FFFFFF`, border tipis `1px solid #E4E7F2`, bayangan sangat halus (`shadow-xs`). |
-| **Tabel Data (Pesanan, Pelanggan, Laporan)** | `Table` (`@tanstack/react-table` opsional jika butuh sort/filter) | Header tabel `#F8FAFC`, padding nyaman (`py-3`), hover lembut `#F5F6FA`. |
-| **Status & ETA Pill** | `Badge` | `rounded-full`, padding ringkas, memakai skema warna semantik tabel di Bagian 2. |
-| **Form Input & Cari Pelanggan** | `Input`, `Label`, `Textarea`, `Select` (atau `Command` + `Popover` untuk Combobox cari `PLGN`/`LYN`) | `rounded-xl`, border `#E4E7F2`, focus ring `#4F46E5`. |
-| **Modal Bayar, Konfirmasi Ambil, Tambah Data** | `Dialog` (atau `AlertDialog` untuk aksi kritis/hapus) | Dipakai untuk modal pencatatan pembayaran (`BYR`) dan dialog konfirmasi serah terima / blokir belum lunas. |
-| **Filter Status & Tab Detail** | `Tabs` | Filter cepat status pesanan (`Semua`, `Antrean`, `Sedang Dicuci`, `Sedang Disetrika`, `Siap Diambil`, `Sudah Diambil`). |
-| **Notifikasi Feedback** | `Sonner` (toast) | Feedback instan setelah simpan pesanan, update status, atau pembayaran lunas. |
-| **Order Progress Tracker (Adaptasi Qwash)** | Komposisi `Badge` + utilitas Tailwind flex stepper (tanpa library chart berat) | 5 titik/step horizontal (`Antrean` → `Dicuci` → `Disetrika` → `Siap` → `Diambil`) dengan garis gradien indigo-ke-ungu pada step aktif/selesai. |
-| **Animasi & Micro-interaction** | `gsap` + `@gsap/react` (`useGSAP`) | Transisi halus kartu, stepper progres, dan perpindahan halaman yang cepat tanpa menghambat input kasir. |
-| **Ikon** | `lucide-react` | Ketebalan garis seragam (`1.75px`–`2px`). |
+| **App Shell / Navigasi** | `Sidebar` / `Sheet` + `Button` | Sidebar kiri bersih (`#0F172A` active state atau `#FFFFFF` dengan border `#E2E8F0`), kolaps jadi `Sheet` di mobile, wajib `print:hidden`. |
+| **Tombol & CTA** | `Button` | Radius tegas `rounded-md` (`8px`). Maksimal **1 Primary CTA** (`#0369A1` atau `#0F172A`) per layar/bagian; tampilkan loading spinner + `disabled` saat submit async; wajib `cursor-pointer`. |
+| **Kartu KPI & Layanan** | `Card` (`CardHeader`, `CardContent`, `CardFooter`) | Radius `rounded-lg` (`12px`), latar `#FFFFFF`, border `1px solid #E2E8F0`, tanpa shadow berat. |
+| **Tabel Data** | `Table` (`TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`) | **Wajib** pakai struktur semantic HTML `<thead>`/`<tbody>` dari `shadcn/ui` `<Table>` (dilarang mengganti tabel dengan `div grid`), dibungkus `<div className="overflow-x-auto">` agar tidak overflow di mobile. |
+| **Status & ETA Badge** | `Badge` | Radius `rounded-md` atau `rounded-full` ringkas, wajib menyertakan ikon Lucide + teks status. |
+| **Form Input & Combobox** | `Form`, `Input`, `Label`, `Select`, `Command`, `Popover` | Setiap input wajib punya `<Label htmlFor="...">` yang terlihat (dilarang *placeholder-only*); pesan error tampil tepat di bawah field terkait. |
+| **Modal Bayar & Konfirmasi** | `Dialog`, `AlertDialog` | Menyediakan rute keluar jelas (`Escape` / tombol Batal). |
+| **Filter Status** | `Tabs` | Filter status `sts_psn` (`Semua`, `Antrean`, `Sedang Dicuci`, `Sedang Disetrika`, `Siap Diambil`, `Sudah Diambil`). |
+| **Notifikasi** | `Sonner` (toast) | Feedback non-blocking setelah aksi sukses/gagal. |
+| **Order Progress Stepper** | Komposisi `Badge` + Tailwind flex tracker | Stepper presisi horizontal 5 tahap (`Antrean` → `Dicuci` → `Disetrika` → `Siap` → `Diambil`) dengan garis `#0369A1` pada progres selesai/aktif. |
+| **Animasi** | `gsap` + `@gsap/react` (`useGSAP`) | Lihat Bagian 4b di bawah. |
+| **Ikon** | `lucide-react` | Ketebalan garis seragam (`1.75px`–`2px`). Ikon dekoratif di samping teks diberi `aria-hidden="true"`; tombol ikon-only wajib `aria-label`. **Dilarang memakai emoji sebagai ikon.** |
 
 ---
 
-## 4b. Motion & Animation Guidelines (GSAP)
+## 4b. Motion & Animation Guidelines (GSAP — Standard Tier `4/10`)
 
-Agar antarmuka terasa *smooth* seperti referensi *Qwash* namun tetap cepat untuk operasional kasir harian:
+Mengacu hasil riset `--domain gsap` dan `--motion 4` dari `ui-ux-pro-max`:
 
-- **Library:** Gunakan **`gsap`** + **`@gsap/react`** (`useGSAP` hook dengan `scope` ref agar *cleanup* otomatis berjalan aman di React StrictMode).
-- **Titik Animasi yang Disarankan:**
-  1. **Stagger Entrance Kartu KPI & Layanan:** Saat halaman Dashboard/Layanan dimuat, kartu masuk halus (`opacity: 0 → 1`, `y: 12 → 0`, `duration: 0.35`, `stagger: 0.05`, `ease: "power2.out"`).
-  2. **Order Progress Stepper (`sts_psn`):** Animasi halus pada lebar garis progres (`scaleX` / `width`) dan *pulse/scale* ringan pada titik step aktif saat status berubah.
-  3. **Transisi Item Ringkasan Pesanan:** Baris item yang baru ditambahkan di `CreateOrderPage` masuk halus (`duration: 0.22`).
-- **Guardrails Operasional & Aksesibilitas:**
-  - Durasi wajib singkat (**`0.2s–0.35s`**) — **dilarang** memasang animasi panjang/delay yang memperlambat ketikan atau klik kasir.
-  - Wajib hormati preferensi OS `prefers-reduced-motion: reduce` (lewat `gsap.matchMedia()`).
-  - **Print View (`@media print`):** Elemen cetak Tiket Pesanan dan Bukti Pembayaran tidak boleh bergantung pada animasi masuk (`opacity: 0`) agar saat `window.print()` seluruh teks langsung terlihat penuh.
+- **Library:** `gsap` + `@gsap/react` (`useGSAP()` dengan `scope` ref agar tween otomatis ter-cleanup pada unmount / React StrictMode).
+- **Pola Animasi yang Dipakai:**
+  1. **Stagger Grid Kartu (`LYN` & KPI Cards):**
+     ```ts
+     gsap.from('.swiss-card-item', {
+       opacity: 0,
+       y: 12,
+       duration: 0.3,
+       stagger: { each: 0.05, from: 'start', grid: 'auto' },
+       ease: 'power2.out',
+     });
+     ```
+     *Catatan `ui-ux-pro-max`:* Gunakan `power2.out` — **dilarang** memakai `ease: 'back.out'` pada tabel data padat karena *overshoot* terlihat tidak rapi di UI informasional.
+  2. **Hover Micro-interaction Kartu Layanan (`LYN`):** Gunakan `gsap.quickTo` (durasi `200–250ms`, `power2.out`) dengan reverse tween di `mouseleave` agar hover tidak nyangkut.
+  3. **Order Progress Stepper (`sts_psn`):** Animasi halus `scaleX` / lebar garis progres (`duration: 0.3`, `power2.out`) saat status pesanan berubah (hindari animasi properti yang memicu layout thrashing berlebih).
+- **Guardrails Wajib:**
+  - Bungkus animasi dengan `gsap.matchMedia()` untuk `(prefers-reduced-motion: reduce)` agar langsung menampilkan state akhir statis bila user mengaktifkan *reduced motion*.
+  - Durasi wajib singkat (`0.2s–0.35s`) agar tidak menghambat kecepatan input kasir.
+  - **Print Safety (`@media print`):** Elemen struk/tiket yang dicetak wajib tampil penuh (`opacity: 1`) tanpa menunggu animasi GSAP.
 
 ---
 
 ## 5. Layout Principles & Pemetaan Layar
 
-- **Desktop-First Kasir + Responsif Operasional:** Di layar desktop (`>= 1024px`), konten memakai layout 2 kolom di halaman transaksi kompleks (misal kiri: form input pelanggan + tambah layanan `DTL_PSN`; kanan: ringkasan tiket & kalkulasi `tot_hrg` sticky ala checkout). Di layar tablet/mobile (`< 768px`), kolom bertumpuk vertikal dengan padding `16px` agar petugas operasional tetap nyaman menekan tombol update status cucian.
-- **Whitespace & Kepadatan:** Jarak antar-kartu `16px` (`gap-4`), jarak antar-bagian `24px` (`space-y-6`). Hindari menumpuk lebih dari 4–5 kolom penting di kartu mobile.
-- **Pemetaan Layar Inti (Sesuai `04-prd.md` v1.1):**
-  1. **Layar Login (`PTGS`):** Kartu terpusat (`max-w-sm`) di atas latar `#F5F6FA` dengan aksen header gelap *Qwash* (`#1E1B4B`), input `usernm` dan `passwd`, serta tombol penuh *"Masuk"*.
-  2. **Dashboard & Daftar Pesanan (`PSN`):**
-     - Baris atas: 4 kartu KPI ringkas (`Antrean`, `Dalam Proses`, `Siap Diambil`, `Belum Lunas`).
-     - Tab filter status (`Tabs`) + kolom cari nama/ID pesanan + tombol utama *"+ Buat Pesanan"*.
-     - Tabel/daftar pesanan dengan badge `sts_psn`, badge `sts_byr`, serta tombol aksi cepat sesuai status (update ke tahap berikutnya, bayar, atau serahkan cucian).
-  3. **Halaman Buat Pesanan Baru (Prosedur 1, 2, 3):**
-     - Kiri: Pilih/cari pelanggan `PLGN` (dengan tombol cepat *"+ Pelanggan Baru"* via `Dialog` tanpa keluar halaman) + pilih layanan `LYN` dalam bentuk grid kartu ringkas/baris item + input `brt_kg`.
-     - Kanan (Sticky Summary Card): Preview **Tiket Pesanan**, estimasi tanggal selesai (`est_sls`), rincian subtotal item, dan total harga (`tot_hrg`), plus opsi *"Simpan Pesanan (Bayar Nanti)"* atau *"Simpan & Bayar Sekarang"*.
-  4. **Halaman Detail Tiket, Pembayaran & Cetak (Output 3 & 4, Prosedur 4, 5, 6):**
-     - Atas: **Order Progress Stepper** ala *Qwash* (menunjukkan progres `sts_psn` saat ini dan tombol transisi status berikutnya).
-     - Tengah: Rincian `DTL_PSN` + kartu **Bukti Pembayaran** (`BYR`: `met_byr`, `jml_byr`, `tgl_byr`, `sts_byr`, petugas penerima).
-     - Aksi penutupan: Tombol *"Serahkan Cucian"* aktif hanya jika `sts_byr === 'Lunas'` (jika belum, tampilkan badge peringatan merah dan tombol *"Catat Pembayaran"*).
-     - Tombol *"Cetak Tiket / Struk"* (`window.print()` dengan CSS `@media print` bersih menyembunyikan sidebar).
-  5. **Halaman Master Data (`PLGN`, `LYN`, & `PTGS` — Output 1 & 2):**
-     - Halaman terpisah di sidebar untuk **Data Pelanggan** (`PLGN`), **Data Layanan** (`LYN` — ditampilkan sebagai grid kartu rapi ala *Our Services* atau tabel), dan **Kelola Petugas** (`PTGS` — khusus `level = Admin`).
-  6. **Halaman Laporan Transaksi (Output 5):**
-     - Filter rentang tanggal (`tgl_msk` / `tgl_byr` start–end), 3 kartu ringkasan (`Total Pesanan`, `Transaksi Lunas`, `Total Pendapatan`), tabel rincian transaksi periode tersebut, dan tombol opsional *Export CSV*.
+- **Breakpoint & Container (`375px`, `768px`, `1024px`, `1440px`):**
+  - Desktop (`>= 1024px`): Sidebar tetap di kiri (`240px–260px`) + area konten maksimal `max-w-7xl` dengan `gap-4` (`16px`) / `space-y-6` (`24px`), sejalan dengan `--space-md` dan `--space-lg`.
+  - Tablet & Mobile (`< 768px`): Sidebar kolaps ke `Sheet` drawer; tombol aksi minimal tinggi `44px` (`min-h-11`) untuk kenyamanan sentuh petugas operasional di area cuci, dan tidak ada *horizontal scroll* pada halaman utama (hanya wrapper `overflow-x-auto` khusus di dalam kontainer tabel).
+- **Pemetaan 6 Layar Utama (Sesuai `04-prd.md` v1.1):**
+  1. **Layar Login (`PTGS`):** Layout split atau kartu terpusat presisi di atas `#F8FAFC` dengan aksen **Swiss Slate Navy (`#0F172A`)**, label eksplisit `usernm` & `passwd`, dukungan *password manager* (`autocomplete`), dan tombol penuh `#0369A1`.
+  2. **Dashboard & Daftar Pesanan (`PSN`):** 4 kartu KPI (`Antrean`, `Dalam Proses`, `Siap Diambil`, `Belum Lunas`), `Tabs` filter status, pencarian teks, dan `<Table>` pesanan dalam wrapper `overflow-x-auto` + tombol CTA utama *"+ Buat Pesanan"*.
+  3. **Halaman Buat Pesanan Baru (Prosedur 1, 2, 3):** Grid 2 kolom di desktop — kiri: Combobox cari pelanggan (`PLGN`) + dialog cepat tambah pelanggan + grid kartu layanan (`LYN`) + input `brt_kg`; kanan (sticky): Preview Tiket Pesanan, `est_sls`, `tot_hrg` (`Fira Code` `tabular-nums`), dan opsi *"Simpan Pesanan"* / *"Simpan & Bayar Sekarang"*.
+  4. **Halaman Detail Tiket, Pembayaran & Cetak (Output 3 & 4, Prosedur 4, 5, 6):** Atas: **Order Progress Stepper** horizontal 5 langkah; Tengah: `<Table>` rincian `DTL_PSN` + kartu **Bukti Pembayaran** (`BYR`); Bawah: Tombol *"Serahkan Cucian"* (terkunci dengan banner `#DC2626` jika belum `Lunas`) dan tombol *"Cetak Tiket / Struk"* (`window.print()`).
+  5. **Halaman Master Data (`PLGN`, `LYN`, `PTGS` — Output 1 & 2):** Tabel/grid terstruktur dengan modal `Dialog` tambah/edit yang **mempertahankan seluruh input saat validasi/server error** (*Preserve Input After Failed Submit*).
+  6. **Halaman Laporan Transaksi (Output 5):** Filter `start_date` – `end_date`, 3 kartu metrik (`Fira Code` `tabular-nums`), `<Table>` rincian transaksi periode, dan tombol ekspor CSV opsional.
+
+---
+
+## 6. Aturan UX & Pre-Delivery Checklist (`ui-ux-pro-max`)
+
+Checklist wajib sebelum UI dinyatakan selesai di repo implementasi:
+
+- [ ] **No Emoji Icons:** Seluruh ikon memakai `lucide-react` (SVG), tidak ada emoji sebagai ikon.
+- [ ] **Contrast >= 4.5:1:** Teks normal di atas `#FFFFFF` dan `#F8FAFC` memenuhi rasio kontras minimal `4.5:1`; status badge tidak mengandalkan warna saja (*color-not-only*).
+- [ ] **Visible Focus & Keyboard Nav:** Seluruh elemen interaktif memiliki focus ring terlihat (`2px` `#0F172A`, `outline-offset: 2px`), urutan Tab logis, dan tombol ikon memiliki `aria-label`.
+- [ ] **Form Labels & Error Preservation:** Semua input memiliki `<Label htmlFor>`, error tampil di dekat field, dan form **tidak boleh di-reset** bila submit gagal/error dari server.
+- [ ] **Loading & Pointer Feedback:** Semua elemen klik memakai `cursor-pointer`; tombol submit async masuk state `disabled` + spinner untuk cegah double submit.
+- [ ] **Semantic Table & Responsive:** Tabel memakai `<TableHeader><TableBody><TableRow>` di dalam `overflow-x-auto`; dicek bersih pada lebar `375px`, `768px`, `1024px`, dan `1440px`.
+- [ ] **Reduced Motion & Print Safe:** `prefers-reduced-motion` ditangani lewat `gsap.matchMedia()`, dan `@media print` menyembunyikan sidebar/tombol non-struk (`print:hidden`).
 
 ---
 
 ## Asumsi & Risiko
 
-- `[ASUMSI]` Di halaman Buat Pesanan, daftar layanan tidak terlalu banyak (sekitar 5–15 jenis layanan laundry), sehingga pemilihan layanan bisa ditampilkan sebagai kartu/list cepat yang nyaman diklik kasir tanpa harus mencari di dropdown panjang.
-- `[RISIKO]` Tampilan cetak struk (`@media print`) di browser sering berantakan kalau komponen sidebar dan shadow ikut tercetak. Solusinya wajib menyertakan class `print:hidden` pada App Shell & tombol aksi di CSS Tailwind.
-- `[RISIKO]` Aksen gradien ungu/indigo jangan dipakai berlebihan di seluruh latar tombol tabel; batasi hanya pada CTA utama, link aktif, dan *progress tracker* agar mata petugas tidak cepat lelah saat bekerja seharian.
+- `[ASUMSI]` Petugas menggunakan desktop/laptop di meja kasir dan tablet/HP saat memperbarui status di area produksi, sehingga kombinasi `Sidebar` desktop + `Sheet` mobile + `overflow-x-auto` pada tabel menjadi pola paling stabil.
+- `[RISIKO]` Font `Fira Code` untuk heading dan angka memiliki lebar karakter monospace tetap (*fixed-width*) yang sedikit lebih lebar dari font proporsional; pada layar `375px`, ukuran heading halaman sebaiknya dibatasi `20px–22px` (`text-xl`) agar tidak memakan terlalu banyak baris.
+- `[RISIKO]` Jika halaman cetak struk tidak menonaktifkan style background/border tertentu, hasil print bisa boros tinta; gunakan `print:shadow-none print:border-slate-300 print:bg-white`.
 
 ## Out of scope
 
-- Pembuatan komponen UI custom dari nol (wajib memakai `shadcn/ui` + Tailwind CSS).
-- Implementasi desain fitur promosi (*Special Offer*), *AI Search*, *Saved Cards*, atau pelacakan kurir GPS seperti pada referensi *Qwash*.
-- Pembuatan file prototipe Figma/FigCraft terpisah (langsung diterjemahkan ke `06-spec.md` dan implementasi `shadcn/ui`).
-- Dark mode toggle di tahap MVP (fokus satu tema terang higienis yang konsisten).
+- Pembuatan komponen UI custom dari nol di luar `shadcn/ui`.
+- Ilustrasi 3D/foto produk, *dark mode toggle*, dan fitur consumer app (*AI Search*, *Special Offer*, *Saved Cards*).
+- Pembuatan file prototipe Figma/FigCraft terpisah.
 
 ## Changelog
 
 | Versi | Tanggal | Perubahan |
 |---|---|---|
-| 1.0 | 2026-11-20 | Penyusunan `05-design.md` mengadaptasi referensi visual Dribbble *Qwash* (#27031424) ke aplikasi web operasional laundry berbasis `shadcn/ui`, Tailwind CSS, dan `lucide-react` sesuai `04-prd.md` v1.1. |
+| 1.0 | 2026-11-20 | Penyusunan awal `05-design.md` mengadaptasi referensi Dribbble *Qwash* (#27031424) dengan `shadcn/ui` dan `lucide-react`. |
 | 1.1 | 2026-11-20 | Menambahkan panduan **Motion & Animation (GSAP + `@gsap/react`)** beserta guardrail kecepatan input kasir, `prefers-reduced-motion`, dan print safety. |
+| 2.0 | 2026-11-26 | **Major Design Update (`ui-ux-pro-max`):** Mengganti tema visual ke **Minimalism & Swiss Style** (`#0F172A` navy, `#0369A1` accent, `#F8FAFC` canvas, `Fira Code` + `Fira Sans`), mengekspor CSS Design Tokens, serta menambahkan aturan prioritas UX, semantic `<Table>`, *Preserve Input After Failed Submit*, GSAP anti-overshoot rule, dan *Pre-Delivery Checklist* `ui-ux-pro-max`. |

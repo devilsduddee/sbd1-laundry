@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { Check, Clock, Sparkles, Shirt, CheckCircle2 } from 'lucide-react';
+import { Check, Clock, Droplets, Flame, PackageCheck, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { StsPsn } from '@shared/schemas';
 
@@ -12,9 +12,9 @@ interface OrderStepperProps {
 
 const STEPS: { status: StsPsn; label: string; icon: React.ElementType }[] = [
   { status: 'Antrean', label: 'Antrean', icon: Clock },
-  { status: 'Sedang Dicuci', label: 'Dicuci', icon: Sparkles },
-  { status: 'Sedang Disetrika', label: 'Disetrika', icon: Shirt },
-  { status: 'Siap Diambil', label: 'Siap Diambil', icon: Check },
+  { status: 'Sedang Dicuci', label: 'Dicuci', icon: Droplets },
+  { status: 'Sedang Disetrika', label: 'Disetrika', icon: Flame },
+  { status: 'Siap Diambil', label: 'Siap Diambil', icon: PackageCheck },
   { status: 'Sudah Diambil', label: 'Selesai', icon: CheckCircle2 },
 ];
 
@@ -33,28 +33,23 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
 
   useGSAP(
     () => {
-      const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (isReduced) {
+      const mm = gsap.matchMedia();
+
+      mm.add('(prefers-reduced-motion: reduce)', () => {
         if (progressBarRef.current) {
           progressBarRef.current.style.width = `${progressPercent}%`;
         }
-        return;
-      }
+      });
 
-      if (progressBarRef.current) {
-        gsap.to(progressBarRef.current, {
-          width: `${progressPercent}%`,
-          duration: 0.35,
-          ease: 'power2.out',
-        });
-      }
-
-      // Micro pulse on current step dot
-      gsap.fromTo(
-        '.step-active-dot',
-        { scale: 0.9 },
-        { scale: 1.05, duration: 0.25, yoyo: true, repeat: 1, ease: 'power1.inOut' }
-      );
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        if (progressBarRef.current) {
+          gsap.to(progressBarRef.current, {
+            width: `${progressPercent}%`,
+            duration: 0.3,
+            ease: 'power2.out',
+          });
+        }
+      });
     },
     { dependencies: [currentStatus], scope: containerRef }
   );
@@ -62,19 +57,19 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
   return (
     <div
       ref={containerRef}
-      className={cn('w-full py-4 px-2 relative select-none', className)}
+      className={cn('w-full py-4 px-2 relative select-none print:hidden', className)}
     >
       {/* Background Track Line */}
-      <div className="absolute top-[28px] left-[32px] right-[32px] h-1 bg-[#E4E7F2] -translate-y-1/2 z-0 rounded-full" />
+      <div className="absolute top-[34px] left-[36px] right-[36px] h-[2px] bg-[#E2E8F0] -translate-y-1/2 z-0" />
 
-      {/* Active Progress Bar */}
+      {/* Active Progress Bar (Ocean Blue #0369A1) */}
       <div
         ref={progressBarRef}
         style={{ width: `${progressPercent}%` }}
-        className="absolute top-[28px] left-[32px] h-1 bg-gradient-to-r from-indigo-500 to-indigo-600 -translate-y-1/2 z-0 rounded-full origin-left transition-none"
+        className="absolute top-[34px] left-[36px] h-[2px] bg-[#0369A1] -translate-y-1/2 z-0 origin-left transition-none"
       />
 
-      {/* Stepper Dots */}
+      {/* Stepper Nodes */}
       <div className="relative z-10 flex justify-between items-start">
         {STEPS.map((step, idx) => {
           const isDone = idx < currentIndex;
@@ -88,27 +83,27 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
             >
               <div
                 className={cn(
-                  'size-9 rounded-full flex items-center justify-center border-2 transition-colors duration-200 shadow-2xs',
-                  isDone && 'bg-indigo-600 border-indigo-600 text-white',
+                  'size-9 rounded-md flex items-center justify-center border transition-colors duration-200',
+                  isDone && 'bg-[#0369A1] border-[#0369A1] text-white',
                   isCurrent &&
-                    'step-active-dot bg-white border-indigo-600 text-indigo-600 ring-4 ring-indigo-50 font-semibold',
+                    'bg-white border-2 border-[#0F172A] text-[#0F172A] ring-4 ring-[#E0F2FE] font-semibold',
                   !isDone &&
                     !isCurrent &&
-                    'bg-white border-[#E4E7F2] text-[#9CA3AF]'
+                    'bg-white border-[#E2E8F0] text-[#475569]'
                 )}
               >
                 {isDone ? (
-                  <Check className="size-4 stroke-[2.5]" />
+                  <Check className="size-4 stroke-[2.25]" aria-hidden="true" />
                 ) : (
-                  <Icon className="size-4" />
+                  <Icon className="size-4 stroke-[1.75]" aria-hidden="true" />
                 )}
               </div>
               <span
                 className={cn(
-                  'mt-2 text-xs text-center font-medium transition-colors duration-200',
-                  isCurrent && 'text-indigo-600 font-semibold',
-                  isDone && 'text-[#1A1A2E]',
-                  !isDone && !isCurrent && 'text-[#9CA3AF]'
+                  'mt-2 text-xs text-center font-sans transition-colors duration-200',
+                  isCurrent && 'text-[#0F172A] font-semibold',
+                  isDone && 'text-[#0369A1] font-medium',
+                  !isDone && !isCurrent && 'text-[#475569]'
                 )}
               >
                 {step.label}

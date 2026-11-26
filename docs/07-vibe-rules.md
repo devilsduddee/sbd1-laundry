@@ -1,16 +1,16 @@
 # 07 - Vibe Rules: Sistem Pengelolaan Laundry
 
 - **Versi:** 1.2
-- **Tanggal:** 2026-11-21
+- **Tanggal:** 2026-11-26
 - **Status:** Approved
-- **Sumber input:** `04-prd.md` v1.1, `05-design.md` v1.1, `06-spec.md` v1.2 (Gate 3 Approved), dan `profile.md` bagian 9.
+- **Sumber input:** `04-prd.md` v1.1, `05-design.md` v2.0, `06-spec.md` v1.2 (Gate 3 Approved), dan `profile.md` bagian 9.
 - **Skill digunakan:** `vibe-rules`
 
 ---
 
 ## TL;DR
 
-Dokumen ini menjadi pagar teknis (*guardrails*) bagi coding agent (Antigravity) saat membangun aplikasi web **Sistem Pengelolaan Laundry** di repositori terpisah dengan stack **Vite + React + `shadcn/ui` + Hono + Turso (libSQL) + Drizzle ORM** untuk deployment **Vercel**.
+Dokumen ini menjadi pagar teknis (*guardrails*) bagi coding agent (Antigravity) saat membangun aplikasi web **Sistem Pengelolaan Laundry** di repositori terpisah dengan stack **Vite + React + `shadcn/ui` + Hono + Turso (libSQL)** untuk deployment **Vercel**.
 
 Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan keras mengubah/menambah nama tabel maupun kolom ERD proposal**, batas ukuran maksimal 500 baris per file, wajib memakai komponen standar `shadcn/ui` tanpa bikin komponen custom dari nol, dan larangan keras menjalankan `git push` otomatis tanpa perintah eksplisit user.
 
@@ -19,7 +19,7 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 ## 1. Golden Rules untuk Coding Agent
 
 ### Aturan 1: Patuh Mutlak pada Dokumen & Skema Proposal
-- Coding agent **wajib** membaca `04-prd.md`, `05-design.md`, `06-spec.md`, dan `server/db/schema.ts` / `server/db/schema.sql` sebelum menulis kode.
+- Coding agent **wajib** membaca `04-prd.md`, `05-design.md`, `06-spec.md`, dan `schema.sql` sebelum menulis kode.
 - **Aturan Keras Basis Data (Tugas Kuliah):** Nama tabel (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) dan seluruh nama kolom (`id_psn`, `tgl_msk`, `est_sls`, `tot_hrg`, `sts_psn`, `id_plgn`, `nm_plgn`, `no_hp`, `alamat`, `id_ptgs`, `nm_ptgs`, `usernm`, `passwd`, `level`, `id_lyn`, `nm_lyn`, `hrg_kg`, `est_hari`, `brt_kg`, `hrg_trans`, `id_byr`, `tgl_byr`, `met_byr`, `jml_byr`, `sts_byr`) **TIDAK BOLEH diubah, diterjemahkan ke bahasa Inggris, atau ditambah kolom baru**.
 - **Dilarang berimprovisasi** menambah fitur di luar MVP (misal portal login pelanggan, QRIS payment gateway, notif WA otomatis, atau skema cicilan).
 
@@ -35,9 +35,10 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 
 ### Aturan 4: Zero Custom Component Reinvention
 - Sesuai `profile.md` bagian 9 dan `05-design.md`, **dilarang membuat komponen UI dasar dari nol** (modal custom, dropdown custom, tabel HTML mentah tanpa styling `shadcn/ui`, atau toast manual).
-- Gunakan komponen resmi **`shadcn/ui`** (`Button`, `Card`, `Table`, `Badge`, `Tabs`, `Dialog`, `AlertDialog`, `Select`, `Input`, `Label`, `Command`, `Popover`, `Sheet`, `Sonner`) dan ikon **`lucide-react`**.
-- Stepper status pesanan ala *Qwash* cukup disusun menggunakan komposisi `Badge` + utility classes Tailwind CSS tanpa library tambahan yang berat.
-- **Animasi GSAP (`gsap` + `@gsap/react`):** Seluruh animasi transisi halus (stagger kartu KPI/layanan, progress bar stepper `sts_psn`, tambah baris item) wajib menggunakan hook `useGSAP()` dengan `scope` ref agar aman di React StrictMode, berdurasi singkat (`0.2s–0.35s`) agar tidak menghambat input kasir, menghormati `prefers-reduced-motion: reduce`, dan tidak boleh memblokir tampilan cetak (`@media print`).
+- Gunakan komponen resmi **`shadcn/ui`** (`Button`, `Card`, `Table`, `Badge`, `Tabs`, `Dialog`, `AlertDialog`, `Select`, `Input`, `Label`, `Command`, `Popover`, `Sheet`, `Sonner`) dan ikon **`lucide-react`** (dilarang memakai emoji sebagai ikon).
+- Tabel data **wajib** memakai semantic `<Table><TableHeader><TableBody><TableRow>` dalam wrapper `overflow-x-auto` (jangan diganti `div grid`).
+- **Forms UX:** Setiap input wajib punya `<Label htmlFor>`, dan **dilarang me-reset form** saat validasi/request gagal (*Preserve Input After Failed Submit*).
+- **Animasi GSAP (`gsap` + `@gsap/react`):** Seluruh animasi transisi halus (stagger kartu KPI/layanan, progress bar stepper `sts_psn`, hover `quickTo`) wajib menggunakan hook `useGSAP()` dengan `scope` ref, `ease: 'power2.out'` (dilarang `back.out` di tabel data padat), durasi singkat (`0.2s–0.35s`), menghormati `prefers-reduced-motion: reduce`, dan tidak boleh memblokir tampilan cetak (`@media print`).
 
 ---
 
@@ -64,8 +65,8 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 
 1. **Fase 1 — Inisialisasi & Turso Schema:** Setup project Vite + React + Tailwind + `shadcn/ui`, pasang Hono & `@libsql/client`, eksekusi `schema.sql` ke Turso, dan buat script seed 1 akun `Admin` + contoh `LYN`.
 2. **Fase 2 — Hono API & Auth:** Implementasi `server/app.ts`, middleware JWT + role guard (`Admin`, `Kasir`, `Operasional`), serta seluruh endpoint di `06-spec.md` Bagian 9.
-3. **Fase 3 — UI Shell, Login, & Master Data:** Implementasi tema warna *Qwash Hygienic* (`tailwind.config.ts` & `index.css`), App Shell responsif (`Sidebar` + `Sheet` + `print:hidden`), `LoginPage`, `CustomersPage` (`PLGN`), `ServicesPage` (`LYN`), dan `StaffPage` (`PTGS`).
-4. **Fase 4 — Alur Inti Pesanan, Status, Bayar & Ambil:** Implementasi `OrdersPage`, `CreateOrderPage` (auto-merge item `id_lyn` duplikat), `OrderDetailPage` (Stepper status ala *Qwash*, modal bayar `BYR`, blokir ambil sebelum `Lunas`).
+3. **Fase 3 — UI Shell, Login, & Master Data:** Implementasi tema warna **Minimalism & Swiss Style** (`tailwind.config.ts` & `index.css` + font `Fira Code` & `Fira Sans`), App Shell responsif (`Sidebar` + `Sheet` + `print:hidden`), `LoginPage`, `CustomersPage` (`PLGN`), `ServicesPage` (`LYN`), dan `StaffPage` (`PTGS`).
+4. **Fase 4 — Alur Inti Pesanan, Status, Bayar & Ambil:** Implementasi `OrdersPage`, `CreateOrderPage` (auto-merge item `id_lyn` duplikat, *preserve input* saat error), `OrderDetailPage` (Stepper status presisi Swiss + GSAP, modal bayar `BYR`, blokir ambil sebelum `Lunas`).
 5. **Fase 5 — Cetak Struk, Laporan, & Deploy Vercel:** Tambahkan CSS `@media print` untuk Output 3 (Tiket Pesanan) & Output 4 (Bukti Pembayaran), buat `ReportPage` (Output 5 + CSV opsional), verifikasi `npm run build`, lalu siap deploy ke Vercel.
 
 ---
@@ -91,4 +92,4 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 |---|---|---|
 | 1.0 | 2026-11-20 | Penyusunan `07-vibe-rules.md` dan paket `handoff/` untuk stack Vite + React + `shadcn/ui` + Hono + Turso (Vercel). |
 | 1.1 | 2026-11-20 | Menambahkan aturan GSAP (`gsap` + `@gsap/react`) untuk animasi halus dengan `useGSAP`, durasi singkat, dan print safety. |
-| 1.2 | 2026-11-21 | Menambahkan Drizzle ORM (`drizzle-orm` + `drizzle-kit`) untuk query builder type-safe dan pengelolaan skema Turso/libSQL dengan tetap menjaga 100% kepatuhan proposal. |
+| 1.2 | 2026-11-26 | Menyelaraskan dengan `05-design.md` v2.0 (Minimalism & Swiss Style dari `ui-ux-pro-max`, semantic `<Table>`, *Preserve Input After Failed Submit*, larangan emoji icon, dan anti-overshoot GSAP di tabel). |

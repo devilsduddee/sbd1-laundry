@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { QuickCustomerDialog } from '@/components/laundry/QuickCustomerDialog';
 import { api } from '@/lib/api';
 import { formatRupiah } from '@/lib/format';
 import type { Pelanggan, Layanan, MetByr } from '@shared/schemas';
@@ -25,18 +25,11 @@ export const CreateOrderPage: React.FC = () => {
   const [selectedPlgnId, setSelectedPlgnId] = useState<string>('');
   const [items, setItems] = useState<OrderRow[]>([{ id_lyn: '', brt_kg: 1 }]);
 
-  // Bayar langsung toggle
   const [bayarSekarang, setBayarSekarang] = useState(false);
   const [metByr, setMetByr] = useState<MetByr>('Tunai');
   const [jmlByr, setJmlByr] = useState<number>(0);
 
-  // Modal Tambah Pelanggan Baru Cepat
   const [modalPlgnOpen, setModalPlgnOpen] = useState(false);
-  const [newNmPlgn, setNewNmPlgn] = useState('');
-  const [newNoHp, setNewNoHp] = useState('');
-  const [newAlamat, setNewAlamat] = useState('');
-  const [loadingModal, setLoadingModal] = useState(false);
-
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -51,7 +44,7 @@ export const CreateOrderPage: React.FC = () => {
         if (lRes.data.length > 0) {
           setItems([{ id_lyn: lRes.data[0].id_lyn, brt_kg: 1 }]);
         }
-      } catch (err) {
+      } catch {
         toast.error('Gagal memuat data master');
       }
     }
@@ -74,7 +67,6 @@ export const CreateOrderPage: React.FC = () => {
     setItems(copy);
   };
 
-  // Kalkulasi total & estimasi selesai
   let totalHarga = 0;
   let maxEstHari = 1;
   for (const it of items) {
@@ -90,29 +82,6 @@ export const CreateOrderPage: React.FC = () => {
       setJmlByr(totalHarga);
     }
   }, [totalHarga, bayarSekarang]);
-
-  const handleSaveNewPelanggan = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      setLoadingModal(true);
-      const res = await api.post<{ data: Pelanggan }>('/api/pelanggan', {
-        nm_plgn: newNmPlgn,
-        no_hp: newNoHp,
-        alamat: newAlamat,
-      });
-      setPelangganList([...pelangganList, res.data]);
-      setSelectedPlgnId(res.data.id_plgn);
-      setModalPlgnOpen(false);
-      setNewNmPlgn('');
-      setNewNoHp('');
-      setNewAlamat('');
-      toast.success('Pelanggan baru berhasil ditambahkan');
-    } catch (err: any) {
-      toast.error(err.message || 'Gagal menambah pelanggan');
-    } finally {
-      setLoadingModal(false);
-    }
-  };
 
   const handleSubmitOrder = async () => {
     if (!selectedPlgnId) {
@@ -151,6 +120,7 @@ export const CreateOrderPage: React.FC = () => {
       toast.success('Tiket pesanan berhasil dibuat!');
       navigate(`/pesanan/${res.data.id_psn}`);
     } catch (err: any) {
+      // Preserve form inputs on server error
       toast.error(err.message || 'Gagal membuat pesanan');
     } finally {
       setSubmitting(false);
@@ -166,16 +136,16 @@ export const CreateOrderPage: React.FC = () => {
           variant="outline"
           size="sm"
           onClick={() => navigate('/pesanan')}
-          className="rounded-xl border-[#E4E7F2] h-9 gap-1 text-xs"
+          className="rounded-md border-[#E2E8F0] hover:bg-[#E8ECF1] text-[#0F172A] h-9 gap-1.5 text-xs font-medium"
         >
-          <ArrowLeft className="size-3.5" />
+          <ArrowLeft className="size-3.5" aria-hidden="true" />
           Kembali
         </Button>
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-[#1A1A2E]">
+          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A]">
             Buat Tiket Pesanan Baru
           </h1>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-[#475569]">
             Catat data cucian masuk pelanggan dan rincian layanan
           </p>
         </div>
@@ -184,28 +154,32 @@ export const CreateOrderPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         {/* Kolom Kiri: Form Pelanggan & Layanan */}
         <div className="lg:col-span-2 space-y-5">
-          {/* Section 1: Pilih Pelanggan */}
-          <Card className="rounded-2xl border-[#E4E7F2] shadow-2xs">
-            <CardHeader className="pb-3 border-b border-[#E4E7F2]">
-              <CardTitle className="text-sm font-semibold text-[#1A1A2E] flex justify-between items-center">
+          <Card className="rounded-lg border-[#E2E8F0] shadow-none bg-white">
+            <CardHeader className="pb-3 border-b border-[#E2E8F0]">
+              <CardTitle className="text-sm font-semibold text-[#0F172A] flex justify-between items-center">
                 <span>1. Data Pelanggan</span>
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   onClick={() => setModalPlgnOpen(true)}
-                  className="h-8 text-xs gap-1.5 text-indigo-600 border-indigo-200 hover:bg-indigo-50"
+                  className="h-8 text-xs gap-1.5 text-[#0369A1] border-[#E2E8F0] hover:bg-[#E8ECF1] rounded-md font-medium"
                 >
-                  <UserPlus className="size-3.5" />
-                  + Pelanggan Baru
+                  <UserPlus className="size-3.5" aria-hidden="true" />
+                  Pelanggan Baru
                 </Button>
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-4 space-y-3">
               <div className="space-y-1.5">
-                <Label className="text-xs font-medium">Pilih Pelanggan Terdaftar</Label>
+                <Label htmlFor="select-pelanggan" className="text-xs font-medium text-[#020617]">
+                  Pilih Pelanggan Terdaftar
+                </Label>
                 <Select value={selectedPlgnId} onValueChange={setSelectedPlgnId}>
-                  <SelectTrigger className="rounded-xl border-[#E4E7F2] text-xs">
+                  <SelectTrigger
+                    id="select-pelanggan"
+                    className="rounded-md border-[#E2E8F0] focus:ring-[#0F172A] text-xs h-10 bg-white"
+                  >
                     <SelectValue placeholder="-- Pilih Pelanggan --" />
                   </SelectTrigger>
                   <SelectContent>
@@ -219,28 +193,27 @@ export const CreateOrderPage: React.FC = () => {
               </div>
 
               {selectedPlgn && (
-                <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E4E7F2] text-xs space-y-1">
-                  <p className="font-semibold text-[#1A1A2E]">{selectedPlgn.nm_plgn}</p>
-                  <p className="text-muted-foreground">{selectedPlgn.no_hp}</p>
-                  <p className="text-muted-foreground">{selectedPlgn.alamat}</p>
+                <div className="p-3 bg-[#F8FAFC] rounded-md border border-[#E2E8F0] text-xs space-y-1">
+                  <p className="font-semibold text-[#020617]">{selectedPlgn.nm_plgn}</p>
+                  <p className="font-mono text-[#475569] tabular-nums">{selectedPlgn.no_hp}</p>
+                  <p className="text-[#475569]">{selectedPlgn.alamat}</p>
                 </div>
               )}
             </CardContent>
           </Card>
 
-          {/* Section 2: Rincian Layanan Cucian (DTL_PSN) */}
-          <Card className="rounded-2xl border-[#E4E7F2] shadow-2xs">
-            <CardHeader className="pb-3 border-b border-[#E4E7F2]">
-              <CardTitle className="text-sm font-semibold text-[#1A1A2E] flex justify-between items-center">
+          <Card className="rounded-lg border-[#E2E8F0] shadow-none bg-white">
+            <CardHeader className="pb-3 border-b border-[#E2E8F0]">
+              <CardTitle className="text-sm font-semibold text-[#0F172A] flex justify-between items-center">
                 <span>2. Rincian Layanan & Berat Cucian</span>
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   onClick={handleAddItem}
-                  className="h-8 text-xs gap-1.5 text-indigo-600 border-indigo-200 hover:bg-indigo-50"
+                  className="h-8 text-xs gap-1.5 text-[#0369A1] border-[#E2E8F0] hover:bg-[#E8ECF1] rounded-md font-medium"
                 >
-                  <Plus className="size-3.5" />
+                  <Plus className="size-3.5" aria-hidden="true" />
                   Tambah Layanan
                 </Button>
               </CardTitle>
@@ -253,21 +226,26 @@ export const CreateOrderPage: React.FC = () => {
                 return (
                   <div
                     key={idx}
-                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 bg-[#F8FAFC] rounded-xl border border-[#E4E7F2]"
+                    className="flex flex-col sm:flex-row items-start sm:items-end gap-3 p-3 bg-[#F8FAFC] rounded-md border border-[#E2E8F0]"
                   >
                     <div className="flex-1 w-full space-y-1">
-                      <Label className="text-[11px] text-muted-foreground">Jenis Layanan</Label>
+                      <Label htmlFor={`lyn-${idx}`} className="text-xs text-[#475569]">
+                        Jenis Layanan
+                      </Label>
                       <Select
                         value={it.id_lyn}
                         onValueChange={(val) => handleItemChange(idx, 'id_lyn', val)}
                       >
-                        <SelectTrigger className="bg-white rounded-lg border-[#E4E7F2] text-xs h-9">
+                        <SelectTrigger
+                          id={`lyn-${idx}`}
+                          className="bg-white rounded-md border-[#E2E8F0] text-xs h-9"
+                        >
                           <SelectValue placeholder="Pilih Layanan" />
                         </SelectTrigger>
                         <SelectContent>
                           {layananList.map((l) => (
                             <SelectItem key={l.id_lyn} value={l.id_lyn} className="text-xs">
-                              {l.nm_lyn} • {formatRupiah(l.hrg_kg)}/kg ({l.est_hari} Hari)
+                              {l.nm_lyn} | {formatRupiah(l.hrg_kg)}/kg ({l.est_hari} Hari)
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -275,9 +253,12 @@ export const CreateOrderPage: React.FC = () => {
                     </div>
 
                     <div className="w-28 space-y-1">
-                      <Label className="text-[11px] text-muted-foreground">Berat / Pcs</Label>
+                      <Label htmlFor={`brt-${idx}`} className="text-xs text-[#475569]">
+                        Berat (kg)
+                      </Label>
                       <div className="relative">
                         <Input
+                          id={`brt-${idx}`}
                           type="number"
                           step="0.1"
                           min="0.1"
@@ -286,17 +267,17 @@ export const CreateOrderPage: React.FC = () => {
                           onChange={(e) =>
                             handleItemChange(idx, 'brt_kg', parseFloat(e.target.value) || 0)
                           }
-                          className="bg-white rounded-lg border-[#E4E7F2] text-xs h-9 pr-7 tabular-nums"
+                          className="bg-white rounded-md border-[#E2E8F0] font-mono text-xs h-9 pr-7 tabular-nums"
                         />
-                        <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[11px] text-muted-foreground">
+                        <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-[#475569]">
                           kg
                         </span>
                       </div>
                     </div>
 
                     <div className="w-28 text-right space-y-1">
-                      <span className="text-[11px] text-muted-foreground block">Subtotal</span>
-                      <span className="text-xs font-bold text-[#1A1A2E] tabular-nums block h-9 leading-9">
+                      <span className="text-xs text-[#475569] block">Subtotal</span>
+                      <span className="font-mono text-xs font-bold text-[#020617] tabular-nums block h-9 leading-9">
                         {formatRupiah(subtotal)}
                       </span>
                     </div>
@@ -306,10 +287,11 @@ export const CreateOrderPage: React.FC = () => {
                         type="button"
                         variant="ghost"
                         size="icon"
+                        aria-label="Hapus layanan"
                         onClick={() => handleRemoveItem(idx)}
-                        className="size-8 text-red-500 hover:text-red-700 hover:bg-red-50 self-end sm:self-center"
+                        className="size-9 text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] rounded-md self-end"
                       >
-                        <Trash2 className="size-4" />
+                        <Trash2 className="size-4" aria-hidden="true" />
                       </Button>
                     )}
                   </div>
@@ -321,44 +303,45 @@ export const CreateOrderPage: React.FC = () => {
 
         {/* Kolom Kanan: Sticky Summary Card */}
         <div className="space-y-4 sticky top-6">
-          <Card className="rounded-2xl border-[#E4E7F2] shadow-sm bg-white overflow-hidden">
-            <CardHeader className="bg-[#1E1B4B] text-white p-4">
-              <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                <ShoppingBag className="size-4" />
+          <Card className="rounded-lg border-[#E2E8F0] shadow-none bg-white overflow-hidden">
+            <CardHeader className="bg-[#0F172A] text-white p-4">
+              <CardTitle className="font-heading text-sm font-semibold flex items-center gap-2">
+                <ShoppingBag className="size-4" aria-hidden="true" />
                 Ringkasan Pesanan
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 space-y-4 text-xs">
-              <div className="space-y-2 pb-3 border-b border-[#E4E7F2]">
+              <div className="space-y-2 pb-3 border-b border-[#E2E8F0]">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Pelanggan:</span>
-                  <span className="font-semibold text-[#1A1A2E]">
+                  <span className="text-[#475569]">Pelanggan:</span>
+                  <span className="font-semibold text-[#020617]">
                     {selectedPlgn ? selectedPlgn.nm_plgn : '-'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Jumlah Item:</span>
-                  <span className="font-semibold tabular-nums">{items.length} Layanan</span>
+                  <span className="text-[#475569]">Jumlah Item:</span>
+                  <span className="font-mono font-semibold text-[#020617] tabular-nums">
+                    {items.length} Layanan
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Estimasi Waktu:</span>
-                  <span className="font-semibold text-indigo-600 tabular-nums">
+                  <span className="text-[#475569]">Estimasi Waktu:</span>
+                  <span className="font-mono font-semibold text-[#0369A1] tabular-nums">
                     {maxEstHari} Hari Kerja
                   </span>
                 </div>
               </div>
 
               <div className="flex justify-between items-baseline pt-1">
-                <span className="font-bold text-sm text-[#1A1A2E]">TOTAL BIAYA</span>
-                <span className="font-extrabold text-lg text-indigo-600 tabular-nums">
+                <span className="font-heading font-bold text-sm text-[#0F172A]">TOTAL BIAYA</span>
+                <span className="font-heading font-bold text-xl text-[#020617] tabular-nums">
                   {formatRupiah(totalHarga)}
                 </span>
               </div>
 
-              {/* Opsi Bayar Sekarang */}
-              <div className="p-3 bg-[#EEF0F8] rounded-xl space-y-2.5">
+              <div className="p-3 bg-[#F8FAFC] border border-[#E2E8F0] rounded-md space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="bayar-toggle" className="text-xs font-semibold cursor-pointer">
+                  <Label htmlFor="bayar-toggle" className="text-xs font-semibold text-[#020617] cursor-pointer">
                     Bayar Lunas Sekarang?
                   </Label>
                   <input
@@ -366,16 +349,18 @@ export const CreateOrderPage: React.FC = () => {
                     type="checkbox"
                     checked={bayarSekarang}
                     onChange={(e) => setBayarSekarang(e.target.checked)}
-                    className="size-4 rounded accent-indigo-600 cursor-pointer"
+                    className="size-4 rounded accent-[#0369A1] cursor-pointer"
                   />
                 </div>
 
                 {bayarSekarang && (
-                  <div className="space-y-2 pt-2 border-t border-white/60">
+                  <div className="space-y-2 pt-2 border-t border-[#E2E8F0]">
                     <div className="space-y-1">
-                      <Label className="text-[11px]">Metode Pembayaran</Label>
+                      <Label htmlFor="met-byr" className="text-xs text-[#475569]">
+                        Metode Pembayaran
+                      </Label>
                       <Select value={metByr} onValueChange={(v) => setMetByr(v as MetByr)}>
-                        <SelectTrigger className="bg-white rounded-lg border-[#E4E7F2] text-xs h-8">
+                        <SelectTrigger id="met-byr" className="bg-white rounded-md border-[#E2E8F0] text-xs h-9">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -390,12 +375,15 @@ export const CreateOrderPage: React.FC = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <Label className="text-[11px]">Jumlah Uang Dibayar</Label>
+                      <Label htmlFor="jml-byr" className="text-xs text-[#475569]">
+                        Jumlah Uang Dibayar
+                      </Label>
                       <Input
+                        id="jml-byr"
                         type="number"
                         value={jmlByr}
                         onChange={(e) => setJmlByr(parseInt(e.target.value) || 0)}
-                        className="bg-white rounded-lg border-[#E4E7F2] text-xs h-8 tabular-nums"
+                        className="bg-white rounded-md border-[#E2E8F0] font-mono text-xs h-9 tabular-nums"
                       />
                     </div>
                   </div>
@@ -406,11 +394,11 @@ export const CreateOrderPage: React.FC = () => {
                 type="button"
                 disabled={submitting || totalHarga === 0}
                 onClick={handleSubmitOrder}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl h-10 font-semibold shadow-md shadow-indigo-100"
+                className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md h-10 font-semibold"
               >
                 {submitting ? (
                   <>
-                    <Loader2 className="mr-2 size-4 animate-spin" />
+                    <Loader2 className="mr-2 size-4 animate-spin" aria-hidden="true" />
                     Menyimpan...
                   </>
                 ) : (
@@ -422,65 +410,14 @@ export const CreateOrderPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Dialog Cepat Tambah Pelanggan Baru */}
-      <Dialog open={modalPlgnOpen} onOpenChange={setModalPlgnOpen}>
-        <DialogContent className="rounded-2xl max-w-sm">
-          <DialogHeader>
-            <DialogTitle className="text-base font-semibold">
-              Tambah Pelanggan Baru
-            </DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSaveNewPelanggan} className="space-y-3 py-2 text-xs">
-            <div className="space-y-1">
-              <Label htmlFor="new-nama">Nama Lengkap</Label>
-              <Input
-                id="new-nama"
-                value={newNmPlgn}
-                onChange={(e) => setNewNmPlgn(e.target.value)}
-                placeholder="Contoh: Siti Aisyah"
-                autoComplete="name"
-                required
-                className="rounded-xl border-[#E4E7F2]"
-              />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new-hp">Nomor HP</Label>
-              <Input
-                id="new-hp"
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                value={newNoHp}
-                onChange={(e) => setNewNoHp(e.target.value)}
-                placeholder="081234567890"
-                required
-                className="rounded-xl border-[#E4E7F2]"
-              />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new-alamat">Alamat</Label>
-              <Input
-                id="new-alamat"
-                value={newAlamat}
-                onChange={(e) => setNewAlamat(e.target.value)}
-                placeholder="Jl. Margonda No. 10"
-                autoComplete="street-address"
-                required
-                className="rounded-xl border-[#E4E7F2]"
-              />
-            </div>
-            <DialogFooter className="pt-2">
-              <Button
-                type="submit"
-                disabled={loadingModal}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl"
-              >
-                {loadingModal ? 'Menyimpan...' : 'Simpan Pelanggan'}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <QuickCustomerDialog
+        open={modalPlgnOpen}
+        onOpenChange={setModalPlgnOpen}
+        onCreated={(newCustomer) => {
+          setPelangganList([...pelangganList, newCustomer]);
+          setSelectedPlgnId(newCustomer.id_plgn);
+        }}
+      />
     </div>
   );
 };

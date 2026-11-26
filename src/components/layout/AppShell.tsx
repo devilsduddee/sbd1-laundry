@@ -77,25 +77,25 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const mobileNavItems = getMobileNavItems(user?.level);
 
   return (
-    <div className="min-h-screen bg-[#F5F6FA] text-[#1A1A2E] flex flex-col md:flex-row font-sans">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#020617] flex flex-col md:flex-row font-sans">
       {/* Desktop Sidebar (print:hidden) */}
-      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#E4E7F2] p-5 sticky top-0 h-screen shrink-0 justify-between">
+      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#E2E8F0] p-5 sticky top-0 h-screen shrink-0 justify-between">
         <div className="flex flex-col gap-6">
           {/* Brand Header */}
           <div className="flex items-center gap-3 px-2 py-1">
-            <div className="size-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-200 shrink-0">
+            <div className="size-10 rounded-md bg-[#0F172A] flex items-center justify-center text-white shrink-0">
               <QwashLogo variant="symbol" size="sm" className="text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-base text-[#1A1A2E] leading-tight tracking-tight">
+              <h1 className="font-heading font-bold text-sm text-[#0F172A] leading-tight tracking-tight">
                 Qwash Laundry
               </h1>
-              <p className="text-xs text-muted-foreground">Sistem Pengelolaan</p>
+              <p className="text-xs text-[#475569]">Sistem Pengelolaan</p>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <nav className="flex flex-col gap-1">
+          <nav className="flex flex-col gap-1" aria-label="Menu Utama">
             {desktopFilteredItems.map((item) => {
               const Icon = item.icon;
               const isActive =
@@ -108,13 +108,16 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                   key={item.to}
                   to={item.to}
                   className={cn(
-                    'flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                    'flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-medium transition-colors touch-manipulation active:scale-[0.98]',
                     isActive
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'text-[#4B5563] hover:bg-[#EEF0F8] hover:text-[#1A1A2E]'
+                      ? 'bg-[#0F172A] text-white font-semibold'
+                      : 'text-[#475569] hover:bg-[#E8ECF1] hover:text-[#020617]'
                   )}
                 >
-                  <Icon className={cn('size-4 shrink-0', isActive ? 'text-white' : 'text-[#6B7280]')} />
+                  <Icon
+                    className={cn('size-4 shrink-0 stroke-[1.75]', isActive ? 'text-white' : 'text-[#475569]')}
+                    aria-hidden="true"
+                  />
                   <span>{item.label}</span>
                 </NavLink>
               );
@@ -123,15 +126,15 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
         </div>
 
         {/* User Info & Logout Desktop */}
-        <div className="pt-4 border-t border-[#E4E7F2] flex flex-col gap-3">
+        <div className="pt-4 border-t border-[#E2E8F0] flex flex-col gap-3">
           <div className="flex items-center justify-between px-2">
-            <div className="flex flex-col">
-              <span className="text-xs font-bold text-[#1A1A2E] leading-tight">
+            <div className="flex flex-col min-w-0">
+              <span className="text-xs font-semibold text-[#020617] leading-tight truncate">
                 {user?.nm_ptgs}
               </span>
-              <span className="text-[11px] text-muted-foreground">
-                @{user?.usernm} &bull;{' '}
-                <span className="font-semibold text-indigo-600">{user?.level}</span>
+              <span className="text-xs text-[#475569] font-mono mt-0.5 truncate">
+                @{user?.usernm} |{' '}
+                <span className="font-semibold text-[#0369A1] font-sans">{user?.level}</span>
               </span>
             </div>
           </div>
@@ -139,43 +142,43 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             variant="outline"
             size="sm"
             onClick={handleLogout}
-            className="w-full justify-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200 rounded-xl h-9 text-xs font-semibold touch-manipulation active:scale-[0.98]"
+            className="w-full justify-center gap-2 text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] border-[#FECACA] rounded-md h-9 text-xs font-semibold touch-manipulation active:scale-[0.98]"
           >
-            <LogOut className="size-3.5" />
+            <LogOut className="size-3.5 stroke-[1.75]" aria-hidden="true" />
             Keluar Sesi
           </Button>
         </div>
       </aside>
 
       {/* Mobile Top Header (Ramping & Bersih, print:hidden) */}
-      <header className="print:hidden md:hidden flex items-center justify-between bg-white/95 backdrop-blur-md border-b border-[#E4E7F2] px-4 h-14 sticky top-0 z-30 pt-safe">
-        <div className="flex items-center gap-2.5">
-          <div className="size-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-xs shrink-0">
+      <header className="print:hidden md:hidden flex items-center justify-between bg-white border-b border-[#E2E8F0] px-4 h-14 sticky top-0 z-30 pt-safe">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="size-8 rounded-md bg-[#0F172A] flex items-center justify-center text-white shrink-0">
             <QwashLogo variant="symbol" size="sm" className="text-white" />
           </div>
-          <div className="leading-tight">
-            <span className="font-bold text-xs text-[#1A1A2E] block">
+          <div className="leading-tight min-w-0">
+            <span className="font-semibold text-xs text-[#020617] block truncate">
               {user?.nm_ptgs}
             </span>
-            <span className="text-[10px] text-muted-foreground font-medium">
-              Peran: <strong className="text-indigo-600">{user?.level}</strong>
+            <span className="text-xs text-[#475569] font-medium block">
+              Peran: <strong className="text-[#0369A1]">{user?.level}</strong>
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {user?.level === 'Admin' && (
             <NavLink
               to="/petugas"
               className={cn(
-                'flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-95',
+                'flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-colors touch-manipulation active:scale-95 min-h-[36px]',
                 location.pathname.startsWith('/petugas')
-                  ? 'bg-indigo-600 text-white shadow-xs'
-                  : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200/60'
+                  ? 'bg-[#0F172A] text-white'
+                  : 'bg-[#F1F5F9] text-[#0F172A] hover:bg-[#E8ECF1] border border-[#E2E8F0]'
               )}
             >
-              <ShieldCheck className="size-3.5 shrink-0" />
-              <span className="text-[11px]">Petugas</span>
+              <ShieldCheck className="size-3.5 shrink-0" aria-hidden="true" />
+              <span className="text-xs">Petugas</span>
             </NavLink>
           )}
 
@@ -183,11 +186,11 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             variant="ghost"
             size="sm"
             onClick={handleLogout}
-            className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 px-2.5 text-xs rounded-lg gap-1.5 font-medium touch-manipulation active:scale-95"
-            title="Keluar dari sesi"
+            className="text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] h-9 px-2.5 text-xs rounded-md gap-1.5 font-medium touch-manipulation active:scale-95"
+            aria-label="Keluar dari sesi"
           >
-            <LogOut className="size-3.5" />
-            <span className="text-[11px]">Keluar</span>
+            <LogOut className="size-3.5" aria-hidden="true" />
+            <span className="text-xs">Keluar</span>
           </Button>
         </div>
       </header>
@@ -197,10 +200,10 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
         {children}
       </main>
 
-      {/* Mobile Bottom Navigation Bar (Sama Rata & Simetris, print:hidden) */}
+      {/* Mobile Bottom Navigation Bar (print:hidden) */}
       <nav
         aria-label="Navigasi Bawah Ponsel"
-        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-[#E4E7F2] pb-safe shadow-lg shadow-black/5"
+        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-[#E2E8F0] pb-safe"
       >
         <div
           className={cn(
@@ -224,23 +227,23 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 to={item.to}
                 className={cn(
                   'group flex flex-col items-center justify-center h-full py-1.5 px-0.5 touch-manipulation select-none min-w-0 transition-transform duration-150 active:scale-[0.94]',
-                  isActive ? 'text-indigo-600' : 'text-[#6B7280] hover:text-[#1A1A2E]'
+                  isActive ? 'text-[#0F172A]' : 'text-[#475569] hover:text-[#020617]'
                 )}
               >
                 <div
                   className={cn(
-                    'p-1.5 rounded-xl transition-colors duration-150 flex items-center justify-center',
+                    'p-1.5 rounded-md transition-colors duration-150 flex items-center justify-center',
                     isActive
-                      ? 'bg-indigo-50 text-indigo-600 shadow-xs'
-                      : 'text-[#6B7280] group-hover:bg-[#F3F4F6] group-hover:text-[#1A1A2E]'
+                      ? 'bg-[#0F172A] text-white'
+                      : 'text-[#475569] group-hover:bg-[#E8ECF1] group-hover:text-[#020617]'
                   )}
                 >
-                  <Icon className="size-5 shrink-0 stroke-[1.8]" />
+                  <Icon className="size-4 shrink-0 stroke-[1.8]" aria-hidden="true" />
                 </div>
                 <span
                   className={cn(
-                    'text-[10px] tracking-tight leading-none mt-1 text-center truncate max-w-full px-0.5 transition-colors',
-                    isActive ? 'font-bold text-indigo-600' : 'font-medium text-[#6B7280]'
+                    'text-[11px] tracking-tight leading-none mt-1 text-center truncate max-w-full px-0.5 transition-colors',
+                    isActive ? 'font-bold text-[#0F172A]' : 'font-medium text-[#475569]'
                   )}
                 >
                   {item.shortLabel}

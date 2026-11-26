@@ -1,5 +1,5 @@
 import React from 'react';
-import { Printer, CheckCircle } from 'lucide-react';
+import { Printer, BadgeCheck, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { QwashLogo } from './QwashLogo';
 import { StatusBadge } from './StatusBadge';
@@ -24,41 +24,41 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
         <Button
           onClick={handlePrint}
           variant="outline"
-          className="gap-2 border-indigo-200 text-indigo-600 hover:bg-indigo-50"
+          className="gap-2 border-[#E2E8F0] text-[#0F172A] hover:bg-[#E8ECF1] rounded-md"
         >
-          <Printer className="size-4" />
+          <Printer className="size-4 stroke-[1.75]" aria-hidden="true" />
           Cetak Tiket / Struk
         </Button>
       </div>
 
       {/* Area Struk / Tiket Fisik */}
-      <div className="bg-white border border-[#E4E7F2] rounded-2xl p-6 md:p-8 shadow-xs print:border-none print:shadow-none print:p-0 text-[#1A1A2E] text-sm">
+      <div className="bg-white border border-[#E2E8F0] rounded-lg p-6 md:p-8 print:border-slate-300 print:shadow-none print:bg-white print:p-4 text-[#020617] text-sm">
         {/* Header Usaha */}
-        <div className="flex justify-between items-start pb-6 border-b border-[#E4E7F2]">
+        <div className="flex justify-between items-start pb-6 border-b border-[#E2E8F0]">
           <div className="flex items-start gap-3">
-            <div className="size-11 rounded-xl bg-indigo-600 flex items-center justify-center text-white shrink-0 print:border print:border-indigo-600">
-              <QwashLogo variant="symbol" size="sm" className="text-white" />
+            <div className="size-10 rounded-md bg-[#0F172A] flex items-center justify-center text-white shrink-0 print:border print:border-[#0F172A] print:text-[#0F172A] print:bg-white">
+              <QwashLogo variant="symbol" size="sm" />
             </div>
             <div>
-              <h2 className="text-lg font-bold tracking-tight text-indigo-900 leading-tight">
+              <h2 className="font-heading text-base font-bold tracking-tight text-[#0F172A] leading-tight">
                 QWASH LAUNDRY & HYGIENIC CARE
               </h2>
-              <p className="text-xs text-[#6B7280] mt-0.5">
+              <p className="text-xs text-[#475569] mt-0.5">
                 Layanan Cuci Higienis, Bersih Presisi, dan Terpercaya
               </p>
-              <p className="text-xs text-[#6B7280]">
-                Jl. Margonda Raya No. 100, Depok • Telp: 0812-3456-7890
+              <p className="text-xs text-[#475569]">
+                Jl. Margonda Raya No. 100, Depok | Telp: 0812-3456-7890
               </p>
             </div>
           </div>
           <div className="text-right">
-            <span className="text-xs uppercase tracking-wider text-[#6B7280] font-semibold">
+            <span className="text-xs uppercase tracking-wider text-[#475569] font-medium">
               Tiket Pesanan
             </span>
-            <p className="font-mono font-bold text-base text-indigo-600">
+            <p className="font-mono font-bold text-base text-[#0369A1] tabular-nums">
               {psn.id_psn}
             </p>
-            <div className="mt-1 flex justify-end gap-1.5">
+            <div className="mt-1.5 flex justify-end gap-1.5 print:hidden">
               <StatusBadge status={psn.sts_psn} size="sm" />
               <StatusBadge
                 status={bayar ? 'Lunas' : 'Belum Lunas'}
@@ -69,76 +69,78 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
         </div>
 
         {/* Informasi Pelanggan & Waktu */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-5 border-b border-[#E4E7F2] text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-5 border-b border-[#E2E8F0] text-xs">
           <div>
-            <span className="text-[#6B7280] font-medium">Pelanggan:</span>
-            <p className="text-sm font-semibold text-[#1A1A2E] mt-0.5">
+            <span className="text-[#475569] font-medium">Pelanggan:</span>
+            <p className="text-sm font-semibold text-[#020617] mt-0.5">
               {plgn.nm_plgn}
             </p>
-            <p className="text-[#4B5563] tabular-nums">{plgn.no_hp}</p>
-            <p className="text-[#6B7280] mt-0.5">{plgn.alamat}</p>
+            <p className="font-mono text-[#334155] tabular-nums mt-0.5">{plgn.no_hp}</p>
+            <p className="text-[#475569] mt-0.5">{plgn.alamat}</p>
           </div>
           <div className="md:text-right flex flex-col md:items-end">
             <div>
-              <span className="text-[#6B7280] font-medium">Tanggal Masuk:</span>
-              <p className="font-medium text-[#1A1A2E] tabular-nums">
+              <span className="text-[#475569] font-medium">Tanggal Masuk:</span>
+              <p className="font-mono font-medium text-[#020617] tabular-nums">
                 {formatDateTime(psn.tgl_msk)}
               </p>
             </div>
             <div className="mt-2">
-              <span className="text-[#6B7280] font-medium">Estimasi Selesai:</span>
-              <p className="font-semibold text-indigo-600 tabular-nums">
+              <span className="text-[#475569] font-medium">Estimasi Selesai:</span>
+              <p className="font-mono font-semibold text-[#0369A1] tabular-nums">
                 {formatDateTime(psn.est_sls)}
               </p>
             </div>
-            <div className="mt-1 text-[#6B7280]">
-              Kasir Pencatat: <span className="font-medium">{ptgs.nm_ptgs}</span>
+            <div className="mt-1.5 text-[#475569]">
+              Kasir Pencatat: <span className="font-medium text-[#020617]">{ptgs.nm_ptgs}</span>
             </div>
           </div>
         </div>
 
         {/* Tabel Rincian Layanan Cucian (Output 3) */}
-        <div className="py-5 border-b border-[#E4E7F2]">
-          <h3 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-3">
+        <div className="py-5 border-b border-[#E2E8F0]">
+          <h3 className="text-xs font-semibold text-[#475569] uppercase tracking-wider mb-3">
             Rincian Layanan & Berat
           </h3>
-          <table className="w-full text-left text-xs">
-            <thead>
-              <tr className="border-b border-[#E4E7F2] text-[#6B7280]">
-                <th className="pb-2 font-medium">Layanan</th>
-                <th className="pb-2 font-medium text-center">Estimasi</th>
-                <th className="pb-2 font-medium text-right">Tarif/kg</th>
-                <th className="pb-2 font-medium text-right">Berat (kg)</th>
-                <th className="pb-2 font-medium text-right">Subtotal</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#F3F4F6]">
-              {items.map((it) => (
-                <tr key={it.id_lyn}>
-                  <td className="py-2.5 font-medium text-[#1A1A2E]">
-                    {it.nm_lyn}
-                  </td>
-                  <td className="py-2.5 text-center text-[#6B7280]">
-                    {it.est_hari} Hari
-                  </td>
-                  <td className="py-2.5 text-right tabular-nums text-[#4B5563]">
-                    {formatRupiah(it.hrg_trans)}
-                  </td>
-                  <td className="py-2.5 text-right tabular-nums font-semibold text-[#1A1A2E]">
-                    {it.brt_kg} kg
-                  </td>
-                  <td className="py-2.5 text-right tabular-nums font-semibold text-[#1A1A2E]">
-                    {formatRupiah(Math.round(it.brt_kg * it.hrg_trans))}
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-[#E2E8F0] text-[#475569]">
+                  <th className="pb-2 font-medium">Layanan</th>
+                  <th className="pb-2 font-medium text-center">Estimasi</th>
+                  <th className="pb-2 font-medium text-right">Tarif/kg</th>
+                  <th className="pb-2 font-medium text-right">Berat (kg)</th>
+                  <th className="pb-2 font-medium text-right">Subtotal</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-[#E2E8F0]">
+                {items.map((it) => (
+                  <tr key={it.id_lyn}>
+                    <td className="py-2.5 font-medium text-[#020617]">
+                      {it.nm_lyn}
+                    </td>
+                    <td className="py-2.5 text-center font-mono text-[#475569] tabular-nums">
+                      {it.est_hari} Hari
+                    </td>
+                    <td className="py-2.5 text-right font-mono tabular-nums text-[#334155]">
+                      {formatRupiah(it.hrg_trans)}
+                    </td>
+                    <td className="py-2.5 text-right font-mono tabular-nums font-semibold text-[#020617]">
+                      {it.brt_kg} kg
+                    </td>
+                    <td className="py-2.5 text-right font-mono tabular-nums font-semibold text-[#020617]">
+                      {formatRupiah(Math.round(it.brt_kg * it.hrg_trans))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           {/* Total Tagihan */}
-          <div className="flex justify-between items-center pt-4 mt-2 border-t border-[#E4E7F2]">
-            <span className="font-bold text-sm text-[#1A1A2E]">TOTAL TAGIHAN</span>
-            <span className="font-extrabold text-base text-indigo-600 tabular-nums">
+          <div className="flex justify-between items-center pt-4 mt-2 border-t border-[#E2E8F0]">
+            <span className="font-heading font-bold text-sm text-[#0F172A]">TOTAL TAGIHAN</span>
+            <span className="font-heading font-bold text-lg text-[#020617] tabular-nums">
               {formatRupiah(psn.tot_hrg)}
             </span>
           </div>
@@ -146,42 +148,45 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
 
         {/* Informasi Pembayaran (Output 4 Bukti Pembayaran) */}
         {bayar ? (
-          <div className="py-4 bg-[#F8FAFC] rounded-xl px-4 mt-4 border border-[#E4E7F2]">
+          <div className="py-4 bg-[#F8FAFC] rounded-md px-4 mt-4 border border-[#E2E8F0]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CheckCircle className="size-4 text-emerald-600" />
-                <span className="font-bold text-xs uppercase tracking-wider text-emerald-700">
+                <BadgeCheck className="size-4 text-[#15803D]" aria-hidden="true" />
+                <span className="font-bold text-xs uppercase tracking-wider text-[#15803D]">
                   BUKTI PEMBAYARAN LUNAS
                 </span>
               </div>
-              <span className="text-xs font-mono font-semibold text-[#4B5563]">
+              <span className="text-xs font-mono font-semibold text-[#334155] tabular-nums">
                 {bayar.id_byr}
               </span>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-2 text-xs">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 text-xs">
               <div>
-                <span className="text-[#6B7280]">Waktu Bayar:</span>
-                <p className="font-medium tabular-nums">{formatDateTime(bayar.tgl_byr)}</p>
+                <span className="text-[#475569]">Waktu Bayar:</span>
+                <p className="font-mono font-medium text-[#020617] tabular-nums mt-0.5">
+                  {formatDateTime(bayar.tgl_byr)}
+                </p>
               </div>
               <div>
-                <span className="text-[#6B7280]">Metode:</span>
-                <p className="font-medium">{bayar.met_byr}</p>
+                <span className="text-[#475569]">Metode:</span>
+                <p className="font-medium text-[#020617] mt-0.5">{bayar.met_byr}</p>
               </div>
               <div>
-                <span className="text-[#6B7280]">Jumlah Dibayar:</span>
-                <p className="font-semibold text-emerald-700 tabular-nums">
+                <span className="text-[#475569]">Jumlah Dibayar:</span>
+                <p className="font-mono font-semibold text-[#15803D] tabular-nums mt-0.5">
                   {formatRupiah(bayar.jml_byr)}
                 </p>
               </div>
               <div>
-                <span className="text-[#6B7280]">Kasir Penerima:</span>
-                <p className="font-medium">{bayar.nm_ptgs || '-'}</p>
+                <span className="text-[#475569]">Kasir Penerima:</span>
+                <p className="font-medium text-[#020617] mt-0.5">{bayar.nm_ptgs || '-'}</p>
               </div>
             </div>
           </div>
         ) : (
-          <div className="py-3 px-4 bg-red-50 border border-red-200 rounded-xl mt-4 flex items-center justify-between text-xs text-red-700">
-            <span className="font-medium">
+          <div className="py-3 px-4 bg-[#FEE2E2] border border-[#FECACA] rounded-md mt-4 flex items-center justify-between text-xs text-[#B91C1C]">
+            <span className="font-medium flex items-center gap-2">
+              <AlertCircle className="size-4 shrink-0" aria-hidden="true" />
               Status Pembayaran: <strong>BELUM LUNAS</strong>
             </span>
             <span>Wajib dilunasi saat pengambilan cucian</span>
@@ -189,8 +194,8 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
         )}
 
         {/* Catatan / Ketentuan */}
-        <div className="mt-6 pt-4 border-t border-dashed border-[#E4E7F2] text-[11px] text-[#6B7280] leading-relaxed">
-          <p className="font-semibold text-[#4B5563]">Perhatian:</p>
+        <div className="mt-6 pt-4 border-t border-dashed border-[#E2E8F0] text-xs text-[#475569] leading-relaxed">
+          <p className="font-semibold text-[#334155]">Perhatian:</p>
           <ul className="list-disc pl-4 space-y-0.5 mt-1">
             <li>Pengambilan cucian wajib membawa tiket/bukti pembayaran ini.</li>
             <li>Cucian yang tidak diambil dalam 30 hari di luar tanggung jawab kami.</li>

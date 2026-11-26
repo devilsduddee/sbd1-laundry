@@ -9,54 +9,52 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['"Fira Sans"', 'system-ui', 'sans-serif'],
+        heading: ['"Fira Code"', 'monospace'],
+        mono: ['"Fira Code"', 'monospace'],
       },
       colors: {
-        // Token Qwash Hygienic (05-design.md)
-        background: '#F5F6FA',
-        foreground: '#1A1A2E',
+        // Token Minimalism & Swiss Style (ui-ux-pro-max — 05-design.md v2.0)
+        background: '#F8FAFC',
+        foreground: '#020617',
         card: {
           DEFAULT: '#FFFFFF',
-          foreground: '#1A1A2E',
+          foreground: '#020617',
         },
         popover: {
           DEFAULT: '#FFFFFF',
-          foreground: '#1A1A2E',
+          foreground: '#020617',
         },
         primary: {
-          DEFAULT: '#4F46E5',
+          DEFAULT: '#0F172A',
           foreground: '#FFFFFF',
         },
         secondary: {
-          DEFAULT: '#EEF0F8',
-          foreground: '#1A1A2E',
-        },
-        muted: {
-          DEFAULT: '#EEF0F8',
-          foreground: '#6B7280',
-        },
-        accent: {
-          DEFAULT: '#EEF0F8',
-          foreground: '#1E1B4B',
-        },
-        destructive: {
-          DEFAULT: '#EF4444',
+          DEFAULT: '#334155',
           foreground: '#FFFFFF',
         },
-        border: '#E4E7F2',
-        input: '#E4E7F2',
-        ring: '#4F46E5',
-
-        // Semantic brand & status tokens
-        brand: {
-          midnight: '#1E1B4B',
-          indigo: '#4F46E5',
+        muted: {
+          DEFAULT: '#E8ECF1',
+          foreground: '#475569',
         },
+        accent: {
+          DEFAULT: '#0369A1',
+          foreground: '#FFFFFF',
+        },
+        destructive: {
+          DEFAULT: '#DC2626',
+          foreground: '#FFFFFF',
+        },
+        border: '#E2E8F0',
+        input: '#E2E8F0',
+        ring: '#0F172A',
+
+        // Semantic status tokens (kontras >= 4.5:1)
         status: {
-          queueBg: '#F3F4F6',
-          queueText: '#374151',
-          washBg: '#DBEAFE',
-          washText: '#1D4ED8',
+          queueBg: '#F1F5F9',
+          queueText: '#334155',
+          washBg: '#E0F2FE',
+          washText: '#0369A1',
           ironBg: '#FEF3C7',
           ironText: '#B45309',
           readyBg: '#EDE9FE',
@@ -68,9 +66,9 @@ const config: Config = {
         },
       },
       borderRadius: {
-        lg: '1rem',       // 16px — Card utama
-        md: '0.75rem',    // 12px — Input & Button
-        sm: '0.5rem',     // 8px
+        lg: '0.75rem',   // 12px — Card utama Swiss Style
+        md: '0.5rem',    // 8px — Input & Button
+        sm: '0.375rem',  // 6px — Badge / Tag
       },
     },
   },

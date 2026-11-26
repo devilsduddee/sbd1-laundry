@@ -8,41 +8,41 @@ export const PublicFooter: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="mt-auto bg-[#1E1B4B] text-white border-t border-indigo-950/60 pb-safe">
+    <footer className="mt-auto bg-[#0F172A] text-white border-t border-slate-800 pb-safe">
       <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* Kolom 1: Brand & Filosofi (5 Kolom) */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="size-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shrink-0 shadow-sm shadow-indigo-900">
+              <div className="size-9 rounded-md bg-[#0369A1] flex items-center justify-center text-white shrink-0">
                 <QwashLogo variant="symbol" size="sm" className="text-white" />
               </div>
               <div className="leading-tight">
-                <span className="font-bold text-white text-sm block tracking-tight">
+                <span className="font-heading font-bold text-white text-sm block tracking-tight">
                   Qwash Laundry &amp; Hygienic Care
                 </span>
-                <span className="text-indigo-300 text-[11px] block mt-0.5">
+                <span className="text-slate-400 text-xs block mt-0.5">
                   Sistem Pengelolaan Operasional dan Basis Data Laundry
                 </span>
               </div>
             </div>
 
-            <p className="text-indigo-200/80 text-xs leading-relaxed max-w-sm">
+            <p className="text-slate-300 text-xs leading-relaxed max-w-sm">
               Layanan perawatan pakaian kiloan dan satuan modern berstandar higienis. Pantau progres pencucian secara transparan langsung dari ponsel Anda.
             </p>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-800/60 text-[11px] text-emerald-300 font-medium select-none">
-              <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-              Layanan Operasional Aktif
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-slate-800 border border-slate-700 text-xs font-mono text-emerald-300 font-medium select-none">
+              <span className="size-2 rounded-full bg-emerald-400" />
+              OPERASIONAL_AKTIF
             </div>
           </div>
 
           {/* Kolom 2: Navigasi Tautan (3 Kolom) */}
           <div className="md:col-span-3 space-y-3">
-            <h4 className="font-semibold text-white text-xs tracking-wider uppercase">
+            <h4 className="font-heading font-semibold text-white text-xs tracking-wider uppercase">
               Navigasi Cepat
             </h4>
-            <ul className="space-y-2 text-xs text-indigo-200/80">
+            <ul className="space-y-2 text-xs text-slate-300">
               <li>
                 <a href="#lacak" className="hover:text-white transition-colors">
                   Pelacakan Nomor Tiket
@@ -68,13 +68,13 @@ export const PublicFooter: React.FC = () => {
 
           {/* Kolom 3: Jam & Outlet (2 Kolom) */}
           <div className="md:col-span-2 space-y-3">
-            <h4 className="font-semibold text-white text-xs tracking-wider uppercase">
+            <h4 className="font-heading font-semibold text-white text-xs tracking-wider uppercase">
               Jam Buka
             </h4>
-            <div className="space-y-1.5 text-xs text-indigo-200/80">
+            <div className="space-y-1.5 text-xs text-slate-300">
               <p className="font-medium text-white">Senin - Minggu</p>
-              <p className="font-mono text-[11px] text-indigo-300">07.00 - 21.00 WIB</p>
-              <p className="text-[11px] text-indigo-200/70 pt-1 leading-snug">
+              <p className="font-mono text-xs text-sky-300">07.00 - 21.00 WIB</p>
+              <p className="text-xs text-slate-400 pt-1 leading-snug">
                 Jl. Margonda Raya No. 100, Depok
               </p>
             </div>
@@ -82,30 +82,30 @@ export const PublicFooter: React.FC = () => {
 
           {/* Kolom 4: Akses Petugas (2 Kolom) */}
           <div className="md:col-span-2 space-y-3">
-            <h4 className="font-semibold text-white text-xs tracking-wider uppercase">
+            <h4 className="font-heading font-semibold text-white text-xs tracking-wider uppercase">
               Portal Internal
             </h4>
-            <p className="text-indigo-200/70 text-[11px] leading-relaxed">
+            <p className="text-slate-400 text-xs leading-relaxed">
               Khusus staf kasir, operasional, dan admin.
             </p>
             <div className="pt-1">
               <Button
                 onClick={() => navigate('/login')}
-                className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl text-xs h-9 px-3 gap-1.5 shadow-sm touch-manipulation active:scale-[0.98]"
+                className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white font-semibold rounded-md text-xs h-9 px-3 gap-1.5 touch-manipulation active:scale-[0.98]"
               >
                 <span>Masuk Staf</span>
-                <ArrowRight className="size-3.5" />
+                <ArrowRight className="size-3.5" aria-hidden="true" />
               </Button>
             </div>
           </div>
         </div>
 
         {/* Baris Bawah: Copyright & Akademik */}
-        <div className="mt-12 pt-6 border-t border-indigo-900/60 flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px] text-indigo-300/70">
+        <div className="mt-12 pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-400">
           <p>
-            &copy; 2024 Qwash Laundry &amp; Hygienic Care. Seluruh hak cipta dilindungi.
+            &copy; 2026 Qwash Laundry &amp; Hygienic Care. Seluruh hak cipta dilindungi.
           </p>
-          <p className="font-mono text-indigo-300/80">
+          <p className="font-mono text-slate-400">
             Tugas Besar Sistem Basis Data Kelas 3IA01
           </p>
         </div>

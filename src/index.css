@@ -77,9 +77,9 @@
     transition: transform 100ms var(--ease-out);
   }
 
-  /* Accessible Focus-Visible */
+  /* Accessible Focus-Visible (Swiss Slate Navy #0F172A) */
   :focus-visible {
-    outline: 2px solid #4F46E5;
+    outline: 2px solid #0F172A;
     outline-offset: 2px;
   }
 }
@@ -92,7 +92,7 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Design Taste: Subtle Card Lift for Precise Pointer Devices */
+/* Swiss Style: Subtle Card Lift for Precise Pointer Devices */
 @media (hover: hover) and (pointer: fine) {
   .hover-lift {
     transform: translateY(0);
@@ -100,7 +100,7 @@
   }
   .hover-lift:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px -2px rgba(30, 27, 75, 0.08);
+    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
   }
 }
 

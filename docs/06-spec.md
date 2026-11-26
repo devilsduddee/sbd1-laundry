@@ -1,16 +1,16 @@
 # Spec Teknis: Sistem Pengelolaan Laundry
 
 - **Versi:** 1.2
-- **Tanggal:** 2026-11-21
+- **Tanggal:** 2026-11-26
 - **Status:** Approved (Gate 3)
-- **Sumber input:** `04-prd.md` v1.1 (Approved), `05-design.md` v1.1, `project-context.md`, dan dokumen ERD Proposal Tugas Kuliah Sistem Basis Data.
+- **Sumber input:** `04-prd.md` v1.1 (Approved), `05-design.md` v2.0, `project-context.md`, dan dokumen ERD Proposal Tugas Kuliah Sistem Basis Data.
 - **Skill digunakan:** `spec-writer`
 
 ## TL;DR
 
-Dokumen ini menerjemahkan `04-prd.md` v1.1 dan `05-design.md` v1.0 menjadi spesifikasi teknis siap implementasi (*vibecoding*) menggunakan stack **Vite + React + `shadcn/ui` + Hono + Turso (libSQL) + Drizzle ORM** dengan deployment di **Vercel**.
+Dokumen ini menerjemahkan `04-prd.md` v1.1 dan `05-design.md` v1.0 menjadi spesifikasi teknis siap implementasi (*vibecoding*) menggunakan stack **Vite + React + `shadcn/ui` + Hono + Turso (libSQL)** dengan deployment di **Vercel**.
 
-Seluruh skema basis data mempertahankan **100% nama tabel dan nama field asli proposal** (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) tanpa penambahan atau perubahan nama kolom, didefinisikan secara type-safe via Drizzle ORM (`server/db/schema.ts`). Bagian paling kritis yang dijaga di backend Hono adalah transaksi atomik pembuatan tiket (`PSN` + `DTL_PSN`), penguncian harga `hrg_trans` di server, autentikasi stateless via JWT *HttpOnly cookie* untuk Vercel Serverless, serta blokir mutlak pengambilan cucian jika `BYR.sts_byr` belum `Lunas`.
+Seluruh skema basis data mempertahankan **100% nama tabel dan nama field asli proposal** (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) tanpa penambahan atau perubahan nama kolom. Bagian paling kritis yang dijaga di backend Hono adalah transaksi atomik pembuatan tiket (`PSN` + `DTL_PSN`), penguncian harga `hrg_trans` di server, autentikasi stateless via JWT *HttpOnly cookie* untuk Vercel Serverless, serta blokir mutlak pengambilan cucian jika `BYR.sts_byr` belum `Lunas`.
 
 ---
 
@@ -29,7 +29,7 @@ Seluruh skema basis data mempertahankan **100% nama tabel dan nama field asli pr
 - **Tech stack (Dikunci):**
   - **Frontend:** Vite + React (TypeScript) + Tailwind CSS + `shadcn/ui` + `lucide-react` + `react-router-dom` + `gsap` (`@gsap/react`).
   - **Backend API:** Hono (TypeScript) berjalan sebagai Vercel Serverless Function (`api/index.ts` via `hono/vercel`).
-  - **Database & ORM:** Turso / libSQL (`@libsql/client`) dikelola menggunakan Drizzle ORM (`drizzle-orm` + `drizzle-kit`) dengan SQLite relational schema + `PRAGMA foreign_keys = ON`.
+  - **Database:** Turso / libSQL (`@libsql/client`) dengan SQLite relational schema + `PRAGMA foreign_keys = ON`.
   - **Deployment:** Vercel (single project: static SPA Vite di `dist/` + serverless API di `/api/*`).
 
 ---
@@ -440,8 +440,8 @@ Seluruh endpoint selain `/api/auth/login` wajib memverifikasi **HttpOnly JWT Coo
 | Pencarian Pelanggan Cepat | `shadcn/ui` (`Popover` + `Command` / Combobox) | Cari `nm_plgn` atau `no_hp` + tombol *"+ Pelanggan Baru"* via `Dialog`. |
 | Modal Bayar & Konfirmasi | `shadcn/ui` (`Dialog`, `AlertDialog`) | Untuk modal input `BYR` dan konfirmasi penutupan pesanan. |
 | Notifikasi Toast | `sonner` (via `shadcn/ui`) | Feedback sukses/error API instan. |
-| Order Status Stepper | Komposisi `Badge` + utilitas Tailwind CSS + `gsap` | Mengadaptasi stepper horizontal *Qwash* dengan animasi transisi progres halus. |
-| Animasi UI | `gsap` + `@gsap/react` (`useGSAP`) | Stagger kartu, animasi stepper, dan micro-interaction; hormati `prefers-reduced-motion`. |
+| Order Status Stepper | Komposisi `Badge` + utilitas Tailwind CSS + `gsap` | Stepper horizontal presisi Swiss Style (`05-design.md` v2.0) dengan animasi progres `power2.out`. |
+| Animasi UI | `gsap` + `@gsap/react` (`useGSAP`) | Stagger kartu (`grid: 'auto'`), hover `quickTo`, dan stepper; dilarang `back.out` di tabel data padat; hormati `prefers-reduced-motion`. |
 | Ikon | `lucide-react` | Satu paket ikon garis konsisten. |
 | Database Client & Hashing | `@libsql/client` + `bcryptjs` + `@hono/zod-validator` | Ringan & kompatibel penuh dengan runtime Vercel Serverless. |
 
@@ -453,7 +453,7 @@ flowchart TD
     App --> Shell["ProtectedShell (Sidebar + Topbar print:hidden)"]
     Shell --> Dash["OrdersPage (/) — KPI Cards + Tabs Status + OrderTable"]
     Shell --> Create["CreateOrderPage (/pesanan/baru) — CustomerCombobox + ServiceGrid + SummaryCard"]
-    Shell --> Detail["OrderDetailPage (/pesanan/:id) — QwashStepper + ItemsTable + PaymentCard + PrintReceipt"]
+    Shell --> Detail["OrderDetailPage (/pesanan/:id) — OrderStepper + ItemsTable + PaymentCard + PrintReceipt"]
     Shell --> Cust["CustomersPage (/pelanggan) — CustomerTable + CustomerDialog"]
     Shell --> Svc["ServicesPage (/layanan) — ServiceGrid/Table + ServiceDialog"]
     Shell --> Staff["StaffPage (/petugas, Admin) — StaffTable + StaffDialog"]
@@ -466,15 +466,11 @@ flowchart TD
 sistem-laundry/
 ├── api/
 │   └── index.ts                 # Entrypoint Vercel Serverless: export handle(app) dari hono/vercel
-├── drizzle.config.ts            # Konfigurasi Drizzle Kit untuk Turso
 ├── server/
 │   ├── app.ts                   # Instance Hono utama + registrasi middleware & routes (/api/*)
-│   ├── dev.ts                   # Local dev server (@hono/node-server)
 │   ├── db/
-│   │   ├── client.ts            # Inisialisasi @libsql/client & Drizzle db instance
-│   │   ├── schema.ts            # Drizzle ORM schema 6 tabel persis ERD proposal
-│   │   ├── schema.sql           # DDL 6 tabel persis ERD + index
-│   │   └── seed.ts              # Seeding akun petugas awal & master layanan
+│   │   ├── client.ts            # Inisialisasi @libsql/client (TURSO_DATABASE_URL & TURSO_AUTH_TOKEN)
+│   │   └── schema.sql           # DDL 6 tabel persis ERD + index + seed admin awal
 │   ├── middleware/
 │   │   └── auth.ts              # Verifikasi JWT cookie & guard level (Admin/Kasir/Operasional)
 │   └── routes/
@@ -510,7 +506,7 @@ sistem-laundry/
 
 | Skenario | Perilaku yang Diharapkan | Pesan / Respons UI |
 |---|---|---|
-| **Input kosong / `brt_kg <= 0`** | Ditolak validasi Zod di FE & BE (`400 Bad Request`). | Highlight field merah + pesan spesifik (misal *"Berat cucian harus lebih dari 0"*). |
+| **Input kosong / `brt_kg <= 0`** | Ditolak validasi Zod di FE & BE (`400 Bad Request`). **Nilai form yang sudah diisi user wajib dipertahankan (jangan di-reset).** | Highlight field merah + pesan spesifik di bawah field terkait. |
 | **Layanan sama dipilih 2x dalam 1 pesanan** | UI otomatis menggabungkan baris dan menjumlahkan `brt_kg`; BE juga menormalkan `items` per `id_lyn` sebelum insert ke `DTL_PSN`. | Jumlah berat terakumulasi dalam satu baris layanan. |
 | **Ambil cucian saat belum `Lunas`** | `PATCH /api/pesanan/:id/ambil` mengembalikan `409 Conflict`. Tombol serahkan di UI dinonaktifkan dengan alert merah. | *"Pesanan belum lunas. Catat pembayaran terlebih dahulu sebelum menyerahkan cucian."* |
 | **Ambil cucian sebelum `Siap Diambil`** | `PATCH /api/pesanan/:id/ambil` menolak jika `sts_psn` belum `Siap Diambil`. | *"Status cucian belum Siap Diambil."* |
@@ -579,4 +575,4 @@ sistem-laundry/
 |---|---|---|
 | 1.0 | 2026-11-20 | Draft awal Spec Teknis (`06-spec.md`) dengan stack Vite + React + `shadcn/ui` + Hono + Turso (Vercel deployment) dan kepatuhan penuh pada 6 tabel & nama field asli proposal. |
 | 1.1 | 2026-11-20 | Menambahkan `gsap` + `@gsap/react` untuk animasi UI halus sesuai pembaruan `05-design.md` v1.1. |
-| 1.2 | 2026-11-21 | Mengintegrasikan Drizzle ORM (`drizzle-orm` + `drizzle-kit`) untuk mempermudah query builder type-safe dan pengelolaan skema Turso/libSQL dengan tetap menjaga 100% nama tabel & kolom asli proposal. |
+| 1.2 | 2026-11-26 | Menyelaraskan spec komponen & error handling dengan `05-design.md` v2.0 (Minimalism & Swiss Style dari `ui-ux-pro-max`, aturan *Preserve Input After Failed Submit*, dan GSAP anti-overshoot). |

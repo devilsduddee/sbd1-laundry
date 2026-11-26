@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
   CreditCard,
-  CheckCircle,
+  CheckCircle2,
   AlertTriangle,
   Play,
   Loader2,
@@ -58,8 +58,8 @@ export const OrderDetailPage: React.FC = () => {
 
   if (loading || !data) {
     return (
-      <div className="flex justify-center items-center h-64 text-xs text-muted-foreground">
-        <Loader2 className="mr-2 size-5 animate-spin text-indigo-600" />
+      <div className="flex justify-center items-center h-64 text-xs text-[#475569]">
+        <Loader2 className="mr-2 size-5 animate-spin text-[#0369A1]" aria-hidden="true" />
         Memuat detail pesanan...
       </div>
     );
@@ -126,6 +126,7 @@ export const OrderDetailPage: React.FC = () => {
       setModalBayarOpen(false);
       await fetchDetail();
     } catch (err: any) {
+      // Preserve form inputs on error
       toast.error(err.message || 'Gagal mencatat pembayaran');
     } finally {
       setPaying(false);
@@ -140,27 +141,27 @@ export const OrderDetailPage: React.FC = () => {
           variant="outline"
           size="sm"
           onClick={() => navigate('/pesanan')}
-          className="rounded-xl border-[#E4E7F2] h-9 gap-1 text-xs"
+          className="rounded-md border-[#E2E8F0] hover:bg-[#E8ECF1] text-[#0F172A] h-9 gap-1.5 text-xs font-medium"
         >
-          <ArrowLeft className="size-3.5" />
+          <ArrowLeft className="size-3.5" aria-hidden="true" />
           Kembali ke Daftar
         </Button>
       </div>
 
       {/* Stepper Progress & Aksi Cepat Operasional (print:hidden) */}
-      <Card className="print:hidden rounded-2xl border-[#E4E7F2] shadow-2xs overflow-hidden">
-        <CardHeader className="bg-[#1E1B4B] text-white p-4">
-          <CardTitle className="text-sm font-semibold flex justify-between items-center">
+      <Card className="print:hidden rounded-lg border-[#E2E8F0] shadow-none bg-white overflow-hidden">
+        <CardHeader className="bg-[#0F172A] text-white p-4">
+          <CardTitle className="font-heading text-sm font-semibold flex justify-between items-center">
             <span>Pelacakan Progres Pengerjaan Cucian</span>
-            <span className="font-mono text-xs text-indigo-200">{psn.id_psn}</span>
+            <span className="font-mono text-xs text-sky-300 tabular-nums">{psn.id_psn}</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 md:p-6 space-y-5">
           <OrderStepper currentStatus={psn.sts_psn} />
 
           {/* Action Bar Berdasarkan Status & Role */}
-          <div className="pt-3 border-t border-[#E4E7F2] flex flex-wrap items-center justify-between gap-3">
-            <div className="text-xs text-muted-foreground">
+          <div className="pt-3 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
+            <div className="text-xs text-[#475569] font-medium">
               Aksi operasional selanjutnya:
             </div>
 
@@ -171,9 +172,9 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Sedang Dicuci')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl gap-1.5 text-xs h-9"
+                  className="bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md gap-1.5 text-xs h-9"
                 >
-                  <Play className="size-3.5" />
+                  <Play className="size-3.5" aria-hidden="true" />
                   Mulai Proses Cuci
                 </Button>
               )}
@@ -184,9 +185,9 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Sedang Disetrika')}
-                  className="bg-amber-600 hover:bg-amber-700 text-white rounded-xl gap-1.5 text-xs h-9"
+                  className="bg-[#B45309] hover:bg-[#92400E] text-white rounded-md gap-1.5 text-xs h-9"
                 >
-                  <Play className="size-3.5" />
+                  <Play className="size-3.5" aria-hidden="true" />
                   Lanjut ke Penyetrikaan
                 </Button>
               )}
@@ -197,9 +198,9 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Siap Diambil')}
-                  className="bg-purple-600 hover:bg-purple-700 text-white rounded-xl gap-1.5 text-xs h-9"
+                  className="bg-[#6D28D9] hover:bg-[#5B21B6] text-white rounded-md gap-1.5 text-xs h-9"
                 >
-                  <CheckCircle className="size-3.5" />
+                  <CheckCircle2 className="size-3.5" aria-hidden="true" />
                   Tandai Siap Diambil
                 </Button>
               )}
@@ -209,9 +210,9 @@ export const OrderDetailPage: React.FC = () => {
                 <Button
                   size="sm"
                   onClick={() => setModalBayarOpen(true)}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl gap-1.5 text-xs h-9"
+                  className="bg-[#15803D] hover:bg-[#166534] text-white rounded-md gap-1.5 text-xs h-9"
                 >
-                  <CreditCard className="size-3.5" />
+                  <CreditCard className="size-3.5" aria-hidden="true" />
                   Catat Pembayaran Lunas
                 </Button>
               )}
@@ -222,19 +223,22 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={!isLunas || updatingStatus}
                   onClick={handleSerahkanCucian}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl gap-1.5 text-xs h-9 shadow-xs"
+                  className="bg-[#0F172A] hover:bg-[#1E293B] text-white rounded-md gap-1.5 text-xs h-9"
                 >
-                  <CheckCircle className="size-3.5" />
+                  <CheckCircle2 className="size-3.5" aria-hidden="true" />
                   Serahkan Cucian ke Pelanggan
                 </Button>
               )}
             </div>
           </div>
 
-          {/* Banner Peringatan jika Siap Diambil tapi Belum Lunas (FR-07) */}
+          {/* Banner Peringatan jika Siap Diambil tapi Belum Lunas (Prosedur 6 / FR-07) */}
           {isSiap && !isLunas && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-xl flex items-center gap-2.5 text-xs text-red-700">
-              <AlertTriangle className="size-4 shrink-0 text-red-600" />
+            <div
+              role="alert"
+              className="p-3 bg-[#FEE2E2] border border-[#FECACA] rounded-md flex items-center gap-2.5 text-xs text-[#B91C1C]"
+            >
+              <AlertTriangle className="size-4 shrink-0 text-[#DC2626]" aria-hidden="true" />
               <span>
                 <strong>Perhatian Kasir:</strong> Cucian sudah siap diambil tetapi pembayaran belum lunas.
                 Wajib mencatat pembayaran terlebih dahulu sebelum menyerahkan cucian.
@@ -243,8 +247,8 @@ export const OrderDetailPage: React.FC = () => {
           )}
 
           {isSelesai && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2.5 text-xs text-emerald-800">
-              <CheckCircle className="size-4 shrink-0 text-emerald-600" />
+            <div className="p-3 bg-[#DCFCE7] border border-[#BBF7D0] rounded-md flex items-center gap-2.5 text-xs text-[#15803D]">
+              <CheckCircle2 className="size-4 shrink-0 text-[#15803D]" aria-hidden="true" />
               <span>
                 Pesanan ini telah selesai dan diserahkan kepada pelanggan. Seluruh transaksi tertutup dengan aman.
               </span>
@@ -258,21 +262,21 @@ export const OrderDetailPage: React.FC = () => {
 
       {/* Modal Pencatatan Pembayaran (Prosedur 5) */}
       <Dialog open={modalBayarOpen} onOpenChange={setModalBayarOpen}>
-        <DialogContent className="rounded-2xl max-w-sm">
+        <DialogContent className="rounded-lg max-w-sm border-[#E2E8F0]">
           <DialogHeader>
-            <DialogTitle className="text-base font-semibold">
+            <DialogTitle className="font-heading text-base font-bold text-[#0F172A]">
               Catat Pembayaran Lunas
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSavePayment} className="space-y-4 py-2 text-xs">
-            <div className="p-3 bg-[#F8FAFC] rounded-xl border border-[#E4E7F2] space-y-1">
+            <div className="p-3 bg-[#F8FAFC] rounded-md border border-[#E2E8F0] space-y-1.5">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">ID Tiket:</span>
-                <span className="font-mono font-semibold">{psn.id_psn}</span>
+                <span className="text-[#475569]">ID Tiket:</span>
+                <span className="font-mono font-semibold text-[#0F172A] tabular-nums">{psn.id_psn}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Total Tagihan:</span>
-                <span className="font-bold text-indigo-600 tabular-nums">
+                <span className="text-[#475569]">Total Tagihan:</span>
+                <span className="font-mono font-bold text-[#0369A1] tabular-nums">
                   {formatRupiah(psn.tot_hrg)}
                 </span>
               </div>
@@ -281,7 +285,7 @@ export const OrderDetailPage: React.FC = () => {
             <div className="space-y-1">
               <Label htmlFor="pay-method">Metode Pembayaran</Label>
               <Select value={metByr} onValueChange={(v) => setMetByr(v as MetByr)}>
-                <SelectTrigger id="pay-method" className="rounded-xl border-[#E4E7F2] text-xs h-9">
+                <SelectTrigger id="pay-method" className="rounded-md border-[#E2E8F0] text-xs h-9 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -305,10 +309,10 @@ export const OrderDetailPage: React.FC = () => {
                 onChange={(e) => setJmlByr(parseInt(e.target.value) || 0)}
                 required
                 min={psn.tot_hrg}
-                className="rounded-xl border-[#E4E7F2] tabular-nums"
+                className="rounded-md border-[#E2E8F0] font-mono tabular-nums"
               />
               {jmlByr > psn.tot_hrg && (
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-xs font-mono text-[#475569] tabular-nums">
                   Kembalian: {formatRupiah(jmlByr - psn.tot_hrg)}
                 </p>
               )}
@@ -318,7 +322,7 @@ export const OrderDetailPage: React.FC = () => {
               <Button
                 type="submit"
                 disabled={paying}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl"
+                className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md"
               >
                 {paying ? 'Menyimpan...' : 'Konfirmasi Pembayaran Lunas'}
               </Button>

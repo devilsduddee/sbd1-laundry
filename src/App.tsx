@@ -24,8 +24,8 @@ const ProtectedRoute: React.FC<{
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F5F6FA] text-xs text-muted-foreground">
-        <Loader2 className="mr-2 size-5 animate-spin text-indigo-600" />
+      <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] text-xs text-[#475569]">
+        <Loader2 className="mr-2 size-5 animate-spin text-[#0369A1]" aria-hidden="true" />
         Memeriksa sesi login...
       </div>
     );
