@@ -10,21 +10,6 @@ export function formatRupiah(amount: number): string {
 }
 
 /**
- * Format tanggal ISO ke format Indonesia singkat.
- */
-export function formatDate(isoString: string): string {
-  if (!isoString) return '-';
-  const d = new Date(isoString);
-  if (isNaN(d.getTime())) return isoString;
-
-  return new Intl.DateTimeFormat('id-ID', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(d);
-}
-
-/**
  * Format tanggal dan jam lengkap Indonesia.
  */
 export function formatDateTime(isoString: string): string {
