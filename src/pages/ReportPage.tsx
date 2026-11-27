@@ -126,7 +126,8 @@ export const ReportPage: React.FC = () => {
         <Button
           onClick={handleExportCSV}
           variant="outline"
-          className="border-[#D5E4E4] text-[#0B253B] hover:bg-[#E8F2F2] rounded-md gap-2 text-xs h-9 font-semibold"
+          size="sm"
+          className="gap-2 text-xs h-9 font-semibold"
         >
           <Download className="size-4" aria-hidden="true" />
           Ekspor CSV

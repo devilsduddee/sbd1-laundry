@@ -200,9 +200,12 @@ export const LoginPage: React.FC = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate('/')}
-                className="rounded-md text-xs gap-1.5 text-[#425869] hover:text-[#0B253B] hover:bg-[#E8F2F2] h-9 font-medium px-2.5 -ml-2.5 touch-manipulation"
+                className="group text-xs gap-1.5 text-[#2D4659] h-9 font-medium px-2.5 -ml-2.5"
               >
-                <ArrowLeft className="size-3.5" aria-hidden="true" />
+                <ArrowLeft
+                  className="size-3.5 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-x-[3px]"
+                  aria-hidden="true"
+                />
                 <span>Beranda Publik</span>
               </Button>
 
@@ -314,13 +317,13 @@ export const LoginPage: React.FC = () => {
                           key={acc.role}
                           type="button"
                           onClick={() => handleSelectDemo(acc)}
-                          className={`p-2.5 rounded-md border text-left flex flex-col justify-between transition-colors touch-manipulation active:scale-[0.97] cursor-pointer ${
+                          className={`p-2.5 rounded-md border text-left flex flex-col justify-between transition-[transform,background-color,border-color,box-shadow] duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-[1px] active:translate-y-[1px] active:scale-[0.985] active:duration-75 touch-manipulation cursor-pointer ${
                             isSelected
-                              ? 'border-[#006EB3] bg-[#D5ECEB]/70 text-[#0B253B] ring-1 ring-[#006EB3]'
-                              : 'border-[#D5E4E4] bg-[#F6FFFF] text-[#2D4659] hover:border-[#00A2FF] hover:bg-white'
+                              ? 'border-[#006EB3] bg-[#D5ECEB]/70 text-[#0B253B] ring-1 ring-[#006EB3] shadow-[0_2px_8px_-2px_rgba(0,110,179,0.2)]'
+                              : 'border-[#D5E4E4] bg-[#F6FFFF] text-[#2D4659] hover:border-[#9EC7C6] hover:bg-white'
                           }`}
                         >
-                          <span className="text-xs font-bold leading-tight truncate">
+                          <span className="text-xs font-bold leading-tight truncate text-[#071422]">
                             {acc.title}
                           </span>
                           <span className="text-xs font-mono text-[#425869] mt-1">
@@ -336,7 +339,8 @@ export const LoginPage: React.FC = () => {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md h-11 text-sm font-semibold touch-manipulation active:scale-[0.98]"
+                    size="lg"
+                    className="w-full h-11 text-sm font-semibold"
                   >
                     {loading ? (
                       <>

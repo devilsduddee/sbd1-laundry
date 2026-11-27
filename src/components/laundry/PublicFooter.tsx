@@ -44,22 +44,22 @@ export const PublicFooter: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-xs text-[#2D4659]">
               <li>
-                <a href="#lacak" className="hover:text-[#006EB3] transition-colors font-medium">
+                <a href="#lacak" className="neat-link inline-block hover:text-[#006EB3] transition-colors font-medium">
                   Pelacakan Nomor Tiket
                 </a>
               </li>
               <li>
-                <a href="#layanan" className="hover:text-[#006EB3] transition-colors font-medium">
+                <a href="#layanan" className="neat-link inline-block hover:text-[#006EB3] transition-colors font-medium">
                   Daftar Paket &amp; Tarif Resmi
                 </a>
               </li>
               <li>
-                <a href="#higienis" className="hover:text-[#006EB3] transition-colors font-medium">
+                <a href="#higienis" className="neat-link inline-block hover:text-[#006EB3] transition-colors font-medium">
                   Standar Sanitasi 5 Tahap
                 </a>
               </li>
               <li>
-                <a href="#lokasi" className="hover:text-[#006EB3] transition-colors font-medium">
+                <a href="#lokasi" className="neat-link inline-block hover:text-[#006EB3] transition-colors font-medium">
                   Lokasi Outlet &amp; Kontak
                 </a>
               </li>
@@ -85,16 +85,20 @@ export const PublicFooter: React.FC = () => {
             <h4 className="font-heading font-bold text-[#0B253B] text-xs tracking-wider uppercase">
               Portal Internal
             </h4>
-            <p className="text-[#425869] text-xs leading-relaxed">
+            <p className="text-[#2D4659] text-xs leading-relaxed">
               Khusus staf kasir, operasional, dan admin.
             </p>
             <div className="pt-1">
               <Button
                 onClick={() => navigate('/login')}
-                className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white font-semibold rounded-md text-xs h-9 px-3 gap-1.5 touch-manipulation active:scale-[0.98]"
+                size="sm"
+                className="group w-full font-semibold h-9 px-3 gap-1.5"
               >
                 <span>Masuk Staf</span>
-                <ArrowRight className="size-3.5" aria-hidden="true" />
+                <ArrowRight
+                  className="size-3.5 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-[3px]"
+                  aria-hidden="true"
+                />
               </Button>
             </div>
           </div>

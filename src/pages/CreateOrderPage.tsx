@@ -136,9 +136,12 @@ export const CreateOrderPage: React.FC = () => {
           variant="outline"
           size="sm"
           onClick={() => navigate('/pesanan')}
-          className="rounded-md border-[#D5E4E4] hover:bg-[#E8F2F2] text-[#0B253B] h-9 gap-1.5 text-xs font-medium"
+          className="group h-9 gap-1.5 text-xs font-medium"
         >
-          <ArrowLeft className="size-3.5" aria-hidden="true" />
+          <ArrowLeft
+            className="size-3.5 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-x-[3px]"
+            aria-hidden="true"
+          />
           Kembali
         </Button>
         <div>
@@ -163,7 +166,7 @@ export const CreateOrderPage: React.FC = () => {
                   variant="outline"
                   size="sm"
                   onClick={() => setModalPlgnOpen(true)}
-                  className="h-8 text-xs gap-1.5 text-[#006EB3] border-[#D5E4E4] hover:bg-[#E8F2F2] rounded-md font-medium"
+                  className="h-8 text-xs gap-1.5 text-[#006EB3] font-medium"
                 >
                   <UserPlus className="size-3.5" aria-hidden="true" />
                   Pelanggan Baru

@@ -117,7 +117,7 @@ export const OrdersPage: React.FC = () => {
         {canCreateOrder && (
           <Button
             onClick={() => navigate('/pesanan/baru')}
-            className="bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md gap-2 font-semibold min-h-[44px] sm:min-h-0"
+            className="gap-2 font-semibold min-h-[44px] sm:min-h-0"
           >
             <PlusCircle className="size-4 stroke-[1.75]" aria-hidden="true" />
             Buat Tiket Baru
@@ -187,12 +187,12 @@ export const OrdersPage: React.FC = () => {
       {/* Filter Tabs & Search Bar */}
       <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-3">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">
-          <TabsList className="bg-[#D5ECEB]/70 border border-[#C7DBDB] p-1 rounded-md flex-wrap h-auto gap-1">
+          <TabsList className="bg-[#E8F2F2] border border-[#D5E4E4] p-1 rounded-md flex-wrap h-auto gap-1">
             {STATUS_TABS.map((tab) => (
               <TabsTrigger
                 key={tab}
                 value={tab}
-                className="text-xs rounded-sm px-3 py-1.5 text-[#2D4659] data-[state=active]:bg-white data-[state=active]:text-[#006EB3] data-[state=active]:font-semibold shadow-none"
+                className="text-xs rounded-sm px-3 py-1.5 text-[#2D4659] data-[state=active]:bg-white data-[state=active]:text-[#006EB3] data-[state=active]:font-semibold data-[state=active]:shadow-[0_1px_2px_rgba(11,37,59,0.08)]"
               >
                 {tab}
               </TabsTrigger>
@@ -223,7 +223,7 @@ export const OrdersPage: React.FC = () => {
             variant="outline"
             size="sm"
             aria-label="Muat ulang daftar pesanan"
-            className="rounded-md border-[#D5E4E4] hover:bg-[#E8F2F2] text-[#0B253B] h-9 px-3"
+            className="h-9 px-3"
           >
             <RefreshCw className="size-3.5" aria-hidden="true" />
           </Button>

@@ -141,9 +141,12 @@ export const OrderDetailPage: React.FC = () => {
           variant="outline"
           size="sm"
           onClick={() => navigate('/pesanan')}
-          className="rounded-md border-[#D5E4E4] hover:bg-[#E8F2F2] text-[#0B253B] h-9 gap-1.5 text-xs font-medium"
+          className="group h-9 gap-1.5 text-xs font-medium"
         >
-          <ArrowLeft className="size-3.5" aria-hidden="true" />
+          <ArrowLeft
+            className="size-3.5 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-x-[3px]"
+            aria-hidden="true"
+          />
           Kembali ke Daftar
         </Button>
       </div>
@@ -174,7 +177,7 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Sedang Dicuci')}
-                  className="bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="gap-1.5 text-xs h-9 font-semibold"
                 >
                   <Play className="size-3.5" aria-hidden="true" />
                   Mulai Proses Cuci
@@ -187,7 +190,7 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Sedang Disetrika')}
-                  className="bg-[#7C4D12] hover:bg-[#633D0E] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="gap-1.5 text-xs h-9 font-semibold"
                 >
                   <Play className="size-3.5" aria-hidden="true" />
                   Lanjut ke Penyetrikaan
@@ -200,7 +203,7 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Siap Diambil')}
-                  className="bg-[#005A94] hover:bg-[#004470] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="gap-1.5 text-xs h-9 font-semibold"
                 >
                   <CheckCircle2 className="size-3.5" aria-hidden="true" />
                   Tandai Siap Diambil
@@ -211,8 +214,9 @@ export const OrderDetailPage: React.FC = () => {
               {!isLunas && (user?.level === 'Admin' || user?.level === 'Kasir') && (
                 <Button
                   size="sm"
+                  variant={isSiap ? 'default' : 'secondary'}
                   onClick={() => setModalBayarOpen(true)}
-                  className="bg-[#15803D] hover:bg-[#166534] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="gap-1.5 text-xs h-9 font-semibold"
                 >
                   <CreditCard className="size-3.5" aria-hidden="true" />
                   Catat Pembayaran Lunas
@@ -223,9 +227,10 @@ export const OrderDetailPage: React.FC = () => {
               {isSiap && (user?.level === 'Admin' || user?.level === 'Kasir') && (
                 <Button
                   size="sm"
+                  variant={isLunas ? 'default' : 'outline'}
                   disabled={!isLunas || updatingStatus}
                   onClick={handleSerahkanCucian}
-                  className="bg-[#0B253B] hover:bg-[#1E293B] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="gap-1.5 text-xs h-9 font-semibold"
                 >
                   <CheckCircle2 className="size-3.5" aria-hidden="true" />
                   Serahkan Cucian ke Pelanggan

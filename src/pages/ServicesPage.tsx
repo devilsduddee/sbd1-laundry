@@ -141,7 +141,8 @@ export const ServicesPage: React.FC = () => {
         {isAdmin && (
           <Button
             onClick={openCreateDialog}
-            className="bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md gap-2 text-xs h-9 font-semibold"
+            size="sm"
+            className="gap-2 text-xs h-9 font-semibold"
           >
             <Plus className="size-4" aria-hidden="true" />
             Tambah Layanan

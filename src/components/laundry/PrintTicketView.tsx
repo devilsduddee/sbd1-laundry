@@ -24,7 +24,7 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
         <Button
           onClick={handlePrint}
           variant="outline"
-          className="gap-2 border-[#D5E4E4] text-[#0B253B] hover:bg-[#E8F2F2] rounded-md"
+          className="gap-2"
         >
           <Printer className="size-4 stroke-[1.75]" aria-hidden="true" />
           Cetak Tiket / Struk
@@ -32,7 +32,7 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
       </div>
 
       {/* Area Struk / Tiket Fisik */}
-      <div className="bg-white border border-[#D5E4E4] rounded-lg p-6 md:p-8 print:border-slate-300 print:shadow-none print:bg-white print:p-4 text-[#071422] text-sm">
+      <div className="bg-white border border-[#D5E4E4] rounded-lg p-6 md:p-8 print:border-[#9EC7C6] print:shadow-none print:bg-white print:p-4 text-[#071422] text-sm">
         {/* Header Usaha */}
         <div className="flex justify-between items-start pb-6 border-b border-[#D5E4E4]">
           <div className="flex items-start gap-3">

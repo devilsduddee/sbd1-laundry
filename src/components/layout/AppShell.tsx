@@ -144,7 +144,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             variant="outline"
             size="sm"
             onClick={handleLogout}
-            className="w-full justify-center gap-2 text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] border-[#FECACA] rounded-md h-9 text-xs font-semibold touch-manipulation active:scale-[0.98]"
+            className="w-full justify-center gap-2 text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] hover:border-[#FCA5A5] border-[#FECACA] h-9 text-xs font-semibold"
           >
             <LogOut className="size-3.5 stroke-[1.75]" aria-hidden="true" />
             Keluar Sesi
@@ -188,7 +188,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             variant="ghost"
             size="sm"
             onClick={handleLogout}
-            className="text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] h-9 px-2.5 text-xs rounded-md gap-1.5 font-medium touch-manipulation active:scale-95"
+            className="text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] h-9 px-2.5 text-xs gap-1.5 font-medium"
             aria-label="Keluar dari sesi"
           >
             <LogOut className="size-3.5" aria-hidden="true" />

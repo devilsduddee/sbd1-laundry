@@ -1,5 +1,7 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import {
   Search,
   Clock,
@@ -28,6 +30,22 @@ const DEMO_TICKET = 'PSN-20261121-2014';
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
+  const heroScope = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      gsap.from('.hero-enter', {
+        y: 12,
+        opacity: 0,
+        duration: 0.35,
+        stagger: 0.06,
+        ease: 'power2.out',
+        clearProps: 'transform,opacity',
+      });
+    },
+    { scope: heroScope }
+  );
 
   // State Pelacakan
   const [ticketQuery, setTicketQuery] = useState('');
@@ -88,17 +106,17 @@ export const LandingPage: React.FC = () => {
             <QwashLogo variant="lockup" size="md" className="text-[#0B253B]" />
           </div>
 
-          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-[#425869]">
-            <a href="#lacak" className="hover:text-[#006EB3] transition-colors">
+          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-[#2D4659]">
+            <a href="#lacak" className="neat-link hover:text-[#006EB3] transition-colors">
               Lacak Cucian
             </a>
-            <a href="#layanan" className="hover:text-[#006EB3] transition-colors">
+            <a href="#layanan" className="neat-link hover:text-[#006EB3] transition-colors">
               Paket &amp; Tarif
             </a>
-            <a href="#higienis" className="hover:text-[#006EB3] transition-colors">
+            <a href="#higienis" className="neat-link hover:text-[#006EB3] transition-colors">
               Standar Higienis
             </a>
-            <a href="#lokasi" className="hover:text-[#006EB3] transition-colors">
+            <a href="#lokasi" className="neat-link hover:text-[#006EB3] transition-colors">
               Outlet &amp; Jam Buka
             </a>
           </nav>
@@ -108,7 +126,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => navigate('/login')}
               variant="outline"
               size="sm"
-              className="rounded-md border-[#D5E4E4] text-xs h-9 font-semibold text-[#0B253B] hover:bg-[#E8F2F2] touch-manipulation"
+              className="h-9 text-xs font-semibold"
             >
               Masuk Portal Staf
             </Button>
@@ -129,24 +147,24 @@ export const LandingPage: React.FC = () => {
           <div className="absolute inset-0 bg-white/35" />
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div ref={heroScope} className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Kolom Kiri: Headline & Form Lacak */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white/90 backdrop-blur-sm border border-[#C7DBDB] text-xs font-mono font-medium text-[#0B253B] select-none">
+            <div className="hero-enter inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white/90 backdrop-blur-sm border border-[#C7DBDB] text-xs font-mono font-medium text-[#0B253B] select-none">
               <ShieldCheck className="size-3.5 text-[#006EB3] shrink-0" aria-hidden="true" />
               <span>QWASH_STANDARD: HIGIENIS &amp; PRESISI</span>
             </div>
 
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0B253B] leading-tight">
+            <h1 className="hero-enter font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0B253B] leading-tight">
               Laundry Kiloan Terdata, Bersih, dan Siap Tepat Waktu
             </h1>
 
-            <p className="text-sm md:text-base text-[#1E293B] leading-relaxed max-w-xl font-medium">
+            <p className="hero-enter text-sm md:text-base text-[#2D4659] leading-relaxed max-w-xl font-medium">
               Antar cucian Anda ke outlet, lalu pantau setiap tahap pengerjaan secara langsung tanpa perlu membuat akun. Setiap pakaian dicuci terpisah dengan deterjen antibakteri dan disetrika uap sanitasi.
             </p>
 
             {/* Form Lacak Pesanan Mandiri */}
-            <div id="lacak" className="pt-2 space-y-2.5 max-w-xl">
+            <div id="lacak" className="hero-enter pt-2 space-y-2.5 max-w-xl">
               <form onSubmit={handleTrackSubmit} className="flex flex-col sm:flex-row gap-2">
                 <div className="relative w-full">
                   <Label htmlFor="ticket-query" className="sr-only">
@@ -171,7 +189,7 @@ export const LandingPage: React.FC = () => {
                 <Button
                   type="submit"
                   disabled={trackingLoading}
-                  className="h-12 px-6 bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md text-xs sm:text-sm font-semibold shrink-0 touch-manipulation"
+                  className="h-12 px-6 text-xs sm:text-sm font-semibold shrink-0"
                 >
                   {trackingLoading ? (
                     <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -259,10 +277,13 @@ export const LandingPage: React.FC = () => {
                     type="button"
                     onClick={handleQuickDemo}
                     variant="outline"
-                    className="w-full rounded-md border-[#D5E4E4] bg-white text-[#006EB3] hover:bg-[#E8F2F2] hover:text-[#0B253B] text-xs font-semibold h-10 gap-1.5"
+                    className="group w-full text-[#006EB3] hover:text-[#0B253B] text-xs font-semibold h-10 gap-1.5"
                   >
-                    Coba Demo Lacak Pesanan
-                    <ArrowRight className="size-3.5" aria-hidden="true" />
+                    <span>Coba Demo Lacak Pesanan</span>
+                    <ArrowRight
+                      className="size-3.5 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-[3px]"
+                      aria-hidden="true"
+                    />
                   </Button>
                 </div>
               </div>
@@ -277,7 +298,7 @@ export const LandingPage: React.FC = () => {
           <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-[#0B253B]">
             Paket Layanan dan Tarif Resmi
           </h2>
-          <p className="text-xs md:text-sm text-[#425869]">
+          <p className="text-sm md:text-base text-[#2D4659]">
             Harga kiloan transparan tanpa biaya tersembunyi. Dihitung akurat sesuai timbangan outlet.
           </p>
         </div>
@@ -297,7 +318,7 @@ export const LandingPage: React.FC = () => {
                       <Shirt className="size-5 stroke-[1.75]" aria-hidden="true" />
                     </div>
                     <h3 className="font-bold text-base text-[#071422]">{lyn.nm_lyn}</h3>
-                    <p className="text-xs text-[#425869] leading-relaxed">
+                    <p className="text-[13px] text-[#2D4659] leading-relaxed">
                       Pencucian menyeluruh, sanitasi serat kain, dan pengemasan rapi.
                     </p>
                   </div>
@@ -330,7 +351,7 @@ export const LandingPage: React.FC = () => {
             <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-[#0B253B]">
               Standar Kebersihan 5 Tahap Qwash
             </h2>
-            <p className="text-xs md:text-sm text-[#425869]">
+            <p className="text-sm md:text-base text-[#2D4659]">
               Kami menerapkan protokol pembersihan ketat untuk menjaga kebersihan higienis dan ketahanan serat pakaian Anda.
             </p>
           </div>
@@ -380,8 +401,8 @@ export const LandingPage: React.FC = () => {
                 >
                   {step.num}
                 </div>
-                <h4 className="font-semibold text-xs text-[#071422] pt-1">{step.title}</h4>
-                <p className="text-xs text-[#425869] leading-relaxed">{step.desc}</p>
+                <h4 className="font-semibold text-sm text-[#071422] pt-1">{step.title}</h4>
+                <p className="text-[13px] text-[#2D4659] leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -396,7 +417,7 @@ export const LandingPage: React.FC = () => {
               <MapPin className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B253B]">Lokasi Outlet</h3>
-            <p className="text-xs text-[#425869] leading-relaxed">
+            <p className="text-[13px] text-[#2D4659] leading-relaxed">
               Jl. Margonda Raya No. 100, Depok, Jawa Barat
             </p>
             <p className="text-xs text-[#425869]">Dekat halte dan area kampus</p>
@@ -407,7 +428,7 @@ export const LandingPage: React.FC = () => {
               <Clock className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B253B]">Jam Operasional</h3>
-            <p className="font-mono text-xs text-[#425869] leading-relaxed">
+            <p className="font-mono text-[13px] text-[#071422] leading-relaxed">
               Senin - Minggu | 07.00 - 21.00 WIB
             </p>
             <p className="text-xs text-[#15803D] font-semibold flex items-center gap-1">
@@ -421,7 +442,7 @@ export const LandingPage: React.FC = () => {
               <Phone className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B253B]">Layanan Pelanggan</h3>
-            <p className="text-xs text-[#071422] leading-relaxed font-mono">
+            <p className="text-[13px] text-[#071422] leading-relaxed font-mono">
               WhatsApp / Telp: 0812-3456-7890
             </p>
             <p className="text-xs text-[#425869]">Bantuan informasi pesanan dan konfirmasi</p>
