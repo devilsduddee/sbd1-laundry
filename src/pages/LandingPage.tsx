@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Search,
@@ -21,6 +21,8 @@ import { PublicTrackingCard, type PublicTrackingData } from '@/components/laundr
 import { PublicFooter } from '@/components/laundry/PublicFooter';
 import { formatRupiah } from '@/lib/format';
 import type { Layanan } from '@shared/schemas';
+
+const NeatBackground = lazy(() => import('@/components/laundry/NeatBackground'));
 
 const DEMO_TICKET = 'PSN-20261121-2014';
 
@@ -114,12 +116,23 @@ export const LandingPage: React.FC = () => {
         </div>
       </header>
 
-      {/* Hero Section (Swiss Clean Surface) */}
-      <section className="relative py-12 md:py-20 px-4 bg-white border-b border-[#E2E8F0]">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      {/* Hero Section (Swiss Style + Ambient @firecms/neat Opsi A) */}
+      <section className="relative py-12 md:py-20 px-4 bg-[#F8FAFC] border-b border-[#E2E8F0] overflow-hidden">
+        <div className="absolute inset-0 z-0 pointer-events-none print:hidden" aria-hidden="true">
+          <Suspense
+            fallback={
+              <div className="w-full h-full bg-gradient-to-br from-[#D5ECEB] via-[#FFFFFF] to-[#EFE2CE]" />
+            }
+          >
+            <NeatBackground scrollReactive />
+          </Suspense>
+          <div className="absolute inset-0 bg-white/35" />
+        </div>
+
+        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Kolom Kiri: Headline & Form Lacak */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[#F1F5F9] border border-[#CBD5E1] text-xs font-mono font-medium text-[#0F172A] select-none">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white/90 backdrop-blur-sm border border-[#CBD5E1] text-xs font-mono font-medium text-[#0F172A] select-none">
               <ShieldCheck className="size-3.5 text-[#0369A1] shrink-0" aria-hidden="true" />
               <span>QWASH_STANDARD: HIGIENIS &amp; PRESISI</span>
             </div>
@@ -128,7 +141,7 @@ export const LandingPage: React.FC = () => {
               Laundry Kiloan Terdata, Bersih, dan Siap Tepat Waktu
             </h1>
 
-            <p className="text-sm md:text-base text-[#475569] leading-relaxed max-w-xl">
+            <p className="text-sm md:text-base text-[#1E293B] leading-relaxed max-w-xl font-medium">
               Antar cucian Anda ke outlet, lalu pantau setiap tahap pengerjaan secara langsung tanpa perlu membuat akun. Setiap pakaian dicuci terpisah dengan deterjen antibakteri dan disetrika uap sanitasi.
             </p>
 
@@ -149,7 +162,7 @@ export const LandingPage: React.FC = () => {
                     placeholder="Masukkan Nomor Tiket (Contoh: PSN-20261121-2014)"
                     value={ticketQuery}
                     onChange={(e) => setTicketQuery(e.target.value)}
-                    className="pl-10 h-12 rounded-md border-[#E2E8F0] bg-white text-xs sm:text-sm font-mono focus-visible:ring-[#0F172A]"
+                    className="pl-10 h-12 rounded-md border-[#E2E8F0] bg-white/95 backdrop-blur-sm text-xs sm:text-sm font-mono focus-visible:ring-[#0F172A]"
                     autoCapitalize="characters"
                     autoCorrect="off"
                     spellCheck={false}
@@ -169,7 +182,7 @@ export const LandingPage: React.FC = () => {
               </form>
 
               {/* Quick Demo Chip */}
-              <div className="flex items-center gap-2 text-xs text-[#475569]">
+              <div className="flex items-center gap-2 text-xs text-[#334155] font-medium">
                 <span>Ingin mencoba fitur lacak?</span>
                 <button
                   type="button"
@@ -199,7 +212,7 @@ export const LandingPage: React.FC = () => {
                 <PublicTrackingCard data={trackingResult} />
               </div>
             ) : (
-              <div className="p-6 md:p-8 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] space-y-5">
+              <div className="p-6 md:p-8 rounded-lg bg-white/90 backdrop-blur-md border border-[#E2E8F0] space-y-5 shadow-sm">
                 <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
                   <div className="flex items-center gap-2.5">
                     <div className="size-9 rounded-md bg-[#0F172A] flex items-center justify-center text-white font-bold">

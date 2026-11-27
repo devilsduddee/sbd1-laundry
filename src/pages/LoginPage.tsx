@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Lock,
@@ -16,6 +16,8 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+
+const NeatBackground = lazy(() => import('@/components/laundry/NeatBackground'));
 
 type DemoRole = 'admin' | 'kasir' | 'operasional';
 
@@ -174,172 +176,185 @@ export const LoginPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Kolom Kanan: Form Autentikasi Staf */}
-        <div className="col-span-1 lg:col-span-6 xl:col-span-5 p-6 sm:p-10 xl:p-14 flex flex-col justify-between max-w-md mx-auto w-full pt-safe pb-safe bg-white">
-          {/* Header Bar dengan Tombol Kembali ke Landing Page */}
-          <div className="flex items-center justify-between">
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate('/')}
-              className="rounded-md text-xs gap-1.5 text-[#475569] hover:text-[#0F172A] hover:bg-[#E8ECF1] h-9 font-medium px-2.5 -ml-2.5 touch-manipulation"
+        {/* Kolom Kanan: Form Autentikasi Staf di atas Ambient @firecms/neat (Opsi A) */}
+        <div className="col-span-1 lg:col-span-6 xl:col-span-5 relative overflow-hidden p-4 sm:p-8 xl:p-12 flex flex-col justify-center items-center w-full min-h-screen pt-safe pb-safe bg-[#F8FAFC]">
+          <div className="absolute inset-0 z-0 pointer-events-none print:hidden" aria-hidden="true">
+            <Suspense
+              fallback={
+                <div className="w-full h-full bg-gradient-to-br from-[#D5ECEB] via-[#FFFFFF] to-[#EFE2CE]" />
+              }
             >
-              <ArrowLeft className="size-3.5" aria-hidden="true" />
-              <span>Beranda Publik</span>
-            </Button>
-
-            <span className="text-xs font-mono font-medium text-[#475569]">
-              Qwash v2.0
-            </span>
+              <NeatBackground />
+            </Suspense>
+            <div className="absolute inset-0 bg-white/25" />
           </div>
 
-          {/* Form Container */}
-          <div className="my-auto py-8 space-y-6">
-            <div className="space-y-1.5">
-              <h2 className="font-heading text-2xl font-bold text-[#0F172A] tracking-tight">
-                Masuk ke Portal Petugas
-              </h2>
-              <p className="text-xs text-[#475569]">
-                Masukkan kredensial akun staf untuk memulai pengerjaan
-              </p>
+          <div className="relative z-10 w-full max-w-md bg-white/92 backdrop-blur-md border border-[#E2E8F0] rounded-lg p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-6">
+            {/* Header Bar dengan Tombol Kembali ke Landing Page */}
+            <div className="flex items-center justify-between">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate('/')}
+                className="rounded-md text-xs gap-1.5 text-[#475569] hover:text-[#0F172A] hover:bg-[#E8ECF1] h-9 font-medium px-2.5 -ml-2.5 touch-manipulation"
+              >
+                <ArrowLeft className="size-3.5" aria-hidden="true" />
+                <span>Beranda Publik</span>
+              </Button>
+
+              <span className="text-xs font-mono font-medium text-[#475569]">
+                Qwash v2.1
+              </span>
             </div>
 
-            {error && (
-              <div
-                role="alert"
-                className="p-3.5 bg-[#FEE2E2] border border-[#FECACA] text-[#B91C1C] text-xs rounded-md font-medium flex items-center gap-2.5"
-              >
-                <AlertCircle className="size-4 shrink-0 text-[#DC2626]" aria-hidden="true" />
-                <span>{error}</span>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Input Username */}
+            {/* Form Container */}
+            <div className="space-y-6">
               <div className="space-y-1.5">
-                <Label htmlFor="usernm" className="text-xs font-semibold text-[#020617]">
-                  Username Petugas
-                </Label>
-                <div className="relative">
-                  <User
-                    className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
-                    aria-hidden="true"
-                  />
-                  <Input
-                    id="usernm"
-                    type="text"
-                    placeholder="Masukkan username akun staf"
-                    value={usernm}
-                    onChange={(e) => {
-                      setUsernm(e.target.value);
-                      setActiveRole(null);
-                    }}
-                    className="pl-10 h-11 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-sm font-medium text-[#020617]"
-                    autoComplete="username"
-                    autoCapitalize="none"
-                    autoCorrect="off"
-                    spellCheck={false}
-                    disabled={loading}
-                    required
-                  />
-                </div>
+                <h2 className="font-heading text-2xl font-bold text-[#0F172A] tracking-tight">
+                  Masuk ke Portal Petugas
+                </h2>
+                <p className="text-xs text-[#475569]">
+                  Masukkan kredensial akun staf untuk memulai pengerjaan
+                </p>
               </div>
 
-              {/* Input Password */}
-              <div className="space-y-1.5">
-                <Label htmlFor="passwd" className="text-xs font-semibold text-[#020617]">
-                  Kata Sandi
-                </Label>
-                <div className="relative">
-                  <Lock
-                    className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
-                    aria-hidden="true"
-                  />
-                  <Input
-                    id="passwd"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Masukkan password"
-                    value={passwd}
-                    onChange={(e) => {
-                      setPasswd(e.target.value);
-                      setActiveRole(null);
-                    }}
-                    className="pl-10 pr-10 h-11 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-sm font-medium text-[#020617]"
-                    autoComplete="current-password"
-                    disabled={loading}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#475569] hover:text-[#0F172A] p-1 rounded-sm"
-                    aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="size-4" aria-hidden="true" />
-                    ) : (
-                      <Eye className="size-4" aria-hidden="true" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Akun Demo Cepat (Quick Login Tabs) */}
-              <div className="pt-2 space-y-2">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="font-semibold text-[#334155]">Pilih Akun Demo Cepat:</span>
-                  <span className="text-[#475569]">1-klik langsung terisi</span>
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  {DEMO_ACCOUNTS.map((acc) => {
-                    const isSelected = activeRole === acc.role;
-                    return (
-                      <button
-                        key={acc.role}
-                        type="button"
-                        onClick={() => handleSelectDemo(acc)}
-                        className={`p-2.5 rounded-md border text-left flex flex-col justify-between transition-colors touch-manipulation active:scale-[0.97] cursor-pointer ${
-                          isSelected
-                            ? 'border-[#0F172A] bg-[#F1F5F9] text-[#0F172A] ring-1 ring-[#0F172A]'
-                            : 'border-[#E2E8F0] bg-[#F8FAFC] text-[#334155] hover:border-[#0369A1] hover:bg-white'
-                        }`}
-                      >
-                        <span className="text-xs font-bold leading-tight truncate">
-                          {acc.title}
-                        </span>
-                        <span className="text-xs font-mono text-[#475569] mt-1">
-                          @{acc.user}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Tombol Submit Utama (Ocean Action Blue #0369A1) */}
-              <div className="pt-3">
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md h-11 text-sm font-semibold touch-manipulation active:scale-[0.98]"
+              {error && (
+                <div
+                  role="alert"
+                  className="p-3.5 bg-[#FEE2E2] border border-[#FECACA] text-[#B91C1C] text-xs rounded-md font-medium flex items-center gap-2.5"
                 >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 size-4 animate-spin" aria-hidden="true" />
-                      Memverifikasi Sesi...
-                    </>
-                  ) : (
-                    'Masuk ke Sistem'
-                  )}
-                </Button>
-              </div>
-            </form>
-          </div>
+                  <AlertCircle className="size-4 shrink-0 text-[#DC2626]" aria-hidden="true" />
+                  <span>{error}</span>
+                </div>
+              )}
 
-          {/* Footer Bawah */}
-          <div className="text-center text-xs text-[#475569] pt-4 border-t border-[#E2E8F0]">
-            <span>&copy; 2026 Qwash Laundry &amp; Hygienic Care. Sistem Basis Data.</span>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Input Username */}
+                <div className="space-y-1.5">
+                  <Label htmlFor="usernm" className="text-xs font-semibold text-[#020617]">
+                    Username Petugas
+                  </Label>
+                  <div className="relative">
+                    <User
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
+                      aria-hidden="true"
+                    />
+                    <Input
+                      id="usernm"
+                      type="text"
+                      placeholder="Masukkan username akun staf"
+                      value={usernm}
+                      onChange={(e) => {
+                        setUsernm(e.target.value);
+                        setActiveRole(null);
+                      }}
+                      className="pl-10 h-11 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-sm font-medium text-[#020617] bg-white"
+                      autoComplete="username"
+                      autoCapitalize="none"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      disabled={loading}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Input Password */}
+                <div className="space-y-1.5">
+                  <Label htmlFor="passwd" className="text-xs font-semibold text-[#020617]">
+                    Kata Sandi
+                  </Label>
+                  <div className="relative">
+                    <Lock
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
+                      aria-hidden="true"
+                    />
+                    <Input
+                      id="passwd"
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Masukkan password"
+                      value={passwd}
+                      onChange={(e) => {
+                        setPasswd(e.target.value);
+                        setActiveRole(null);
+                      }}
+                      className="pl-10 pr-10 h-11 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-sm font-medium text-[#020617] bg-white"
+                      autoComplete="current-password"
+                      disabled={loading}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#475569] hover:text-[#0F172A] p-1 rounded-sm"
+                      aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="size-4" aria-hidden="true" />
+                      ) : (
+                        <Eye className="size-4" aria-hidden="true" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Akun Demo Cepat (Quick Login Tabs) */}
+                <div className="pt-2 space-y-2">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-semibold text-[#334155]">Pilih Akun Demo Cepat:</span>
+                    <span className="text-[#475569]">1-klik langsung terisi</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {DEMO_ACCOUNTS.map((acc) => {
+                      const isSelected = activeRole === acc.role;
+                      return (
+                        <button
+                          key={acc.role}
+                          type="button"
+                          onClick={() => handleSelectDemo(acc)}
+                          className={`p-2.5 rounded-md border text-left flex flex-col justify-between transition-colors touch-manipulation active:scale-[0.97] cursor-pointer ${
+                            isSelected
+                              ? 'border-[#0F172A] bg-[#F1F5F9] text-[#0F172A] ring-1 ring-[#0F172A]'
+                              : 'border-[#E2E8F0] bg-[#F8FAFC] text-[#334155] hover:border-[#0369A1] hover:bg-white'
+                          }`}
+                        >
+                          <span className="text-xs font-bold leading-tight truncate">
+                            {acc.title}
+                          </span>
+                          <span className="text-xs font-mono text-[#475569] mt-1">
+                            @{acc.user}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Tombol Submit Utama (Ocean Action Blue #0369A1) */}
+                <div className="pt-2">
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md h-11 text-sm font-semibold touch-manipulation active:scale-[0.98]"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 size-4 animate-spin" aria-hidden="true" />
+                        Memverifikasi Sesi...
+                      </>
+                    ) : (
+                      'Masuk ke Sistem'
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </div>
+
+            {/* Footer Bawah */}
+            <div className="text-center text-xs text-[#475569] pt-4 border-t border-[#E2E8F0]">
+              <span>&copy; 2026 Qwash Laundry &amp; Hygienic Care. Sistem Basis Data.</span>
+            </div>
           </div>
         </div>
       </div>
