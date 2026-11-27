@@ -6,7 +6,6 @@ import {
   Search,
   Clock,
   Shirt,
-  ShieldCheck,
   ArrowRight,
   AlertCircle,
   Loader2,
@@ -17,7 +16,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent } from '@/components/ui/card';
 import { QwashLogo } from '@/components/laundry/QwashLogo';
 import { PublicTrackingCard, type PublicTrackingData } from '@/components/laundry/PublicTrackingCard';
 import { PublicFooter } from '@/components/laundry/PublicFooter';
@@ -99,14 +97,14 @@ export const LandingPage: React.FC = () => {
 
   return (
     <div className="min-h-screen ambient-workspace text-[#0B1723] flex flex-col font-sans overflow-x-clip">
-      {/* Navbar Publik Sticky (Glassy UI) */}
-      <header className="sticky top-0 z-40 bg-white/72 backdrop-blur-xl border-b border-white/70 shadow-[0_1px_0_rgba(11,23,35,0.07)] pt-safe">
+      {/* Navbar Publik Sticky (Solid Swiss Header, 1px hairline) */}
+      <header className="sticky top-0 z-40 bg-white border-b border-[#E1E8EB] pt-safe">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <QwashLogo variant="lockup" size="md" className="text-[#0B1723]" />
           </div>
 
-          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-[#2E3E4E]">
+          <nav className="hidden md:flex items-center gap-6 text-[13px] font-semibold text-[#2E3E4E]">
             <a href="#lacak" className="neat-link hover:text-[#006EB3] transition-colors">
               Lacak Cucian
             </a>
@@ -126,7 +124,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => navigate('/login')}
               variant="outline"
               size="sm"
-              className="h-9 text-xs font-semibold"
+              className="text-xs font-semibold"
             >
               Masuk Portal Staf
             </Button>
@@ -134,7 +132,7 @@ export const LandingPage: React.FC = () => {
         </div>
       </header>
 
-      {/* Hero Section (Swiss Neutral + Ambient @firecms/neat) */}
+      {/* Hero Section (Glassy UI Showcase Card over @firecms/neat) */}
       <section className="relative py-12 md:py-20 px-4 bg-[#F8FAFA] border-b border-[#E1E8EB] overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none print:hidden" aria-hidden="true">
           <Suspense
@@ -150,11 +148,6 @@ export const LandingPage: React.FC = () => {
         <div ref={heroScope} className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Kolom Kiri: Headline & Form Lacak */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="hero-enter inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 backdrop-blur-md border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(11,23,35,0.06)] text-xs font-mono font-medium text-[#0B1723] select-none">
-              <ShieldCheck className="size-3.5 text-[#006EB3] shrink-0" aria-hidden="true" />
-              <span>QWASH_STANDARD: HIGIENIS &amp; PRESISI</span>
-            </div>
-
             <h1 className="hero-enter font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0B1723] leading-tight">
               Laundry Kiloan Terdata, Bersih, dan Siap Tepat Waktu
             </h1>
@@ -180,7 +173,7 @@ export const LandingPage: React.FC = () => {
                     placeholder="Masukkan Nomor Tiket (Contoh: PSN-20261121-2014)"
                     value={ticketQuery}
                     onChange={(e) => setTicketQuery(e.target.value)}
-                    className="pl-10 h-12 rounded-md border-[#E1E8EB] bg-white/95 backdrop-blur-sm text-xs sm:text-sm font-mono focus-visible:ring-[#0B253B]"
+                    className="pl-10 h-12 text-xs sm:text-sm font-mono"
                     autoCapitalize="characters"
                     autoCorrect="off"
                     spellCheck={false}
@@ -311,41 +304,42 @@ export const LandingPage: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((lyn) => (
-              <Card key={lyn.id_lyn} className="hover-lift">
-                <CardContent className="p-5 flex flex-col justify-between h-full space-y-4">
-                  <div className="space-y-2">
-                    <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] mb-2">
-                      <Shirt className="size-5 stroke-[1.75]" aria-hidden="true" />
-                    </div>
-                    <h3 className="font-bold text-base text-[#0B1723]">{lyn.nm_lyn}</h3>
-                    <p className="text-[13px] text-[#2E3E4E] leading-relaxed">
-                      Pencucian menyeluruh, sanitasi serat kain, dan pengemasan rapi.
-                    </p>
+              <div
+                key={lyn.id_lyn}
+                className="rounded-xl border border-[#E1E8EB] bg-white hover-lift p-5 flex flex-col justify-between h-full space-y-4 shadow-[0_1px_2px_rgba(11,23,35,0.03)]"
+              >
+                <div className="space-y-2">
+                  <div className="size-10 rounded-lg bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] mb-2">
+                    <Shirt className="size-5 stroke-[1.75]" aria-hidden="true" />
                   </div>
-                  <div className="pt-3 border-t border-[#0B1723]/[0.08] flex justify-between items-end">
-                    <div>
-                      <span className="text-xs text-[#526474] block">Estimasi</span>
-                      <span className="font-mono text-xs font-semibold text-[#0B1723] flex items-center gap-1 tabular-nums">
-                        <Clock className="size-3.5 text-[#006EB3]" aria-hidden="true" />
-                        {lyn.est_hari} Hari
-                      </span>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-mono text-lg font-bold text-[#006EB3] tabular-nums">
-                        {formatRupiah(lyn.hrg_kg)}
-                      </span>
-                      <span className="text-xs text-[#526474] block">/ kg</span>
-                    </div>
+                  <h3 className="font-bold text-base text-[#0B1723]">{lyn.nm_lyn}</h3>
+                  <p className="text-sm text-[#2E3E4E] leading-relaxed">
+                    Pencucian menyeluruh, sanitasi serat kain, dan pengemasan rapi.
+                  </p>
+                </div>
+                <div className="pt-3 border-t border-[#E1E8EB] flex justify-between items-end">
+                  <div>
+                    <span className="text-[13px] text-[#526474] block">Estimasi</span>
+                    <span className="font-mono text-[13px] font-semibold text-[#0B1723] flex items-center gap-1 tabular-nums">
+                      <Clock className="size-3.5 text-[#006EB3]" aria-hidden="true" />
+                      {lyn.est_hari} Hari
+                    </span>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="text-right">
+                    <span className="font-mono text-lg font-bold text-[#006EB3] tabular-nums">
+                      {formatRupiah(lyn.hrg_kg)}
+                    </span>
+                    <span className="text-[13px] text-[#526474] block">/ kg</span>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         )}
       </section>
 
       {/* Standar Higienis 5 Langkah Qwash */}
-      <section id="higienis" className="py-16 px-4 bg-[#EEF3F6]/65 border-y border-white/75 backdrop-blur-sm">
+      <section id="higienis" className="py-16 px-4 bg-[#F1F5F6] border-y border-[#E1E8EB]">
         <div className="max-w-6xl mx-auto space-y-10">
           <div className="text-center space-y-2 max-w-2xl mx-auto">
             <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-[#0B1723]">
@@ -386,13 +380,13 @@ export const LandingPage: React.FC = () => {
             ].map((step) => (
               <div
                 key={step.num}
-                className="glass-card p-4 rounded-xl space-y-2 hover-lift"
+                className="p-4 rounded-xl border border-[#E1E8EB] bg-white space-y-2"
               >
-                <div className="inline-flex px-2 py-0.5 rounded-full font-mono font-bold text-xs border bg-[#EEF6FB]/85 text-[#006EB3] border-[#C2DDF0]">
+                <div className="inline-flex px-2 py-0.5 rounded-md font-mono font-bold text-xs border bg-[#EEF6FB] text-[#006EB3] border-[#C2DDF0]">
                   {step.num}
                 </div>
                 <h4 className="font-semibold text-sm text-[#0B1723] pt-1">{step.title}</h4>
-                <p className="text-[13px] text-[#2E3E4E] leading-relaxed">{step.desc}</p>
+                <p className="text-sm text-[#2E3E4E] leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -401,41 +395,41 @@ export const LandingPage: React.FC = () => {
 
       {/* Lokasi & Jam Buka Outlet */}
       <section id="lokasi" className="py-16 px-4 max-w-6xl mx-auto w-full">
-        <div className="glass-card rounded-2xl p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="rounded-xl border border-[#E1E8EB] bg-white p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
-            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] mb-2">
+            <div className="size-10 rounded-lg bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] mb-2">
               <MapPin className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B1723]">Lokasi Outlet</h3>
-            <p className="text-[13px] text-[#2E3E4E] leading-relaxed">
+            <p className="text-sm text-[#2E3E4E] leading-relaxed">
               Jl. Margonda Raya No. 100, Depok, Jawa Barat
             </p>
-            <p className="text-xs text-[#526474]">Dekat halte dan area kampus</p>
+            <p className="text-[13px] text-[#526474]">Dekat halte dan area kampus</p>
           </div>
 
           <div className="space-y-2">
-            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] mb-2">
+            <div className="size-10 rounded-lg bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] mb-2">
               <Clock className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B1723]">Jam Operasional</h3>
-            <p className="font-mono text-[13px] text-[#0B1723] leading-relaxed">
+            <p className="font-mono text-sm text-[#0B1723] leading-relaxed">
               Senin - Minggu | 07.00 - 21.00 WIB
             </p>
-            <p className="text-xs text-[#166534] font-semibold flex items-center gap-1">
+            <p className="text-[13px] text-[#166534] font-semibold flex items-center gap-1">
               <CheckCircle2 className="size-3.5" aria-hidden="true" />
               Buka setiap hari termasuk tanggal merah
             </p>
           </div>
 
           <div className="space-y-2">
-            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] mb-2">
+            <div className="size-10 rounded-lg bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] mb-2">
               <Phone className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B1723]">Layanan Pelanggan</h3>
-            <p className="text-[13px] text-[#0B1723] leading-relaxed font-mono">
+            <p className="text-sm text-[#0B1723] leading-relaxed font-mono">
               WhatsApp / Telp: 0812-3456-7890
             </p>
-            <p className="text-xs text-[#526474]">Bantuan informasi pesanan dan konfirmasi</p>
+            <p className="text-[13px] text-[#526474]">Bantuan informasi pesanan dan konfirmasi</p>
           </div>
         </div>
       </section>

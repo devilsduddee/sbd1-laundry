@@ -31,8 +31,8 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
         </Button>
       </div>
 
-      {/* Area Struk / Tiket Fisik (Glassy UI di layar, Putih Solid saat cetak) */}
-      <div className="glass-card rounded-2xl p-6 md:p-8 print:border-[#CBD5D9] print:shadow-none print:bg-white print:p-4 text-[#0B1723] text-sm">
+      {/* Area Struk / Tiket Fisik (Kertas Tiket Bersih di Layar & Cetak) */}
+      <div className="bg-white border border-[#E1E8EB] rounded-xl p-6 md:p-8 shadow-[0_1px_2px_rgba(11,23,35,0.03)] print:border-[#CBD5D9] print:shadow-none print:bg-white print:p-4 text-[#0B1723] text-sm">
         {/* Header Usaha */}
         <div className="flex justify-between items-start pb-6 border-b border-[#E1E8EB]">
           <div className="flex items-start gap-3">

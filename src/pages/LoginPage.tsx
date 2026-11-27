@@ -9,7 +9,6 @@ import {
   EyeOff,
   ShieldCheck,
   AlertCircle,
-  Terminal,
 } from 'lucide-react';
 import { QwashLogo } from '@/components/laundry/QwashLogo';
 import { useAuth } from '@/hooks/useAuth';
@@ -132,13 +131,9 @@ export const LoginPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Middle Value Proposition & Frosted Swiss Matrix Card */}
+          {/* Middle Value Proposition & Frosted Glassy UI Matrix Card */}
           <div className="space-y-7 max-w-lg my-auto py-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white/95 backdrop-blur-sm border border-[#E1E8EB] text-xs font-mono font-semibold text-[#0B1723]">
-                <Terminal className="size-3.5 text-[#006EB3]" aria-hidden="true" />
-                <span>SISTEM PENGELOLAAN BASIS DATA LAUNDRY</span>
-              </div>
+            <div className="space-y-3">
               <h1 className="font-heading text-3xl xl:text-4xl font-bold tracking-tight leading-tight text-[#0B1723]">
                 Operasional Cepat, Terdata, dan Presisi.
               </h1>
@@ -156,7 +151,7 @@ export const LoginPage: React.FC = () => {
                     SYSTEM_STATUS: READY
                   </span>
                 </div>
-                <span className="px-2.5 py-0.5 rounded-full bg-white/70 text-[#2E3E4E] border border-white/80 text-xs font-mono font-semibold">
+                <span className="px-2 py-0.5 rounded-md bg-white/80 text-[#2E3E4E] border border-[#DCE5E9] text-xs font-mono font-semibold">
                   Turso libSQL
                 </span>
               </div>
@@ -200,7 +195,7 @@ export const LoginPage: React.FC = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate('/')}
-                className="group text-xs gap-1.5 text-[#2E3E4E] h-9 font-medium px-2.5 -ml-2.5"
+                className="group text-xs gap-1.5 text-[#2E3E4E] font-medium px-2.5 -ml-2.5"
               >
                 <ArrowLeft
                   className="size-3.5 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:-translate-x-[3px]"

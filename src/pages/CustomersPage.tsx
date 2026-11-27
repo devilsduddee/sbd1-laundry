@@ -115,7 +115,7 @@ export const CustomersPage: React.FC = () => {
         <Button
           onClick={openCreateDialog}
           size="sm"
-          className="gap-2 text-xs h-9 font-semibold"
+          className="gap-2 text-xs font-semibold"
         >
           <UserPlus className="size-4" aria-hidden="true" />
           Pelanggan Baru
@@ -138,24 +138,23 @@ export const CustomersPage: React.FC = () => {
             placeholder="Cari nama atau nomor HP..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 text-xs h-9 bg-white"
+            className="pl-9 text-xs sm:h-9"
           />
         </div>
         <Button
           type="submit"
           variant="outline"
           size="sm"
-          className="h-9"
         >
           Cari
         </Button>
       </form>
 
-      {/* Semantic Tabel Pelanggan (Glassy Card) */}
-      <div className="glass-card rounded-xl overflow-hidden">
+      {/* Semantic Tabel Pelanggan (Solid Crisp Surface) */}
+      <div className="bg-white border border-[#E1E8EB] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(11,23,35,0.03)]">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#0B1723]/[0.025]">
+            <TableHeader className="bg-[#F8FAFA]">
               <TableRow className="border-b border-[#E1E8EB] text-xs hover:bg-transparent">
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">ID Pelanggan</TableHead>
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">Nama Lengkap</TableHead>

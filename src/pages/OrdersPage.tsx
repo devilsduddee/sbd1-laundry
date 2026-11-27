@@ -215,7 +215,7 @@ export const OrdersPage: React.FC = () => {
               placeholder="Cari ID / Pelanggan / HP..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 text-xs h-9"
+              className="pl-9 text-xs sm:h-9"
             />
           </div>
           <Button
@@ -223,18 +223,18 @@ export const OrdersPage: React.FC = () => {
             variant="outline"
             size="sm"
             aria-label="Muat ulang daftar pesanan"
-            className="h-9 px-3"
+            className="px-3"
           >
             <RefreshCw className="size-3.5" aria-hidden="true" />
           </Button>
         </form>
       </div>
 
-      {/* Semantic Tabel Pesanan dalam Glassy Card */}
-      <div className="glass-card rounded-xl overflow-hidden">
+      {/* Semantic Tabel Pesanan (Solid Crisp Surface untuk Keterbacaan & Scroll Lancar) */}
+      <div className="bg-white border border-[#E1E8EB] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(11,23,35,0.03)]">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#0B1723]/[0.025]">
+            <TableHeader className="bg-[#F8FAFA]">
               <TableRow className="border-b border-[#E1E8EB] text-xs hover:bg-transparent">
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">ID Tiket</TableHead>
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">Pelanggan</TableHead>

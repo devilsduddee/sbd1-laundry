@@ -77,8 +77,8 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
 
   return (
     <div className="min-h-[100dvh] ambient-workspace text-[#0B1723] flex flex-col md:flex-row font-sans">
-      {/* Desktop Sidebar (Glassy UI Frosted Panel, print:hidden) */}
-      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white/70 backdrop-blur-xl border-r border-white/75 shadow-[inset_-1px_0_0_rgba(11,23,35,0.07)] p-5 sticky top-0 h-screen shrink-0 justify-between">
+      {/* Desktop Sidebar (Crisp Solid Surface, print:hidden) */}
+      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#E1E8EB] p-5 sticky top-0 h-screen shrink-0 justify-between">
         <div className="flex flex-col gap-6">
           {/* Brand Header */}
           <div className="flex items-center gap-3 px-2 py-1">
@@ -144,7 +144,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             variant="outline"
             size="sm"
             onClick={handleLogout}
-            className="w-full justify-center gap-2 text-[#2E3E4E] hover:text-[#B91C1C] hover:bg-[#FEF2F2] hover:border-[#FECACA] h-9 text-xs font-semibold"
+            className="w-full justify-center gap-2 text-[#2E3E4E] hover:text-[#B91C1C] hover:bg-[#FEF2F2] hover:border-[#FECACA] text-xs font-semibold"
           >
             <LogOut className="size-3.5 stroke-[1.75]" aria-hidden="true" />
             Keluar Sesi
@@ -153,7 +153,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       </aside>
 
       {/* Mobile Top Header (print:hidden) */}
-      <header className="print:hidden md:hidden flex items-center justify-between bg-white/75 backdrop-blur-xl border-b border-white/75 shadow-[0_1px_0_rgba(11,23,35,0.07)] px-4 h-14 sticky top-0 z-30 pt-safe">
+      <header className="print:hidden md:hidden flex items-center justify-between bg-white border-b border-[#E1E8EB] px-4 h-16 sticky top-0 z-30 pt-safe">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="size-8 rounded-md bg-[#006EB3] flex items-center justify-center text-white shrink-0">
             <QwashLogo variant="symbol" size="sm" className="text-white" />
@@ -188,7 +188,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             variant="ghost"
             size="sm"
             onClick={handleLogout}
-            className="text-[#526474] hover:text-[#B91C1C] hover:bg-[#FEF2F2] h-9 px-2.5 text-xs gap-1.5 font-medium"
+            className="text-[#526474] hover:text-[#B91C1C] hover:bg-[#FEF2F2] px-2.5 text-xs gap-1.5 font-medium"
             aria-label="Keluar dari sesi"
           >
             <LogOut className="size-3.5" aria-hidden="true" />
@@ -205,7 +205,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       {/* Mobile Bottom Navigation Bar (print:hidden) */}
       <nav
         aria-label="Navigasi Bawah Ponsel"
-        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-xl border-t border-white/80 shadow-[0_-1px_0_rgba(11,23,35,0.07)] pb-safe"
+        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-[#E1E8EB] pb-safe"
       >
         <div
           className={cn(

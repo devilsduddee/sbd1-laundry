@@ -168,10 +168,10 @@ export const ServicesPage: React.FC = () => {
             >
               <CardHeader className="p-4 pb-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-semibold text-[#0B1723] bg-white/75 border border-white/90 px-2 py-0.5 rounded-full tabular-nums">
+                  <span className="font-mono text-xs font-semibold text-[#0B1723] bg-[#F1F5F6] border border-[#E1E8EB] px-2 py-0.5 rounded-md tabular-nums">
                     {l.id_lyn}
                   </span>
-                  <div className="flex items-center gap-1 text-xs text-[#526474] bg-white/60 border border-white/80 px-2 py-0.5 rounded-full font-mono font-medium tabular-nums">
+                  <div className="flex items-center gap-1 text-xs text-[#526474] bg-[#F8FAFA] border border-[#E1E8EB] px-2 py-0.5 rounded-md font-mono font-medium tabular-nums">
                     <Clock className="size-3 text-[#006EB3]" aria-hidden="true" />
                     <span>{l.est_hari} Hari</span>
                   </div>
@@ -194,19 +194,19 @@ export const ServicesPage: React.FC = () => {
                   <div className="flex items-center justify-end gap-1 mt-3 pt-2 border-t border-[#E1E8EB]">
                     <Button
                       variant="ghost"
-                      size="sm"
+                      size="icon"
                       aria-label={`Ubah ${l.nm_lyn}`}
                       onClick={() => openEditDialog(l)}
-                      className="size-8 p-0 text-[#006EB3] hover:text-[#0B1723]"
+                      className="sm:size-8 text-[#006EB3] hover:text-[#0B1723]"
                     >
                       <Edit2 className="size-3.5" aria-hidden="true" />
                     </Button>
                     <Button
                       variant="ghost"
-                      size="sm"
+                      size="icon"
                       aria-label={`Hapus ${l.nm_lyn}`}
                       onClick={() => handleDeleteService(l.id_lyn)}
-                      className="size-8 p-0 text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEF2F2]"
+                      className="sm:size-8 text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEF2F2]"
                     >
                       <Trash2 className="size-3.5" aria-hidden="true" />
                     </Button>

@@ -127,17 +127,17 @@ export const ReportPage: React.FC = () => {
           onClick={handleExportCSV}
           variant="outline"
           size="sm"
-          className="gap-2 text-xs h-9 font-semibold"
+          className="gap-2 text-xs font-semibold"
         >
           <Download className="size-4" aria-hidden="true" />
           Ekspor CSV
         </Button>
       </div>
 
-      {/* Filter Periode Tanggal (Glassy Card) */}
+      {/* Filter Periode Tanggal */}
       <form
         onSubmit={handleFilterSubmit}
-        className="glass-card p-4 rounded-xl flex flex-wrap items-end gap-3"
+        className="bg-white border border-[#E1E8EB] p-4 rounded-xl flex flex-wrap items-end gap-3 shadow-[0_1px_2px_rgba(11,23,35,0.03)]"
       >
         <div className="space-y-1">
           <Label htmlFor="start-date" className="text-xs font-medium text-[#526474]">
@@ -148,7 +148,7 @@ export const ReportPage: React.FC = () => {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="font-mono text-xs h-9"
+            className="font-mono text-xs sm:h-9"
           />
         </div>
         <div className="space-y-1">
@@ -160,13 +160,13 @@ export const ReportPage: React.FC = () => {
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="font-mono text-xs h-9"
+            className="font-mono text-xs sm:h-9"
           />
         </div>
         <Button
           type="submit"
           size="sm"
-          className="text-xs h-9 gap-1.5 font-semibold"
+          className="text-xs gap-1.5 font-semibold"
         >
           <Filter className="size-3.5" aria-hidden="true" />
           Terapkan Filter
@@ -220,11 +220,11 @@ export const ReportPage: React.FC = () => {
         </div>
       )}
 
-      {/* Semantic Tabel Rincian Transaksi Periode (Glassy Card) */}
-      <div className="glass-card rounded-xl overflow-hidden">
+      {/* Semantic Tabel Rincian Transaksi Periode (Solid Crisp Surface) */}
+      <div className="bg-white border border-[#E1E8EB] rounded-xl overflow-hidden shadow-[0_1px_2px_rgba(11,23,35,0.03)]">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#0B1723]/[0.025]">
+            <TableHeader className="bg-[#F8FAFA]">
               <TableRow className="border-b border-[#E1E8EB] text-xs hover:bg-transparent">
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">ID Tiket</TableHead>
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">Tanggal Masuk</TableHead>
