@@ -77,20 +77,20 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const mobileNavItems = getMobileNavItems(user?.level);
 
   return (
-    <div className="min-h-[100dvh] bg-[#F8FAFC] text-[#020617] flex flex-col md:flex-row font-sans">
+    <div className="min-h-[100dvh] bg-[#F6FFFF] text-[#071422] flex flex-col md:flex-row font-sans">
       {/* Desktop Sidebar (print:hidden) */}
-      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#E2E8F0] p-5 sticky top-0 h-screen shrink-0 justify-between">
+      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#D5E4E4] p-5 sticky top-0 h-screen shrink-0 justify-between">
         <div className="flex flex-col gap-6">
           {/* Brand Header */}
           <div className="flex items-center gap-3 px-2 py-1">
-            <div className="size-10 rounded-md bg-[#0F172A] flex items-center justify-center text-white shrink-0">
+            <div className="size-10 rounded-md bg-[#0B253B] flex items-center justify-center text-white shrink-0">
               <QwashLogo variant="symbol" size="sm" className="text-white" />
             </div>
             <div>
-              <h1 className="font-heading font-bold text-sm text-[#0F172A] leading-tight tracking-tight">
+              <h1 className="font-heading font-bold text-sm text-[#0B253B] leading-tight tracking-tight">
                 Qwash Laundry
               </h1>
-              <p className="text-xs text-[#475569]">Sistem Pengelolaan</p>
+              <p className="text-xs text-[#425869]">Sistem Pengelolaan</p>
             </div>
           </div>
 
@@ -110,12 +110,12 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                   className={cn(
                     'flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-medium transition-colors touch-manipulation active:scale-[0.98]',
                     isActive
-                      ? 'bg-[#0F172A] text-white font-semibold'
-                      : 'text-[#475569] hover:bg-[#E8ECF1] hover:text-[#020617]'
+                      ? 'bg-[#0B253B] text-white font-semibold'
+                      : 'text-[#425869] hover:bg-[#E8F2F2] hover:text-[#071422]'
                   )}
                 >
                   <Icon
-                    className={cn('size-4 shrink-0 stroke-[1.75]', isActive ? 'text-white' : 'text-[#475569]')}
+                    className={cn('size-4 shrink-0 stroke-[1.75]', isActive ? 'text-white' : 'text-[#425869]')}
                     aria-hidden="true"
                   />
                   <span>{item.label}</span>
@@ -126,15 +126,15 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
         </div>
 
         {/* User Info & Logout Desktop */}
-        <div className="pt-4 border-t border-[#E2E8F0] flex flex-col gap-3">
+        <div className="pt-4 border-t border-[#D5E4E4] flex flex-col gap-3">
           <div className="flex items-center justify-between px-2">
             <div className="flex flex-col min-w-0">
-              <span className="text-xs font-semibold text-[#020617] leading-tight truncate">
+              <span className="text-xs font-semibold text-[#071422] leading-tight truncate">
                 {user?.nm_ptgs}
               </span>
-              <span className="text-xs text-[#475569] font-mono mt-0.5 truncate">
+              <span className="text-xs text-[#425869] font-mono mt-0.5 truncate">
                 @{user?.usernm} |{' '}
-                <span className="font-semibold text-[#0369A1] font-sans">{user?.level}</span>
+                <span className="font-semibold text-[#006EB3] font-sans">{user?.level}</span>
               </span>
             </div>
           </div>
@@ -151,17 +151,17 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       </aside>
 
       {/* Mobile Top Header (Ramping & Bersih, print:hidden) */}
-      <header className="print:hidden md:hidden flex items-center justify-between bg-white border-b border-[#E2E8F0] px-4 h-14 sticky top-0 z-30 pt-safe">
+      <header className="print:hidden md:hidden flex items-center justify-between bg-white border-b border-[#D5E4E4] px-4 h-14 sticky top-0 z-30 pt-safe">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="size-8 rounded-md bg-[#0F172A] flex items-center justify-center text-white shrink-0">
+          <div className="size-8 rounded-md bg-[#0B253B] flex items-center justify-center text-white shrink-0">
             <QwashLogo variant="symbol" size="sm" className="text-white" />
           </div>
           <div className="leading-tight min-w-0">
-            <span className="font-semibold text-xs text-[#020617] block truncate">
+            <span className="font-semibold text-xs text-[#071422] block truncate">
               {user?.nm_ptgs}
             </span>
-            <span className="text-xs text-[#475569] font-medium block">
-              Peran: <strong className="text-[#0369A1]">{user?.level}</strong>
+            <span className="text-xs text-[#425869] font-medium block">
+              Peran: <strong className="text-[#006EB3]">{user?.level}</strong>
             </span>
           </div>
         </div>
@@ -173,8 +173,8 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
               className={cn(
                 'flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-colors touch-manipulation active:scale-95 min-h-[36px]',
                 location.pathname.startsWith('/petugas')
-                  ? 'bg-[#0F172A] text-white'
-                  : 'bg-[#F1F5F9] text-[#0F172A] hover:bg-[#E8ECF1] border border-[#E2E8F0]'
+                  ? 'bg-[#0B253B] text-white'
+                  : 'bg-[#E8F2F2] text-[#0B253B] hover:bg-[#E8F2F2] border border-[#D5E4E4]'
               )}
             >
               <ShieldCheck className="size-3.5 shrink-0" aria-hidden="true" />
@@ -203,7 +203,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       {/* Mobile Bottom Navigation Bar (print:hidden) */}
       <nav
         aria-label="Navigasi Bawah Ponsel"
-        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-[#E2E8F0] pb-safe"
+        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-[#D5E4E4] pb-safe"
       >
         <div
           className={cn(
@@ -227,15 +227,15 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 to={item.to}
                 className={cn(
                   'group flex flex-col items-center justify-center h-full py-1.5 px-0.5 touch-manipulation select-none min-w-0 transition-transform duration-150 active:scale-[0.94]',
-                  isActive ? 'text-[#0F172A]' : 'text-[#475569] hover:text-[#020617]'
+                  isActive ? 'text-[#0B253B]' : 'text-[#425869] hover:text-[#071422]'
                 )}
               >
                 <div
                   className={cn(
                     'p-1.5 rounded-md transition-colors duration-150 flex items-center justify-center',
                     isActive
-                      ? 'bg-[#0F172A] text-white'
-                      : 'text-[#475569] group-hover:bg-[#E8ECF1] group-hover:text-[#020617]'
+                      ? 'bg-[#0B253B] text-white'
+                      : 'text-[#425869] group-hover:bg-[#E8F2F2] group-hover:text-[#071422]'
                   )}
                 >
                   <Icon className="size-4 shrink-0 stroke-[1.8]" aria-hidden="true" />
@@ -243,7 +243,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 <span
                   className={cn(
                     'text-[11px] tracking-tight leading-none mt-1 text-center truncate max-w-full px-0.5 transition-colors',
-                    isActive ? 'font-bold text-[#0F172A]' : 'font-medium text-[#475569]'
+                    isActive ? 'font-bold text-[#0B253B]' : 'font-medium text-[#425869]'
                   )}
                 >
                   {item.shortLabel}

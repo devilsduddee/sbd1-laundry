@@ -36,17 +36,17 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-4 font-sans">
-          <div className="max-w-md w-full bg-white rounded-lg border border-[#E2E8F0] p-6 text-center space-y-5">
+        <div className="min-h-screen bg-[#F6FFFF] flex items-center justify-center p-4 font-sans">
+          <div className="max-w-md w-full bg-white rounded-lg border border-[#D5E4E4] p-6 text-center space-y-5">
             <div className="mx-auto size-14 rounded-md bg-[#FEE2E2] border border-[#FECACA] text-[#DC2626] flex items-center justify-center">
               <AlertCircle className="size-8" aria-hidden="true" />
             </div>
 
             <div className="space-y-2">
-              <h1 className="font-heading text-lg font-bold text-[#0F172A]">
+              <h1 className="font-heading text-lg font-bold text-[#0B253B]">
                 Terjadi Kendala pada Tampilan
               </h1>
-              <p className="text-xs text-[#475569] leading-relaxed">
+              <p className="text-xs text-[#425869] leading-relaxed">
                 Aplikasi mengalami kendala saat memuat komponen ini. Anda dapat memuat ulang halaman atau kembali ke beranda.
               </p>
             </div>
@@ -60,14 +60,14 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex gap-2.5 pt-2">
               <Button
                 variant="outline"
-                className="flex-1 rounded-md text-xs h-10 border-[#E2E8F0] text-[#0F172A] hover:bg-[#E8ECF1]"
+                className="flex-1 rounded-md text-xs h-10 border-[#D5E4E4] text-[#0B253B] hover:bg-[#E8F2F2]"
                 onClick={this.handleHome}
               >
                 <Home className="mr-1.5 size-3.5" aria-hidden="true" />
                 Beranda
               </Button>
               <Button
-                className="flex-1 rounded-md text-xs h-10 bg-[#0369A1] hover:bg-[#0284C7] text-white"
+                className="flex-1 rounded-md text-xs h-10 bg-[#006EB3] hover:bg-[#00588F] text-white"
                 onClick={this.handleReload}
               >
                 <RefreshCw className="mr-1.5 size-3.5" aria-hidden="true" />

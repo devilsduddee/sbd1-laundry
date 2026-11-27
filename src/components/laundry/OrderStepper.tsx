@@ -60,13 +60,13 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
       className={cn('w-full py-4 px-2 relative select-none print:hidden', className)}
     >
       {/* Background Track Line */}
-      <div className="absolute top-[34px] left-[36px] right-[36px] h-[2px] bg-[#E2E8F0] -translate-y-1/2 z-0" />
+      <div className="absolute top-[34px] left-[36px] right-[36px] h-[2px] bg-[#D5E4E4] -translate-y-1/2 z-0" />
 
-      {/* Active Progress Bar (Ocean Blue #0369A1) */}
+      {/* Active Progress Bar (Ocean Blue #006EB3) */}
       <div
         ref={progressBarRef}
         style={{ width: `${progressPercent}%` }}
-        className="absolute top-[34px] left-[36px] h-[2px] bg-[#0369A1] -translate-y-1/2 z-0 origin-left transition-none"
+        className="absolute top-[34px] left-[36px] h-[2px] bg-[#006EB3] -translate-y-1/2 z-0 origin-left transition-none"
       />
 
       {/* Stepper Nodes */}
@@ -84,12 +84,12 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
               <div
                 className={cn(
                   'size-9 rounded-md flex items-center justify-center border transition-colors duration-200',
-                  isDone && 'bg-[#0369A1] border-[#0369A1] text-white',
+                  isDone && 'bg-[#006EB3] border-[#006EB3] text-white',
                   isCurrent &&
-                    'bg-white border-2 border-[#0F172A] text-[#0F172A] ring-4 ring-[#E0F2FE] font-semibold',
+                    'bg-white border-2 border-[#0B253B] text-[#0B253B] ring-4 ring-[#D5ECEB] font-semibold',
                   !isDone &&
                     !isCurrent &&
-                    'bg-white border-[#E2E8F0] text-[#475569]'
+                    'bg-white border-[#D5E4E4] text-[#425869]'
                 )}
               >
                 {isDone ? (
@@ -101,9 +101,9 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
               <span
                 className={cn(
                   'mt-2 text-xs text-center font-sans transition-colors duration-200',
-                  isCurrent && 'text-[#0F172A] font-semibold',
-                  isDone && 'text-[#0369A1] font-medium',
-                  !isDone && !isCurrent && 'text-[#475569]'
+                  isCurrent && 'text-[#0B253B] font-semibold',
+                  isDone && 'text-[#006EB3] font-medium',
+                  !isDone && !isCurrent && 'text-[#425869]'
                 )}
               >
                 {step.label}

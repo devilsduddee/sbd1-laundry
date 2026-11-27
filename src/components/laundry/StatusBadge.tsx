@@ -22,24 +22,24 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   className,
   size = 'default',
 }) => {
-  let styleClass = 'bg-[#F1F5F9] text-[#334155] border-[#CBD5E1]';
+  let styleClass = 'bg-[#E8F2F2] text-[#2D4659] border-[#C7DBDB]';
   let Icon: React.ElementType = Clock;
 
   switch (status) {
     case 'Antrean':
-      styleClass = 'bg-[#F1F5F9] text-[#334155] border-[#CBD5E1]';
+      styleClass = 'bg-[#E8F2F2] text-[#2D4659] border-[#C7DBDB]';
       Icon = Clock;
       break;
     case 'Sedang Dicuci':
-      styleClass = 'bg-[#E0F2FE] text-[#0369A1] border-[#BAE6FD]';
+      styleClass = 'bg-[#D5ECEB] text-[#005A94] border-[#B0D4D3]';
       Icon = Droplets;
       break;
     case 'Sedang Disetrika':
-      styleClass = 'bg-[#FEF3C7] text-[#B45309] border-[#FDE68A]';
+      styleClass = 'bg-[#EFE2CE] text-[#7C4D12] border-[#DEC8A4]';
       Icon = Flame;
       break;
     case 'Siap Diambil':
-      styleClass = 'bg-[#EDE9FE] text-[#6D28D9] border-[#DDD6FE]';
+      styleClass = 'bg-[#E0F2FE] text-[#005A94] border-[#BAE6FD]';
       Icon = PackageCheck;
       break;
     case 'Sudah Diambil':

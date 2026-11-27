@@ -1,28 +1,32 @@
 # 05 - Design System: Sistem Pengelolaan Laundry
 
-- **Versi:** 2.1
+- **Versi:** 2.2
 - **Tanggal:** 2026-11-27
 - **Status:** Approved
-- **Sumber input:** `04-prd.md` v1.1 (Approved), riset `ui-ux-pro-max`, dan keputusan Lead PM menerapkan **Minimalism & Swiss Style + Ambient `@firecms/neat` (Opsi A)**.
+- **Sumber input:** `04-prd.md` v1.1 (Approved), riset `ui-ux-pro-max`, serta penyelarasan palet warna seluruh web dengan preset **`@firecms/neat` (Opsi A)**.
 - **Skill digunakan:** `ui-ux-pro-max`, `design-taste-frontend`
 
 ## TL;DR
 
-Design system v2.1 mempertahankan **Minimalism & Swiss Style** (v2.0) untuk seluruh area kerja operasional kasir, serta mengintegrasikan **`@firecms/neat` (`NeatGradient`) melalui pendekatan Hybrid (Opsi A)** pada **Hero `LandingPage`** dan latar **`LoginPage`**.
+Design system v2.2 menyelaraskan seluruh palet warna antarmuka web agar lahir dari satu kesatuan harmonis bersama latar WebGL **`@firecms/neat` (`NeatGradient`)**.
 
-Palet gradient WebGL menggunakan warna air bersih & kain linen (`#FFFFFF`, `#EFE2CE`, `#D5ECEB`, `#E4E4E4`, `#F6FFFF` di atas `#00A2FF` dengan *grain* halus `0.05` dan `speed: 2`), sementara dashboard data internal (`/pesanan`, `/pelanggan`, `/layanan`, `/laporan`, `/petugas`) serta layout cetak struk tetap menggunakan latar Swiss solid (`#F8FAFC` + `#FFFFFF`), jangkar **Deep Slate Navy (`#0F172A`)**, CTA **Ocean Blue (`#0369A1`)**, serta pasangan tipografi **`Fira Code`** + **`Fira Sans`**.
+Kanvas aplikasi menggunakan **`#F6FFFF` (*Icy Mint White*)**, permukaan kartu **`#FFFFFF`**, aksen semantik lembut **`#D5ECEB` (*Aqua Mist*)** & **`#EFE2CE` (*Warm Linen*)** langsung dari preset Neat, dipadukan dengan jangkar **Deep Oceanic Navy (`#0B253B`)**, CTA **Deep Neat Azure (`#006EB3` — turunan aksesibel dari `#00A2FF` dengan rasio kontras 5.41:1)**, serta tipografi presisi **`Fira Code`** + **`Fira Sans`**.
 
 ---
 
-## Konteks Perubahan Arah Desain (v2.0 -> v2.1)
+## Konteks Perubahan Arah Desain (v2.0 -> v2.2)
 
-Pada pembaruan v2.1, dipilih **Opsi A (Hybrid Swiss + Neat Ambient WebGL)** (dengan opsi evaluasi ke Opsi B bila diperlukan):
+Pada evaluasi desain v2.2, tema **Minimalism & Swiss Style** diselaraskan sepenuhnya dengan DNA warna `@firecms/neat` (*fresh water, clean linen, airy daylight*):
 
-- **Area Publik & Gerbang (`LandingPage` Hero & `LoginPage`):**
-  - Menggunakan kanvas WebGL `<NeatBackground />` berbasis `@firecms/neat` dengan `yOffset` reaktif terhadap `window.scrollY`.
-  - Kartu/teks di atas kanvas dibungkus permukaan putih semi-transparan (`bg-white/90 backdrop-blur-sm border border-[#E2E8F0]`) atau teks `#0F172A` agar kontras tetap >= 4.5:1 di mana pun gelombang `#00A2FF` muncul.
+- **Penyelarasan Warna Menyeluruh (Unified Neat Palette):**
+  - Kanvas dasar memakai `#F6FFFF` (diambil langsung dari Neat) dan border `#D5E4E4` (perpaduan `#D5ECEB` dan `#E4E4E4`).
+  - Aksi utama (`--accent`) memakai `#006EB3` (hue identik dengan `#00A2FF` di Neat namun dipergelap agar teks putih memenuhi kontras WCAG AA `>= 4.5:1`), sedangkan `#00A2FF` dipakai sebagai aksen highlight di atas latar gelap `#0B253B`.
+  - Status *Sedang Dicuci* menggunakan `#D5ECEB` (*Aqua Mist* Neat) dan *Sedang Disetrika* menggunakan `#EFE2CE` (*Warm Linen* Neat).
+- **Area Publik & Gerbang (`LandingPage` Hero & `LoginPage` — Opsi A):**
+  - Menggunakan kanvas WebGL `<NeatBackground />` dengan `yOffset` reaktif terhadap `window.scrollY`.
+  - Kartu/teks di atas kanvas dibungkus permukaan putih semi-transparan (`bg-white/90 backdrop-blur-md border border-[#D5E4E4]`) atau teks `#0B253B`.
 - **Area Operasional Kasir & Produksi (`/pesanan`, tabel data, form tiket, cetak nota):**
-  - Tetap **Swiss Style solid** (`#F8FAFC` canvas, `#FFFFFF` card, `1px solid #E2E8F0`) demi kecepatan baca tabel padat, efisiensi baterai HP/laptop kasir, dan zero GPU distraction.
+  - Tetap **Swiss Style solid** di atas `#F6FFFF` + `#FFFFFF` demi kecepatan baca tabel padat, efisiensi baterai HP/laptop kasir, dan zero GPU distraction.
 - **Ditolak (Out of Scope):**
   - Animasi *overshoot* (`back.out`) pada tabel data padat atau menampilkan kanvas WebGL saat mencetak struk (`@media print`).
 
@@ -42,22 +46,25 @@ Token di bawah diekspor langsung dari `ui-ux-pro-max` (`--tokens css`) dan dipet
 
 ```css
 :root {
-  --color-primary: #0F172A;
+  --color-primary: #0B253B;
   --color-on-primary: #FFFFFF;
-  --color-secondary: #334155;
+  --color-secondary: #2D4659;
   --color-on-secondary: #FFFFFF;
-  --color-accent: #0369A1;
+  --color-accent: #006EB3;
   --color-on-accent: #FFFFFF;
-  --color-background: #F8FAFC;
-  --color-foreground: #020617;
+  --color-neat-azure: #00A2FF;
+  --color-neat-aqua: #D5ECEB;
+  --color-neat-linen: #EFE2CE;
+  --color-background: #F6FFFF;
+  --color-foreground: #071422;
   --color-card: #FFFFFF;
-  --color-card-foreground: #020617;
-  --color-muted: #E8ECF1;
-  --color-muted-foreground: #475569;
-  --color-border: #E2E8F0;
+  --color-card-foreground: #071422;
+  --color-muted: #E8F2F2;
+  --color-muted-foreground: #425869;
+  --color-border: #D5E4E4;
   --color-destructive: #DC2626;
   --color-on-destructive: #FFFFFF;
-  --color-ring: #0F172A;
+  --color-ring: #0B253B;
   --font-heading: "Fira Code", monospace;
   --font-body: "Fira Sans", sans-serif;
   --space-xs: 4px;
@@ -72,15 +79,15 @@ Token di bawah diekspor langsung dari `ui-ux-pro-max` (`--tokens css`) dan dipet
 
 | Nama Peran | Hex Code | Token `shadcn/ui` | Peran Fungsional |
 |---|---|---|---|
-| **Swiss Slate Navy** | `#0F172A` | `--primary` | Header tabel/navbar aktif, tombol utama struktural, dan focus ring (`--ring`). |
-| **Ocean Action Blue** | `#0369A1` | `--accent` / CTA | Tombol CTA konversi tinggi (*+ Buat Pesanan*, *Catat Pembayaran Lunas*, *Serahkan Cucian*), link aktif. |
-| **Deep Slate Secondary** | `#334155` | `--secondary` | Elemen pendukung struktural, sub-header, tombol sekunder gelap. |
-| **Cool Alabaster Canvas** | `#F8FAFC` | `--background` | Latar belakang utama halaman agar kartu putih terpisah tajam. |
+| **Deep Oceanic Navy** | `#0B253B` | `--primary` | Header tabel/navbar aktif, tombol struktural, panel brand, dan focus ring (`--ring`, kontras 15.65:1). |
+| **Deep Neat Azure** | `#006EB3` | `--accent` / CTA | Turunan aksesibel `#00A2FF` (kontras 5.41:1) untuk tombol CTA (*+ Buat Pesanan*, *Catat Bayar*, *Lacak*), link aktif. |
+| **Coastal Slate Dark** | `#2D4659` | `--secondary` | Elemen pendukung struktural, sub-header, tombol sekunder gelap (kontras 9.85:1). |
+| **Icy Mint Canvas** | `#F6FFFF` | `--background` | Latar belakang utama langsung dari palet `@firecms/neat` agar menyatu mulus dengan Hero/Login. |
 | **Pure White Surface** | `#FFFFFF` | `--card` / `--popover` | Kartu KPI, tabel transaksi, form tiket, modal `Dialog`, dan layout cetak struk. |
-| **Obsidian Ink** | `#020617` | `--foreground` | Teks judul utama, angka tagihan (`tot_hrg`), dan sel tabel utama (kontras > 15:1 di atas putih). |
-| **Slate Gray Muted** | `#475569` | `--muted-foreground` | Metadata sekunder (`no_hp`, `alamat`, tanggal, label kolom; kontras >= 4.5:1 di atas `#FFFFFF` & `#F8FAFC`). |
-| **Soft Slate Tint** | `#E8ECF1` | `--muted` | Latar tombol sekunder netral, badge netral, dan hover row ringan. |
-| **Hairline Slate Border** | `#E2E8F0` | `--border` / `--input` | Garis tepi `1px` presisi khas Swiss Style pada kartu, tabel, dan input form. |
+| **Abyssal Ink** | `#071422` | `--foreground` | Teks judul utama, angka tagihan (`tot_hrg`), dan sel tabel utama (kontras 18.25:1). |
+| **Coastal Slate Muted** | `#425869` | `--muted-foreground` | Metadata sekunder (`no_hp`, `alamat`, tanggal, label kolom; kontras >= 7.3:1). |
+| **Soft Aqua Mist Tint** | `#E8F2F2` | `--muted` | Latar tab list, tombol sekunder netral, dan hover row ringan. |
+| **Hairline Aqua Border** | `#D5E4E4` | `--border` / `--input` | Garis tepi `1px` presisi (perpaduan `#D5ECEB` dan `#E4E4E4` Neat) pada kartu, tabel, dan input form. |
 | **Crimson Alert Red** | `#DC2626` | `--destructive` | Alert blokir pengambilan sebelum lunas (Prosedur 6), error validasi form, dan aksi hapus. |
 
 ### Token Semantik Status (`sts_psn` & `sts_byr`)
@@ -89,10 +96,10 @@ Seluruh badge status wajib memenuhi rasio kontras teks >= 4.5:1 dan selalu menye
 
 | Status | Latar Badge | Teks | Border | Ikon Lucide |
 |---|---|---|---|---|
-| `Antrean` | `#F1F5F9` | `#334155` | `#CBD5E1` | `Clock` |
-| `Sedang Dicuci` | `#E0F2FE` | `#0369A1` | `#BAE6FD` | `Waves` / `Droplets` |
-| `Sedang Disetrika` | `#FEF3C7` | `#B45309` | `#FDE68A` | `Flame` / `Sparkles` |
-| `Siap Diambil` | `#EDE9FE` | `#6D28D9` | `#DDD6FE` | `PackageCheck` |
+| `Antrean` | `#E8F2F2` | `#2D4659` | `#C7DBDB` | `Clock` |
+| `Sedang Dicuci` | `#D5ECEB` *(Neat Aqua)* | `#005A94` | `#B0D4D3` | `Droplets` |
+| `Sedang Disetrika` | `#EFE2CE` *(Neat Linen)* | `#7C4D12` | `#DEC8A4` | `Flame` |
+| `Siap Diambil` | `#E0F2FE` | `#005A94` | `#BAE6FD` | `PackageCheck` |
 | `Sudah Diambil` | `#DCFCE7` | `#15803D` | `#BBF7D0` | `CheckCircle2` |
 | `Lunas` (`sts_byr`) | `#DCFCE7` | `#15803D` | `#BBF7D0` | `BadgeCheck` |
 | `Belum Lunas` | `#FEE2E2` | `#B91C1C` | `#FECACA` | `AlertCircle` |
@@ -231,3 +238,4 @@ Checklist wajib sebelum UI dinyatakan selesai di repo implementasi:
 | 1.1 | 2026-11-20 | Menambahkan panduan **Motion & Animation (GSAP + `@gsap/react`)** beserta guardrail kecepatan input kasir, `prefers-reduced-motion`, dan print safety. |
 | 2.0 | 2026-11-26 | **Major Design Update (`ui-ux-pro-max`):** Mengganti tema visual ke **Minimalism & Swiss Style** (`#0F172A` navy, `#0369A1` accent, `#F8FAFC` canvas, `Fira Code` + `Fira Sans`), mengekspor CSS Design Tokens, serta menambahkan aturan prioritas UX, semantic `<Table>`, *Preserve Input After Failed Submit*, GSAP anti-overshoot rule, dan *Pre-Delivery Checklist* `ui-ux-pro-max`. |
 | 2.1 | 2026-11-27 | **Ambient WebGL Integration (Opsi A):** Mengintegrasikan `@firecms/neat` (`NeatGradient`) pada Hero `LandingPage` & `LoginPage` dengan palet fresh-water/linen, lifecycle `destroy()`, lazy loading, `prefers-reduced-motion` guard, dan `{ passive: true }` scroll reactivity, sambil mempertahankan Swiss solid untuk area operasional kasir. |
+| 2.2 | 2026-11-27 | **Unified Neat Color Harmonization:** Menyelaraskan palet warna seluruh web langsung dari acuan `@firecms/neat`: kanvas `#F6FFFF`, Deep Oceanic Navy `#0B253B`, CTA Deep Neat Azure `#006EB3` (kontras 5.41:1 turunan `#00A2FF`), border `#D5E4E4`, serta badge *Sedang Dicuci* `#D5ECEB` & *Sedang Disetrika* `#EFE2CE`. |

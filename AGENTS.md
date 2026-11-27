@@ -80,9 +80,10 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
 
 ---
 
-## 4. Token Desain (`05-design.md` v2.1 — Minimalism & Swiss Style + Neat Opsi A)
+## 4. Token Desain (`05-design.md` v2.2 — Unified Neat & Swiss Style)
 
-- **Canvas:** `#F8FAFC` | **Card:** `#FFFFFF` | **Ink Utama:** `#020617` | **Muted:** `#475569`
-- **Primary Slate Navy:** `#0F172A` | **Accent / CTA Ocean Blue:** `#0369A1` | **Secondary:** `#334155` | **Border:** `#E2E8F0` | **Danger:** `#DC2626`
+- **Canvas:** `#F6FFFF` | **Card:** `#FFFFFF` | **Ink Utama:** `#071422` | **Muted:** `#425869`
+- **Primary Oceanic Navy:** `#0B253B` | **Accent / CTA Neat Azure:** `#006EB3` | **Secondary:** `#2D4659` | **Border:** `#D5E4E4` | **Danger:** `#DC2626`
+- **Neat Surface Accents:** Aqua Mist `#D5ECEB`, Warm Linen `#EFE2CE`, Soft Silver `#E4E4E4`, Decorative Azure `#00A2FF`
 - **Font:** Heading & angka/ID tiket memakai `Fira Code` (`tabular-nums`), teks UI & form memakai `Fira Sans`.
-- **Aturan Kontras & Aksesibilitas:** Rasio kontras minimal `4.5:1`, visible focus ring (`2px` `#0F172A`, `outline-offset: 2px`), dan badge status wajib menyertakan teks + ikon Lucide (*never color alone*).
+- **Aturan Kontras & Aksesibilitas:** Rasio kontras minimal `4.5:1`, visible focus ring (`2px` `#0B253B`, `outline-offset: 2px`), dan badge status wajib menyertakan teks + ikon Lucide (*never color alone*).

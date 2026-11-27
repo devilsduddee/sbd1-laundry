@@ -8,13 +8,13 @@ export const PublicFooter: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="mt-auto bg-[#0F172A] text-white border-t border-slate-800 pb-safe">
+    <footer className="mt-auto bg-[#0B253B] text-white border-t border-slate-800 pb-safe">
       <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* Kolom 1: Brand & Filosofi (5 Kolom) */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="size-9 rounded-md bg-[#0369A1] flex items-center justify-center text-white shrink-0">
+              <div className="size-9 rounded-md bg-[#006EB3] flex items-center justify-center text-white shrink-0">
                 <QwashLogo variant="symbol" size="sm" className="text-white" />
               </div>
               <div className="leading-tight">
@@ -73,7 +73,7 @@ export const PublicFooter: React.FC = () => {
             </h4>
             <div className="space-y-1.5 text-xs text-slate-300">
               <p className="font-medium text-white">Senin - Minggu</p>
-              <p className="font-mono text-xs text-sky-300">07.00 - 21.00 WIB</p>
+              <p className="font-mono text-xs text-[#00A2FF]">07.00 - 21.00 WIB</p>
               <p className="text-xs text-slate-400 pt-1 leading-snug">
                 Jl. Margonda Raya No. 100, Depok
               </p>
@@ -91,7 +91,7 @@ export const PublicFooter: React.FC = () => {
             <div className="pt-1">
               <Button
                 onClick={() => navigate('/login')}
-                className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white font-semibold rounded-md text-xs h-9 px-3 gap-1.5 touch-manipulation active:scale-[0.98]"
+                className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white font-semibold rounded-md text-xs h-9 px-3 gap-1.5 touch-manipulation active:scale-[0.98]"
               >
                 <span>Masuk Staf</span>
                 <ArrowRight className="size-3.5" aria-hidden="true" />

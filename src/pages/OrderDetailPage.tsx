@@ -58,8 +58,8 @@ export const OrderDetailPage: React.FC = () => {
 
   if (loading || !data) {
     return (
-      <div className="flex justify-center items-center h-64 text-xs text-[#475569]">
-        <Loader2 className="mr-2 size-5 animate-spin text-[#0369A1]" aria-hidden="true" />
+      <div className="flex justify-center items-center h-64 text-xs text-[#425869]">
+        <Loader2 className="mr-2 size-5 animate-spin text-[#006EB3]" aria-hidden="true" />
         Memuat detail pesanan...
       </div>
     );
@@ -141,7 +141,7 @@ export const OrderDetailPage: React.FC = () => {
           variant="outline"
           size="sm"
           onClick={() => navigate('/pesanan')}
-          className="rounded-md border-[#E2E8F0] hover:bg-[#E8ECF1] text-[#0F172A] h-9 gap-1.5 text-xs font-medium"
+          className="rounded-md border-[#D5E4E4] hover:bg-[#E8F2F2] text-[#0B253B] h-9 gap-1.5 text-xs font-medium"
         >
           <ArrowLeft className="size-3.5" aria-hidden="true" />
           Kembali ke Daftar
@@ -149,19 +149,19 @@ export const OrderDetailPage: React.FC = () => {
       </div>
 
       {/* Stepper Progress & Aksi Cepat Operasional (print:hidden) */}
-      <Card className="print:hidden rounded-lg border-[#E2E8F0] shadow-none bg-white overflow-hidden">
-        <CardHeader className="bg-[#0F172A] text-white p-4">
+      <Card className="print:hidden rounded-lg border-[#D5E4E4] shadow-none bg-white overflow-hidden">
+        <CardHeader className="bg-[#0B253B] text-white p-4">
           <CardTitle className="font-heading text-sm font-semibold flex justify-between items-center">
             <span>Pelacakan Progres Pengerjaan Cucian</span>
-            <span className="font-mono text-xs text-sky-300 tabular-nums">{psn.id_psn}</span>
+            <span className="font-mono text-xs text-[#00A2FF] tabular-nums">{psn.id_psn}</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 md:p-6 space-y-5">
           <OrderStepper currentStatus={psn.sts_psn} />
 
           {/* Action Bar Berdasarkan Status & Role */}
-          <div className="pt-3 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
-            <div className="text-xs text-[#475569] font-medium">
+          <div className="pt-3 border-t border-[#D5E4E4] flex flex-wrap items-center justify-between gap-3">
+            <div className="text-xs text-[#425869] font-medium">
               Aksi operasional selanjutnya:
             </div>
 
@@ -172,7 +172,7 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Sedang Dicuci')}
-                  className="bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md gap-1.5 text-xs h-9"
                 >
                   <Play className="size-3.5" aria-hidden="true" />
                   Mulai Proses Cuci
@@ -185,7 +185,7 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Sedang Disetrika')}
-                  className="bg-[#B45309] hover:bg-[#92400E] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="bg-[#7C4D12] hover:bg-[#633D0E] text-white rounded-md gap-1.5 text-xs h-9"
                 >
                   <Play className="size-3.5" aria-hidden="true" />
                   Lanjut ke Penyetrikaan
@@ -223,7 +223,7 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={!isLunas || updatingStatus}
                   onClick={handleSerahkanCucian}
-                  className="bg-[#0F172A] hover:bg-[#1E293B] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="bg-[#0B253B] hover:bg-[#1E293B] text-white rounded-md gap-1.5 text-xs h-9"
                 >
                   <CheckCircle2 className="size-3.5" aria-hidden="true" />
                   Serahkan Cucian ke Pelanggan
@@ -262,21 +262,21 @@ export const OrderDetailPage: React.FC = () => {
 
       {/* Modal Pencatatan Pembayaran (Prosedur 5) */}
       <Dialog open={modalBayarOpen} onOpenChange={setModalBayarOpen}>
-        <DialogContent className="rounded-lg max-w-sm border-[#E2E8F0]">
+        <DialogContent className="rounded-lg max-w-sm border-[#D5E4E4]">
           <DialogHeader>
-            <DialogTitle className="font-heading text-base font-bold text-[#0F172A]">
+            <DialogTitle className="font-heading text-base font-bold text-[#0B253B]">
               Catat Pembayaran Lunas
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleSavePayment} className="space-y-4 py-2 text-xs">
-            <div className="p-3 bg-[#F8FAFC] rounded-md border border-[#E2E8F0] space-y-1.5">
+            <div className="p-3 bg-[#F6FFFF] rounded-md border border-[#D5E4E4] space-y-1.5">
               <div className="flex justify-between">
-                <span className="text-[#475569]">ID Tiket:</span>
-                <span className="font-mono font-semibold text-[#0F172A] tabular-nums">{psn.id_psn}</span>
+                <span className="text-[#425869]">ID Tiket:</span>
+                <span className="font-mono font-semibold text-[#0B253B] tabular-nums">{psn.id_psn}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#475569]">Total Tagihan:</span>
-                <span className="font-mono font-bold text-[#0369A1] tabular-nums">
+                <span className="text-[#425869]">Total Tagihan:</span>
+                <span className="font-mono font-bold text-[#006EB3] tabular-nums">
                   {formatRupiah(psn.tot_hrg)}
                 </span>
               </div>
@@ -285,7 +285,7 @@ export const OrderDetailPage: React.FC = () => {
             <div className="space-y-1">
               <Label htmlFor="pay-method">Metode Pembayaran</Label>
               <Select value={metByr} onValueChange={(v) => setMetByr(v as MetByr)}>
-                <SelectTrigger id="pay-method" className="rounded-md border-[#E2E8F0] text-xs h-9 bg-white">
+                <SelectTrigger id="pay-method" className="rounded-md border-[#D5E4E4] text-xs h-9 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -309,10 +309,10 @@ export const OrderDetailPage: React.FC = () => {
                 onChange={(e) => setJmlByr(parseInt(e.target.value) || 0)}
                 required
                 min={psn.tot_hrg}
-                className="rounded-md border-[#E2E8F0] font-mono tabular-nums"
+                className="rounded-md border-[#D5E4E4] font-mono tabular-nums"
               />
               {jmlByr > psn.tot_hrg && (
-                <p className="text-xs font-mono text-[#475569] tabular-nums">
+                <p className="text-xs font-mono text-[#425869] tabular-nums">
                   Kembalian: {formatRupiah(jmlByr - psn.tot_hrg)}
                 </p>
               )}
@@ -322,7 +322,7 @@ export const OrderDetailPage: React.FC = () => {
               <Button
                 type="submit"
                 disabled={paying}
-                className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md"
+                className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md"
               >
                 {paying ? 'Menyimpan...' : 'Konfirmasi Pembayaran Lunas'}
               </Button>

@@ -80,25 +80,25 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#020617] flex flex-col font-sans overflow-x-clip">
+    <div className="min-h-screen bg-[#F6FFFF] text-[#071422] flex flex-col font-sans overflow-x-clip">
       {/* Navbar Publik Sticky */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#E2E8F0] pt-safe">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#D5E4E4] pt-safe">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <QwashLogo variant="lockup" size="md" className="text-[#0F172A]" />
+            <QwashLogo variant="lockup" size="md" className="text-[#0B253B]" />
           </div>
 
-          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-[#475569]">
-            <a href="#lacak" className="hover:text-[#0369A1] transition-colors">
+          <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-[#425869]">
+            <a href="#lacak" className="hover:text-[#006EB3] transition-colors">
               Lacak Cucian
             </a>
-            <a href="#layanan" className="hover:text-[#0369A1] transition-colors">
+            <a href="#layanan" className="hover:text-[#006EB3] transition-colors">
               Paket &amp; Tarif
             </a>
-            <a href="#higienis" className="hover:text-[#0369A1] transition-colors">
+            <a href="#higienis" className="hover:text-[#006EB3] transition-colors">
               Standar Higienis
             </a>
-            <a href="#lokasi" className="hover:text-[#0369A1] transition-colors">
+            <a href="#lokasi" className="hover:text-[#006EB3] transition-colors">
               Outlet &amp; Jam Buka
             </a>
           </nav>
@@ -108,7 +108,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => navigate('/login')}
               variant="outline"
               size="sm"
-              className="rounded-md border-[#E2E8F0] text-xs h-9 font-semibold text-[#0F172A] hover:bg-[#E8ECF1] touch-manipulation"
+              className="rounded-md border-[#D5E4E4] text-xs h-9 font-semibold text-[#0B253B] hover:bg-[#E8F2F2] touch-manipulation"
             >
               Masuk Portal Staf
             </Button>
@@ -117,7 +117,7 @@ export const LandingPage: React.FC = () => {
       </header>
 
       {/* Hero Section (Swiss Style + Ambient @firecms/neat Opsi A) */}
-      <section className="relative py-12 md:py-20 px-4 bg-[#F8FAFC] border-b border-[#E2E8F0] overflow-hidden">
+      <section className="relative py-12 md:py-20 px-4 bg-[#F6FFFF] border-b border-[#D5E4E4] overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none print:hidden" aria-hidden="true">
           <Suspense
             fallback={
@@ -132,12 +132,12 @@ export const LandingPage: React.FC = () => {
         <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Kolom Kiri: Headline & Form Lacak */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white/90 backdrop-blur-sm border border-[#CBD5E1] text-xs font-mono font-medium text-[#0F172A] select-none">
-              <ShieldCheck className="size-3.5 text-[#0369A1] shrink-0" aria-hidden="true" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white/90 backdrop-blur-sm border border-[#C7DBDB] text-xs font-mono font-medium text-[#0B253B] select-none">
+              <ShieldCheck className="size-3.5 text-[#006EB3] shrink-0" aria-hidden="true" />
               <span>QWASH_STANDARD: HIGIENIS &amp; PRESISI</span>
             </div>
 
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0F172A] leading-tight">
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0B253B] leading-tight">
               Laundry Kiloan Terdata, Bersih, dan Siap Tepat Waktu
             </h1>
 
@@ -153,7 +153,7 @@ export const LandingPage: React.FC = () => {
                     Masukkan Nomor Tiket Pesanan
                   </Label>
                   <Search
-                    className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#425869]"
                     aria-hidden="true"
                   />
                   <Input
@@ -162,7 +162,7 @@ export const LandingPage: React.FC = () => {
                     placeholder="Masukkan Nomor Tiket (Contoh: PSN-20261121-2014)"
                     value={ticketQuery}
                     onChange={(e) => setTicketQuery(e.target.value)}
-                    className="pl-10 h-12 rounded-md border-[#E2E8F0] bg-white/95 backdrop-blur-sm text-xs sm:text-sm font-mono focus-visible:ring-[#0F172A]"
+                    className="pl-10 h-12 rounded-md border-[#D5E4E4] bg-white/95 backdrop-blur-sm text-xs sm:text-sm font-mono focus-visible:ring-[#0B253B]"
                     autoCapitalize="characters"
                     autoCorrect="off"
                     spellCheck={false}
@@ -171,7 +171,7 @@ export const LandingPage: React.FC = () => {
                 <Button
                   type="submit"
                   disabled={trackingLoading}
-                  className="h-12 px-6 bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md text-xs sm:text-sm font-semibold shrink-0 touch-manipulation"
+                  className="h-12 px-6 bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md text-xs sm:text-sm font-semibold shrink-0 touch-manipulation"
                 >
                   {trackingLoading ? (
                     <Loader2 className="size-4 animate-spin" aria-hidden="true" />
@@ -182,12 +182,12 @@ export const LandingPage: React.FC = () => {
               </form>
 
               {/* Quick Demo Chip */}
-              <div className="flex items-center gap-2 text-xs text-[#334155] font-medium">
+              <div className="flex items-center gap-2 text-xs text-[#2D4659] font-medium">
                 <span>Ingin mencoba fitur lacak?</span>
                 <button
                   type="button"
                   onClick={handleQuickDemo}
-                  className="inline-flex items-center gap-1 font-mono font-semibold text-[#0369A1] hover:text-[#0F172A] underline underline-offset-2 touch-manipulation cursor-pointer"
+                  className="inline-flex items-center gap-1 font-mono font-semibold text-[#006EB3] hover:text-[#0B253B] underline underline-offset-2 touch-manipulation cursor-pointer"
                 >
                   Gunakan tiket contoh: {DEMO_TICKET}
                 </button>
@@ -212,17 +212,17 @@ export const LandingPage: React.FC = () => {
                 <PublicTrackingCard data={trackingResult} />
               </div>
             ) : (
-              <div className="p-6 md:p-8 rounded-lg bg-white/90 backdrop-blur-md border border-[#E2E8F0] space-y-5 shadow-sm">
-                <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
+              <div className="p-6 md:p-8 rounded-lg bg-white/90 backdrop-blur-md border border-[#D5E4E4] space-y-5 shadow-sm">
+                <div className="flex items-center justify-between pb-4 border-b border-[#D5E4E4]">
                   <div className="flex items-center gap-2.5">
-                    <div className="size-9 rounded-md bg-[#0F172A] flex items-center justify-center text-white font-bold">
+                    <div className="size-9 rounded-md bg-[#0B253B] flex items-center justify-center text-white font-bold">
                       <Clock className="size-4" aria-hidden="true" />
                     </div>
                     <div>
-                      <h3 className="font-heading font-bold text-xs text-[#0F172A]">
+                      <h3 className="font-heading font-bold text-xs text-[#0B253B]">
                         Pelacakan Mandiri
                       </h3>
-                      <p className="text-xs text-[#475569]">Update real-time dari sistem kasir</p>
+                      <p className="text-xs text-[#425869]">Update real-time dari sistem kasir</p>
                     </div>
                   </div>
                   <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded-sm bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0]">
@@ -230,26 +230,26 @@ export const LandingPage: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="space-y-3 text-xs text-[#334155]">
+                <div className="space-y-3 text-xs text-[#2D4659]">
                   <div className="flex items-start gap-2.5">
-                    <div className="size-5 rounded-sm bg-[#0F172A] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
+                    <div className="size-5 rounded-sm bg-[#0B253B] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
                       1
                     </div>
                     <p>Serahkan pakaian di kasir dan terima nomor tiket bukti penyerahan.</p>
                   </div>
                   <div className="flex items-start gap-2.5">
-                    <div className="size-5 rounded-sm bg-[#0F172A] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
+                    <div className="size-5 rounded-sm bg-[#0B253B] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
                       2
                     </div>
                     <p>Ketik nomor tiket di kolom pelacakan untuk memantau status cuci dan setrika.</p>
                   </div>
                   <div className="flex items-start gap-2.5">
-                    <div className="size-5 rounded-sm bg-[#0F172A] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
+                    <div className="size-5 rounded-sm bg-[#0B253B] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
                       3
                     </div>
                     <p>
                       Ambil cucian di outlet saat status menunjukkan{' '}
-                      <strong className="text-[#020617]">Siap Diambil</strong>.
+                      <strong className="text-[#071422]">Siap Diambil</strong>.
                     </p>
                   </div>
                 </div>
@@ -259,7 +259,7 @@ export const LandingPage: React.FC = () => {
                     type="button"
                     onClick={handleQuickDemo}
                     variant="outline"
-                    className="w-full rounded-md border-[#E2E8F0] bg-white text-[#0369A1] hover:bg-[#E8ECF1] hover:text-[#0F172A] text-xs font-semibold h-10 gap-1.5"
+                    className="w-full rounded-md border-[#D5E4E4] bg-white text-[#006EB3] hover:bg-[#E8F2F2] hover:text-[#0B253B] text-xs font-semibold h-10 gap-1.5"
                   >
                     Coba Demo Lacak Pesanan
                     <ArrowRight className="size-3.5" aria-hidden="true" />
@@ -274,46 +274,46 @@ export const LandingPage: React.FC = () => {
       {/* Katalog Paket Layanan */}
       <section id="layanan" className="py-16 px-4 max-w-6xl mx-auto w-full space-y-8">
         <div className="text-center space-y-2 max-w-2xl mx-auto">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-[#0F172A]">
+          <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-[#0B253B]">
             Paket Layanan dan Tarif Resmi
           </h2>
-          <p className="text-xs md:text-sm text-[#475569]">
+          <p className="text-xs md:text-sm text-[#425869]">
             Harga kiloan transparan tanpa biaya tersembunyi. Dihitung akurat sesuai timbangan outlet.
           </p>
         </div>
 
         {servicesLoading ? (
-          <div className="flex justify-center items-center h-32 text-xs text-[#475569]">
-            <Loader2 className="mr-2 size-4 animate-spin text-[#0369A1]" aria-hidden="true" />
+          <div className="flex justify-center items-center h-32 text-xs text-[#425869]">
+            <Loader2 className="mr-2 size-4 animate-spin text-[#006EB3]" aria-hidden="true" />
             Memuat daftar layanan...
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((lyn) => (
-              <Card key={lyn.id_lyn} className="rounded-lg border-[#E2E8F0] shadow-none hover-lift bg-white">
+              <Card key={lyn.id_lyn} className="rounded-lg border-[#D5E4E4] shadow-none hover-lift bg-white">
                 <CardContent className="p-5 flex flex-col justify-between h-full space-y-4">
                   <div className="space-y-2">
-                    <div className="size-10 rounded-md bg-[#F1F5F9] border border-[#CBD5E1] flex items-center justify-center text-[#0369A1] mb-2">
+                    <div className="size-10 rounded-md bg-[#E8F2F2] border border-[#C7DBDB] flex items-center justify-center text-[#006EB3] mb-2">
                       <Shirt className="size-5 stroke-[1.75]" aria-hidden="true" />
                     </div>
-                    <h3 className="font-bold text-base text-[#020617]">{lyn.nm_lyn}</h3>
-                    <p className="text-xs text-[#475569] leading-relaxed">
+                    <h3 className="font-bold text-base text-[#071422]">{lyn.nm_lyn}</h3>
+                    <p className="text-xs text-[#425869] leading-relaxed">
                       Pencucian menyeluruh, sanitasi serat kain, dan pengemasan rapi.
                     </p>
                   </div>
-                  <div className="pt-3 border-t border-[#E2E8F0] flex justify-between items-end">
+                  <div className="pt-3 border-t border-[#D5E4E4] flex justify-between items-end">
                     <div>
-                      <span className="text-xs text-[#475569] block">Estimasi</span>
-                      <span className="font-mono text-xs font-semibold text-[#020617] flex items-center gap-1 tabular-nums">
-                        <Clock className="size-3.5 text-[#0369A1]" aria-hidden="true" />
+                      <span className="text-xs text-[#425869] block">Estimasi</span>
+                      <span className="font-mono text-xs font-semibold text-[#071422] flex items-center gap-1 tabular-nums">
+                        <Clock className="size-3.5 text-[#006EB3]" aria-hidden="true" />
                         {lyn.est_hari} Hari
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="font-mono text-lg font-bold text-[#0369A1] tabular-nums">
+                      <span className="font-mono text-lg font-bold text-[#006EB3] tabular-nums">
                         {formatRupiah(lyn.hrg_kg)}
                       </span>
-                      <span className="text-xs text-[#475569] block">/ kg</span>
+                      <span className="text-xs text-[#425869] block">/ kg</span>
                     </div>
                   </div>
                 </CardContent>
@@ -324,13 +324,13 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Standar Higienis 5 Langkah Qwash */}
-      <section id="higienis" className="py-16 px-4 bg-white border-y border-[#E2E8F0]">
+      <section id="higienis" className="py-16 px-4 bg-white border-y border-[#D5E4E4]">
         <div className="max-w-6xl mx-auto space-y-10">
           <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-[#0F172A]">
+            <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-[#0B253B]">
               Standar Kebersihan 5 Tahap Qwash
             </h2>
-            <p className="text-xs md:text-sm text-[#475569]">
+            <p className="text-xs md:text-sm text-[#425869]">
               Kami menerapkan protokol pembersihan ketat untuk menjaga kebersihan higienis dan ketahanan serat pakaian Anda.
             </p>
           </div>
@@ -363,12 +363,12 @@ export const LandingPage: React.FC = () => {
                 desc: 'Pengemasan plastik rapi menjaga aroma harum dan kebersihan hingga ke lemari.',
               },
             ].map((step) => (
-              <div key={step.num} className="p-4 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] space-y-2">
-                <div className="inline-flex px-2 py-0.5 rounded-sm bg-[#0F172A] text-white font-mono font-bold text-xs">
+              <div key={step.num} className="p-4 rounded-lg bg-[#F6FFFF] border border-[#D5E4E4] space-y-2">
+                <div className="inline-flex px-2 py-0.5 rounded-sm bg-[#0B253B] text-white font-mono font-bold text-xs">
                   {step.num}
                 </div>
-                <h4 className="font-semibold text-xs text-[#020617] pt-1">{step.title}</h4>
-                <p className="text-xs text-[#475569] leading-relaxed">{step.desc}</p>
+                <h4 className="font-semibold text-xs text-[#071422] pt-1">{step.title}</h4>
+                <p className="text-xs text-[#425869] leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -377,24 +377,24 @@ export const LandingPage: React.FC = () => {
 
       {/* Lokasi & Jam Buka Outlet */}
       <section id="lokasi" className="py-16 px-4 max-w-6xl mx-auto w-full">
-        <div className="bg-white rounded-lg border border-[#E2E8F0] p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white rounded-lg border border-[#D5E4E4] p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
-            <div className="size-10 rounded-md bg-[#F1F5F9] border border-[#CBD5E1] flex items-center justify-center text-[#0369A1] mb-2">
+            <div className="size-10 rounded-md bg-[#E8F2F2] border border-[#C7DBDB] flex items-center justify-center text-[#006EB3] mb-2">
               <MapPin className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
-            <h3 className="font-heading font-bold text-base text-[#0F172A]">Lokasi Outlet</h3>
-            <p className="text-xs text-[#475569] leading-relaxed">
+            <h3 className="font-heading font-bold text-base text-[#0B253B]">Lokasi Outlet</h3>
+            <p className="text-xs text-[#425869] leading-relaxed">
               Jl. Margonda Raya No. 100, Depok, Jawa Barat
             </p>
-            <p className="text-xs text-[#475569]">Dekat halte dan area kampus</p>
+            <p className="text-xs text-[#425869]">Dekat halte dan area kampus</p>
           </div>
 
           <div className="space-y-2">
-            <div className="size-10 rounded-md bg-[#F1F5F9] border border-[#CBD5E1] flex items-center justify-center text-[#0369A1] mb-2">
+            <div className="size-10 rounded-md bg-[#E8F2F2] border border-[#C7DBDB] flex items-center justify-center text-[#006EB3] mb-2">
               <Clock className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
-            <h3 className="font-heading font-bold text-base text-[#0F172A]">Jam Operasional</h3>
-            <p className="font-mono text-xs text-[#475569] leading-relaxed">
+            <h3 className="font-heading font-bold text-base text-[#0B253B]">Jam Operasional</h3>
+            <p className="font-mono text-xs text-[#425869] leading-relaxed">
               Senin - Minggu | 07.00 - 21.00 WIB
             </p>
             <p className="text-xs text-[#15803D] font-semibold flex items-center gap-1">
@@ -404,14 +404,14 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <div className="size-10 rounded-md bg-[#F1F5F9] border border-[#CBD5E1] flex items-center justify-center text-[#0369A1] mb-2">
+            <div className="size-10 rounded-md bg-[#E8F2F2] border border-[#C7DBDB] flex items-center justify-center text-[#006EB3] mb-2">
               <Phone className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
-            <h3 className="font-heading font-bold text-base text-[#0F172A]">Layanan Pelanggan</h3>
-            <p className="text-xs text-[#020617] leading-relaxed font-mono">
+            <h3 className="font-heading font-bold text-base text-[#0B253B]">Layanan Pelanggan</h3>
+            <p className="text-xs text-[#071422] leading-relaxed font-mono">
               WhatsApp / Telp: 0812-3456-7890
             </p>
-            <p className="text-xs text-[#475569]">Bantuan informasi pesanan dan konfirmasi</p>
+            <p className="text-xs text-[#425869]">Bantuan informasi pesanan dan konfirmasi</p>
           </div>
         </div>
       </section>

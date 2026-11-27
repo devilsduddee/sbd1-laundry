@@ -131,17 +131,17 @@ export const ServicesPage: React.FC = () => {
       {/* Header Halaman (Output 2) */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A]">
+          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-[#0B253B]">
             Data Layanan Laundry (Output 2)
           </h1>
-          <p className="text-xs text-[#475569] mt-0.5">
+          <p className="text-xs text-[#425869] mt-0.5">
             Daftar paket layanan cuci, tarif per kg/satuan, dan estimasi pengerjaan
           </p>
         </div>
         {isAdmin && (
           <Button
             onClick={openCreateDialog}
-            className="bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md gap-2 text-xs h-9 font-semibold"
+            className="bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md gap-2 text-xs h-9 font-semibold"
           >
             <Plus className="size-4" aria-hidden="true" />
             Tambah Layanan
@@ -152,51 +152,51 @@ export const ServicesPage: React.FC = () => {
       {/* Grid Layanan Swiss Style */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {loading ? (
-          <div className="col-span-full h-32 flex items-center justify-center text-xs text-[#475569]">
+          <div className="col-span-full h-32 flex items-center justify-center text-xs text-[#425869]">
             Memuat daftar layanan...
           </div>
         ) : services.length === 0 ? (
-          <div className="col-span-full h-32 flex items-center justify-center text-xs text-[#475569]">
+          <div className="col-span-full h-32 flex items-center justify-center text-xs text-[#425869]">
             Belum ada data layanan.
           </div>
         ) : (
           services.map((l) => (
             <Card
               key={l.id_lyn}
-              className="swiss-card-item hover-lift rounded-lg border-[#E2E8F0] bg-white shadow-none overflow-hidden flex flex-col justify-between"
+              className="swiss-card-item hover-lift rounded-lg border-[#D5E4E4] bg-white shadow-none overflow-hidden flex flex-col justify-between"
             >
               <CardHeader className="p-4 pb-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-semibold text-[#0F172A] bg-[#F1F5F9] border border-[#CBD5E1] px-2 py-0.5 rounded-sm tabular-nums">
+                  <span className="font-mono text-xs font-semibold text-[#0B253B] bg-[#E8F2F2] border border-[#C7DBDB] px-2 py-0.5 rounded-sm tabular-nums">
                     {l.id_lyn}
                   </span>
-                  <div className="flex items-center gap-1 text-xs text-[#475569] bg-[#F8FAFC] border border-[#E2E8F0] px-2 py-0.5 rounded-sm font-mono font-medium tabular-nums">
-                    <Clock className="size-3 text-[#0369A1]" aria-hidden="true" />
+                  <div className="flex items-center gap-1 text-xs text-[#425869] bg-[#F6FFFF] border border-[#D5E4E4] px-2 py-0.5 rounded-sm font-mono font-medium tabular-nums">
+                    <Clock className="size-3 text-[#006EB3]" aria-hidden="true" />
                     <span>{l.est_hari} Hari</span>
                   </div>
                 </div>
-                <CardTitle className="text-sm font-bold text-[#020617] mt-3">
+                <CardTitle className="text-sm font-bold text-[#071422] mt-3">
                   {l.nm_lyn}
                 </CardTitle>
               </CardHeader>
 
               <CardContent className="p-4 pt-2">
-                <div className="pt-2 border-t border-[#E2E8F0] flex items-baseline justify-between">
-                  <span className="text-xs text-[#475569]">Tarif:</span>
-                  <span className="font-mono text-base font-bold text-[#0369A1] tabular-nums">
+                <div className="pt-2 border-t border-[#D5E4E4] flex items-baseline justify-between">
+                  <span className="text-xs text-[#425869]">Tarif:</span>
+                  <span className="font-mono text-base font-bold text-[#006EB3] tabular-nums">
                     {formatRupiah(l.hrg_kg)}
-                    <span className="text-xs text-[#475569] font-sans font-normal"> /kg</span>
+                    <span className="text-xs text-[#425869] font-sans font-normal"> /kg</span>
                   </span>
                 </div>
 
                 {isAdmin && (
-                  <div className="flex items-center justify-end gap-1 mt-3 pt-2 border-t border-[#E2E8F0]">
+                  <div className="flex items-center justify-end gap-1 mt-3 pt-2 border-t border-[#D5E4E4]">
                     <Button
                       variant="ghost"
                       size="sm"
                       aria-label={`Ubah ${l.nm_lyn}`}
                       onClick={() => openEditDialog(l)}
-                      className="size-8 p-0 text-[#0369A1] hover:text-[#0F172A] hover:bg-[#E8ECF1] rounded-md"
+                      className="size-8 p-0 text-[#006EB3] hover:text-[#0B253B] hover:bg-[#E8F2F2] rounded-md"
                     >
                       <Edit2 className="size-3.5" aria-hidden="true" />
                     </Button>
@@ -219,9 +219,9 @@ export const ServicesPage: React.FC = () => {
 
       {/* Dialog Tambah / Ubah Layanan */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="rounded-lg max-w-sm border-[#E2E8F0]">
+        <DialogContent className="rounded-lg max-w-sm border-[#D5E4E4]">
           <DialogHeader>
-            <DialogTitle className="font-heading text-base font-bold text-[#0F172A]">
+            <DialogTitle className="font-heading text-base font-bold text-[#0B253B]">
               {isEdit ? 'Ubah Data Layanan' : 'Tambah Layanan Baru'}
             </DialogTitle>
           </DialogHeader>
@@ -234,7 +234,7 @@ export const ServicesPage: React.FC = () => {
                 onChange={(e) => setNmLyn(e.target.value)}
                 placeholder="Contoh: Cuci Karpet"
                 required
-                className="rounded-md border-[#E2E8F0]"
+                className="rounded-md border-[#D5E4E4]"
               />
             </div>
             <div className="space-y-1">
@@ -246,7 +246,7 @@ export const ServicesPage: React.FC = () => {
                 onChange={(e) => setHrgKg(parseInt(e.target.value) || 0)}
                 required
                 min={100}
-                className="rounded-md border-[#E2E8F0] font-mono tabular-nums"
+                className="rounded-md border-[#D5E4E4] font-mono tabular-nums"
               />
             </div>
             <div className="space-y-1">
@@ -258,14 +258,14 @@ export const ServicesPage: React.FC = () => {
                 onChange={(e) => setEstHari(parseInt(e.target.value) || 1)}
                 required
                 min={1}
-                className="rounded-md border-[#E2E8F0] font-mono tabular-nums"
+                className="rounded-md border-[#D5E4E4] font-mono tabular-nums"
               />
             </div>
             <DialogFooter className="pt-2">
               <Button
                 type="submit"
                 disabled={saving}
-                className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md"
+                className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md"
               >
                 {saving ? 'Menyimpan...' : isEdit ? 'Simpan Perubahan' : 'Tambah Layanan'}
               </Button>

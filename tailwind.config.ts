@@ -17,51 +17,60 @@ const config: Config = {
         mono: ['"Fira Code"', 'monospace'],
       },
       colors: {
-        // Token Minimalism & Swiss Style (ui-ux-pro-max — 05-design.md v2.0)
-        background: '#F8FAFC',
-        foreground: '#020617',
+        // Unified Neat + Swiss Style Palette (05-design.md v2.2)
+        background: '#F6FFFF',
+        foreground: '#071422',
         card: {
           DEFAULT: '#FFFFFF',
-          foreground: '#020617',
+          foreground: '#071422',
         },
         popover: {
           DEFAULT: '#FFFFFF',
-          foreground: '#020617',
+          foreground: '#071422',
         },
         primary: {
-          DEFAULT: '#0F172A',
+          DEFAULT: '#0B253B',
           foreground: '#FFFFFF',
         },
         secondary: {
-          DEFAULT: '#334155',
+          DEFAULT: '#2D4659',
           foreground: '#FFFFFF',
         },
         muted: {
-          DEFAULT: '#E8ECF1',
-          foreground: '#475569',
+          DEFAULT: '#E8F2F2',
+          foreground: '#425869',
         },
         accent: {
-          DEFAULT: '#0369A1',
+          DEFAULT: '#006EB3',
           foreground: '#FFFFFF',
         },
         destructive: {
           DEFAULT: '#DC2626',
           foreground: '#FFFFFF',
         },
-        border: '#E2E8F0',
-        input: '#E2E8F0',
-        ring: '#0F172A',
+        border: '#D5E4E4',
+        input: '#D5E4E4',
+        ring: '#0B253B',
+
+        // Neat Reference Accents
+        neat: {
+          azure: '#00A2FF',
+          aqua: '#D5ECEB',
+          linen: '#EFE2CE',
+          silver: '#E4E4E4',
+          mint: '#F6FFFF',
+        },
 
         // Semantic status tokens (kontras >= 4.5:1)
         status: {
-          queueBg: '#F1F5F9',
-          queueText: '#334155',
-          washBg: '#E0F2FE',
-          washText: '#0369A1',
-          ironBg: '#FEF3C7',
-          ironText: '#B45309',
-          readyBg: '#EDE9FE',
-          readyText: '#6D28D9',
+          queueBg: '#E8F2F2',
+          queueText: '#2D4659',
+          washBg: '#D5ECEB',
+          washText: '#005A94',
+          ironBg: '#EFE2CE',
+          ironText: '#7C4D12',
+          readyBg: '#E0F2FE',
+          readyText: '#005A94',
           doneBg: '#DCFCE7',
           doneText: '#15803D',
           unpaidBg: '#FEE2E2',

@@ -101,13 +101,13 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#020617] flex flex-col justify-center overflow-x-clip font-sans">
+    <div className="min-h-screen bg-[#F6FFFF] text-[#071422] flex flex-col justify-center overflow-x-clip font-sans">
       <div className="w-full min-h-screen grid grid-cols-1 lg:grid-cols-12 bg-white">
         {/* Kolom Kiri: Swiss Slate Navy Brand & Spec Summary */}
-        <div className="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-[#0F172A] text-white p-10 xl:p-16 flex-col justify-between relative">
+        <div className="hidden lg:flex lg:col-span-6 xl:col-span-7 bg-[#0B253B] text-white p-10 xl:p-16 flex-col justify-between relative">
           {/* Top Brand Logo */}
           <div className="flex items-center gap-3">
-            <div className="size-10 rounded-md bg-[#0369A1] flex items-center justify-center text-white shrink-0">
+            <div className="size-10 rounded-md bg-[#006EB3] flex items-center justify-center text-white shrink-0">
               <QwashLogo variant="symbol" size="sm" className="text-white" />
             </div>
             <div>
@@ -123,8 +123,8 @@ export const LoginPage: React.FC = () => {
           {/* Middle Value Proposition & Technical Spec Box */}
           <div className="space-y-8 max-w-lg my-auto py-8">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-slate-800 border border-slate-700 text-xs font-mono text-sky-300">
-                <Terminal className="size-3.5 text-[#38BDF8]" aria-hidden="true" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-slate-800 border border-slate-700 text-xs font-mono text-[#00A2FF]">
+                <Terminal className="size-3.5 text-[#00A2FF]" aria-hidden="true" />
                 <span>SISTEM PENGELOLAAN BASIS DATA LAUNDRY</span>
               </div>
               <h1 className="font-heading text-3xl xl:text-4xl font-bold tracking-tight leading-tight text-white">
@@ -142,7 +142,7 @@ export const LoginPage: React.FC = () => {
                   <span className="size-2 rounded-full bg-emerald-400" />
                   <span className="font-mono text-slate-300 text-xs">SYSTEM_STATUS: READY</span>
                 </div>
-                <span className="px-2 py-0.5 rounded-sm bg-sky-950 text-sky-300 border border-sky-800 text-xs font-mono font-medium">
+                <span className="px-2 py-0.5 rounded-sm bg-[#071B2C] text-[#00A2FF] border border-[#006EB3] text-xs font-mono font-medium">
                   Turso libSQL
                 </span>
               </div>
@@ -177,7 +177,7 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* Kolom Kanan: Form Autentikasi Staf di atas Ambient @firecms/neat (Opsi A) */}
-        <div className="col-span-1 lg:col-span-6 xl:col-span-5 relative overflow-hidden p-4 sm:p-8 xl:p-12 flex flex-col justify-center items-center w-full min-h-screen pt-safe pb-safe bg-[#F8FAFC]">
+        <div className="col-span-1 lg:col-span-6 xl:col-span-5 relative overflow-hidden p-4 sm:p-8 xl:p-12 flex flex-col justify-center items-center w-full min-h-screen pt-safe pb-safe bg-[#F6FFFF]">
           <div className="absolute inset-0 z-0 pointer-events-none print:hidden" aria-hidden="true">
             <Suspense
               fallback={
@@ -189,7 +189,7 @@ export const LoginPage: React.FC = () => {
             <div className="absolute inset-0 bg-white/25" />
           </div>
 
-          <div className="relative z-10 w-full max-w-md bg-white/92 backdrop-blur-md border border-[#E2E8F0] rounded-lg p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-6">
+          <div className="relative z-10 w-full max-w-md bg-white/92 backdrop-blur-md border border-[#D5E4E4] rounded-lg p-6 sm:p-8 shadow-sm flex flex-col justify-between space-y-6">
             {/* Header Bar dengan Tombol Kembali ke Landing Page */}
             <div className="flex items-center justify-between">
               <Button
@@ -197,13 +197,13 @@ export const LoginPage: React.FC = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate('/')}
-                className="rounded-md text-xs gap-1.5 text-[#475569] hover:text-[#0F172A] hover:bg-[#E8ECF1] h-9 font-medium px-2.5 -ml-2.5 touch-manipulation"
+                className="rounded-md text-xs gap-1.5 text-[#425869] hover:text-[#0B253B] hover:bg-[#E8F2F2] h-9 font-medium px-2.5 -ml-2.5 touch-manipulation"
               >
                 <ArrowLeft className="size-3.5" aria-hidden="true" />
                 <span>Beranda Publik</span>
               </Button>
 
-              <span className="text-xs font-mono font-medium text-[#475569]">
+              <span className="text-xs font-mono font-medium text-[#425869]">
                 Qwash v2.1
               </span>
             </div>
@@ -211,10 +211,10 @@ export const LoginPage: React.FC = () => {
             {/* Form Container */}
             <div className="space-y-6">
               <div className="space-y-1.5">
-                <h2 className="font-heading text-2xl font-bold text-[#0F172A] tracking-tight">
+                <h2 className="font-heading text-2xl font-bold text-[#0B253B] tracking-tight">
                   Masuk ke Portal Petugas
                 </h2>
-                <p className="text-xs text-[#475569]">
+                <p className="text-xs text-[#425869]">
                   Masukkan kredensial akun staf untuk memulai pengerjaan
                 </p>
               </div>
@@ -232,12 +232,12 @@ export const LoginPage: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Input Username */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="usernm" className="text-xs font-semibold text-[#020617]">
+                  <Label htmlFor="usernm" className="text-xs font-semibold text-[#071422]">
                     Username Petugas
                   </Label>
                   <div className="relative">
                     <User
-                      className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#425869]"
                       aria-hidden="true"
                     />
                     <Input
@@ -249,7 +249,7 @@ export const LoginPage: React.FC = () => {
                         setUsernm(e.target.value);
                         setActiveRole(null);
                       }}
-                      className="pl-10 h-11 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-sm font-medium text-[#020617] bg-white"
+                      className="pl-10 h-11 rounded-md border-[#D5E4E4] focus-visible:ring-[#0B253B] text-sm font-medium text-[#071422] bg-white"
                       autoComplete="username"
                       autoCapitalize="none"
                       autoCorrect="off"
@@ -262,12 +262,12 @@ export const LoginPage: React.FC = () => {
 
                 {/* Input Password */}
                 <div className="space-y-1.5">
-                  <Label htmlFor="passwd" className="text-xs font-semibold text-[#020617]">
+                  <Label htmlFor="passwd" className="text-xs font-semibold text-[#071422]">
                     Kata Sandi
                   </Label>
                   <div className="relative">
                     <Lock
-                      className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
+                      className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#425869]"
                       aria-hidden="true"
                     />
                     <Input
@@ -279,7 +279,7 @@ export const LoginPage: React.FC = () => {
                         setPasswd(e.target.value);
                         setActiveRole(null);
                       }}
-                      className="pl-10 pr-10 h-11 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-sm font-medium text-[#020617] bg-white"
+                      className="pl-10 pr-10 h-11 rounded-md border-[#D5E4E4] focus-visible:ring-[#0B253B] text-sm font-medium text-[#071422] bg-white"
                       autoComplete="current-password"
                       disabled={loading}
                       required
@@ -287,7 +287,7 @@ export const LoginPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#475569] hover:text-[#0F172A] p-1 rounded-sm"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#425869] hover:text-[#0B253B] p-1 rounded-sm"
                       aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
                     >
                       {showPassword ? (
@@ -302,8 +302,8 @@ export const LoginPage: React.FC = () => {
                 {/* Akun Demo Cepat (Quick Login Tabs) */}
                 <div className="pt-2 space-y-2">
                   <div className="flex justify-between items-center text-xs">
-                    <span className="font-semibold text-[#334155]">Pilih Akun Demo Cepat:</span>
-                    <span className="text-[#475569]">1-klik langsung terisi</span>
+                    <span className="font-semibold text-[#2D4659]">Pilih Akun Demo Cepat:</span>
+                    <span className="text-[#425869]">1-klik langsung terisi</span>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
                     {DEMO_ACCOUNTS.map((acc) => {
@@ -315,14 +315,14 @@ export const LoginPage: React.FC = () => {
                           onClick={() => handleSelectDemo(acc)}
                           className={`p-2.5 rounded-md border text-left flex flex-col justify-between transition-colors touch-manipulation active:scale-[0.97] cursor-pointer ${
                             isSelected
-                              ? 'border-[#0F172A] bg-[#F1F5F9] text-[#0F172A] ring-1 ring-[#0F172A]'
-                              : 'border-[#E2E8F0] bg-[#F8FAFC] text-[#334155] hover:border-[#0369A1] hover:bg-white'
+                              ? 'border-[#0B253B] bg-[#E8F2F2] text-[#0B253B] ring-1 ring-[#0B253B]'
+                              : 'border-[#D5E4E4] bg-[#F6FFFF] text-[#2D4659] hover:border-[#006EB3] hover:bg-white'
                           }`}
                         >
                           <span className="text-xs font-bold leading-tight truncate">
                             {acc.title}
                           </span>
-                          <span className="text-xs font-mono text-[#475569] mt-1">
+                          <span className="text-xs font-mono text-[#425869] mt-1">
                             @{acc.user}
                           </span>
                         </button>
@@ -331,12 +331,12 @@ export const LoginPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Tombol Submit Utama (Ocean Action Blue #0369A1) */}
+                {/* Tombol Submit Utama (Ocean Action Blue #006EB3) */}
                 <div className="pt-2">
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md h-11 text-sm font-semibold touch-manipulation active:scale-[0.98]"
+                    className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md h-11 text-sm font-semibold touch-manipulation active:scale-[0.98]"
                   >
                     {loading ? (
                       <>
@@ -352,7 +352,7 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {/* Footer Bawah */}
-            <div className="text-center text-xs text-[#475569] pt-4 border-t border-[#E2E8F0]">
+            <div className="text-center text-xs text-[#425869] pt-4 border-t border-[#D5E4E4]">
               <span>&copy; 2026 Qwash Laundry &amp; Hygienic Care. Sistem Basis Data.</span>
             </div>
           </div>

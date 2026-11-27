@@ -123,16 +123,16 @@ export const StaffPage: React.FC = () => {
       {/* Header Halaman */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A]">
+          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-[#0B253B]">
             Kelola Akun Petugas (PTGS)
           </h1>
-          <p className="text-xs text-[#475569] mt-0.5">
+          <p className="text-xs text-[#425869] mt-0.5">
             Manajemen hak akses petugas kasir, operasional, dan administrator
           </p>
         </div>
         <Button
           onClick={openCreateDialog}
-          className="bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md gap-2 text-xs h-9 font-semibold"
+          className="bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md gap-2 text-xs h-9 font-semibold"
         >
           <UserPlus className="size-4" aria-hidden="true" />
           Tambah Petugas
@@ -140,30 +140,30 @@ export const StaffPage: React.FC = () => {
       </div>
 
       {/* Semantic Tabel Petugas */}
-      <div className="bg-white border border-[#E2E8F0] rounded-lg overflow-hidden">
+      <div className="bg-white border border-[#D5E4E4] rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#F8FAFC]">
-              <TableRow className="border-b border-[#E2E8F0] text-xs hover:bg-transparent">
-                <TableHead className="py-3 px-4 font-semibold text-[#475569]">ID Petugas</TableHead>
-                <TableHead className="py-3 px-4 font-semibold text-[#475569]">Nama Lengkap</TableHead>
-                <TableHead className="py-3 px-4 font-semibold text-[#475569]">Username</TableHead>
-                <TableHead className="py-3 px-4 font-semibold text-[#475569] text-center">
+            <TableHeader className="bg-[#F6FFFF]">
+              <TableRow className="border-b border-[#D5E4E4] text-xs hover:bg-transparent">
+                <TableHead className="py-3 px-4 font-semibold text-[#425869]">ID Petugas</TableHead>
+                <TableHead className="py-3 px-4 font-semibold text-[#425869]">Nama Lengkap</TableHead>
+                <TableHead className="py-3 px-4 font-semibold text-[#425869]">Username</TableHead>
+                <TableHead className="py-3 px-4 font-semibold text-[#425869] text-center">
                   Tingkat Peran
                 </TableHead>
-                <TableHead className="py-3 px-4 font-semibold text-[#475569] text-right">Aksi</TableHead>
+                <TableHead className="py-3 px-4 font-semibold text-[#425869] text-right">Aksi</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-32 text-center text-xs text-[#475569]">
+                  <TableCell colSpan={5} className="h-32 text-center text-xs text-[#425869]">
                     Memuat data petugas...
                   </TableCell>
                 </TableRow>
               ) : staffList.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-32 text-center text-xs text-[#475569]">
+                  <TableCell colSpan={5} className="h-32 text-center text-xs text-[#425869]">
                     Belum ada data petugas.
                   </TableCell>
                 </TableRow>
@@ -171,19 +171,19 @@ export const StaffPage: React.FC = () => {
                 staffList.map((s) => (
                   <TableRow
                     key={s.id_ptgs}
-                    className="hover:bg-[#F8FAFC] border-b border-[#E2E8F0] last:border-b-0"
+                    className="hover:bg-[#F6FFFF] border-b border-[#D5E4E4] last:border-b-0"
                   >
-                    <TableCell className="font-mono text-xs font-semibold text-[#0369A1] py-3 px-4 tabular-nums whitespace-nowrap">
+                    <TableCell className="font-mono text-xs font-semibold text-[#006EB3] py-3 px-4 tabular-nums whitespace-nowrap">
                       {s.id_ptgs}
                     </TableCell>
-                    <TableCell className="text-xs font-semibold text-[#020617] py-3 px-4">
+                    <TableCell className="text-xs font-semibold text-[#071422] py-3 px-4">
                       {s.nm_ptgs}
                     </TableCell>
-                    <TableCell className="font-mono text-xs text-[#334155] py-3 px-4">
+                    <TableCell className="font-mono text-xs text-[#2D4659] py-3 px-4">
                       @{s.usernm}
                     </TableCell>
                     <TableCell className="text-center py-3 px-4">
-                      <span className="inline-flex items-center text-xs px-2.5 py-0.5 rounded-sm font-medium bg-[#F1F5F9] text-[#0F172A] border border-[#CBD5E1]">
+                      <span className="inline-flex items-center text-xs px-2.5 py-0.5 rounded-sm font-medium bg-[#E8F2F2] text-[#0B253B] border border-[#C7DBDB]">
                         {s.level}
                       </span>
                     </TableCell>
@@ -192,7 +192,7 @@ export const StaffPage: React.FC = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => openEditDialog(s)}
-                        className="rounded-md text-[#0369A1] hover:text-[#0F172A] hover:bg-[#E8ECF1] h-8 px-2.5 text-xs gap-1.5 font-medium"
+                        className="rounded-md text-[#006EB3] hover:text-[#0B253B] hover:bg-[#E8F2F2] h-8 px-2.5 text-xs gap-1.5 font-medium"
                       >
                         <Edit2 className="size-3.5" aria-hidden="true" />
                         Ubah
@@ -208,9 +208,9 @@ export const StaffPage: React.FC = () => {
 
       {/* Dialog Tambah / Ubah Petugas */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="rounded-lg max-w-sm border-[#E2E8F0]">
+        <DialogContent className="rounded-lg max-w-sm border-[#D5E4E4]">
           <DialogHeader>
-            <DialogTitle className="font-heading text-base font-bold text-[#0F172A]">
+            <DialogTitle className="font-heading text-base font-bold text-[#0B253B]">
               {isEdit ? 'Ubah Data Petugas' : 'Tambah Petugas Baru'}
             </DialogTitle>
           </DialogHeader>
@@ -224,7 +224,7 @@ export const StaffPage: React.FC = () => {
                 placeholder="Contoh: Rina Wahyuni"
                 autoComplete="name"
                 required
-                className="rounded-md border-[#E2E8F0]"
+                className="rounded-md border-[#D5E4E4]"
               />
             </div>
 
@@ -241,7 +241,7 @@ export const StaffPage: React.FC = () => {
                   autoComplete="username"
                   spellCheck={false}
                   required
-                  className="rounded-md border-[#E2E8F0] font-mono"
+                  className="rounded-md border-[#D5E4E4] font-mono"
                 />
               </div>
             )}
@@ -258,14 +258,14 @@ export const StaffPage: React.FC = () => {
                 placeholder={isEdit ? '******' : 'Minimal 6 karakter'}
                 autoComplete="new-password"
                 required={!isEdit}
-                className="rounded-md border-[#E2E8F0]"
+                className="rounded-md border-[#D5E4E4]"
               />
             </div>
 
             <div className="space-y-1">
               <Label htmlFor="stf-level">Peran Akses</Label>
               <Select value={level} onValueChange={(v) => setLevel(v as LevelPtgs)}>
-                <SelectTrigger id="stf-level" className="rounded-md border-[#E2E8F0] text-xs h-9 bg-white">
+                <SelectTrigger id="stf-level" className="rounded-md border-[#D5E4E4] text-xs h-9 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -282,7 +282,7 @@ export const StaffPage: React.FC = () => {
               <Button
                 type="submit"
                 disabled={saving}
-                className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md"
+                className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md"
               >
                 {saving ? 'Menyimpan...' : isEdit ? 'Simpan Perubahan' : 'Daftarkan Petugas'}
               </Button>

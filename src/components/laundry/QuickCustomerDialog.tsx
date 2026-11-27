@@ -54,9 +54,9 @@ export const QuickCustomerDialog: React.FC<QuickCustomerDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="rounded-lg max-w-sm border-[#E2E8F0]">
+      <DialogContent className="rounded-lg max-w-sm border-[#D5E4E4]">
         <DialogHeader>
-          <DialogTitle className="font-heading text-base font-bold text-[#0F172A]">
+          <DialogTitle className="font-heading text-base font-bold text-[#0B253B]">
             Tambah Pelanggan Baru
           </DialogTitle>
         </DialogHeader>
@@ -70,7 +70,7 @@ export const QuickCustomerDialog: React.FC<QuickCustomerDialogProps> = ({
               placeholder="Contoh: Siti Aisyah"
               autoComplete="name"
               required
-              className="rounded-md border-[#E2E8F0]"
+              className="rounded-md border-[#D5E4E4]"
             />
           </div>
           <div className="space-y-1">
@@ -84,7 +84,7 @@ export const QuickCustomerDialog: React.FC<QuickCustomerDialogProps> = ({
               onChange={(e) => setNoHp(e.target.value)}
               placeholder="081234567890"
               required
-              className="rounded-md border-[#E2E8F0] font-mono"
+              className="rounded-md border-[#D5E4E4] font-mono"
             />
           </div>
           <div className="space-y-1">
@@ -96,14 +96,14 @@ export const QuickCustomerDialog: React.FC<QuickCustomerDialogProps> = ({
               placeholder="Jl. Margonda No. 10"
               autoComplete="street-address"
               required
-              className="rounded-md border-[#E2E8F0]"
+              className="rounded-md border-[#D5E4E4]"
             />
           </div>
           <DialogFooter className="pt-2">
             <Button
               type="submit"
               disabled={saving}
-              className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md"
+              className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md"
             >
               {saving ? 'Menyimpan...' : 'Simpan Pelanggan'}
             </Button>

@@ -105,16 +105,16 @@ export const CustomersPage: React.FC = () => {
       {/* Header Halaman (Output 1) */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-[#0F172A]">
+          <h1 className="font-heading text-xl sm:text-2xl font-bold tracking-tight text-[#0B253B]">
             Data Pelanggan (Output 1)
           </h1>
-          <p className="text-xs text-[#475569] mt-0.5">
+          <p className="text-xs text-[#425869] mt-0.5">
             Daftar seluruh pelanggan terdaftar dalam basis data laundry
           </p>
         </div>
         <Button
           onClick={openCreateDialog}
-          className="bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md gap-2 text-xs h-9 font-semibold"
+          className="bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md gap-2 text-xs h-9 font-semibold"
         >
           <UserPlus className="size-4" aria-hidden="true" />
           Pelanggan Baru
@@ -128,7 +128,7 @@ export const CustomersPage: React.FC = () => {
             Cari nama pelanggan atau nomor HP
           </Label>
           <Search
-            className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-[#475569]"
+            className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-[#425869]"
             aria-hidden="true"
           />
           <Input
@@ -137,42 +137,42 @@ export const CustomersPage: React.FC = () => {
             placeholder="Cari nama atau nomor HP..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 rounded-md border-[#E2E8F0] focus-visible:ring-[#0F172A] text-xs h-9 bg-white"
+            className="pl-9 rounded-md border-[#D5E4E4] focus-visible:ring-[#0B253B] text-xs h-9 bg-white"
           />
         </div>
         <Button
           type="submit"
           variant="outline"
           size="sm"
-          className="rounded-md border-[#E2E8F0] hover:bg-[#E8ECF1] text-[#0F172A] h-9"
+          className="rounded-md border-[#D5E4E4] hover:bg-[#E8F2F2] text-[#0B253B] h-9"
         >
           Cari
         </Button>
       </form>
 
       {/* Semantic Tabel Pelanggan */}
-      <div className="bg-white border border-[#E2E8F0] rounded-lg overflow-hidden">
+      <div className="bg-white border border-[#D5E4E4] rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#F8FAFC]">
-              <TableRow className="border-b border-[#E2E8F0] text-xs hover:bg-transparent">
-                <TableHead className="py-3 px-4 font-semibold text-[#475569]">ID Pelanggan</TableHead>
-                <TableHead className="py-3 px-4 font-semibold text-[#475569]">Nama Lengkap</TableHead>
-                <TableHead className="py-3 px-4 font-semibold text-[#475569]">Nomor HP</TableHead>
-                <TableHead className="py-3 px-4 font-semibold text-[#475569]">Alamat</TableHead>
-                <TableHead className="py-3 px-4 font-semibold text-[#475569] text-right">Aksi</TableHead>
+            <TableHeader className="bg-[#F6FFFF]">
+              <TableRow className="border-b border-[#D5E4E4] text-xs hover:bg-transparent">
+                <TableHead className="py-3 px-4 font-semibold text-[#425869]">ID Pelanggan</TableHead>
+                <TableHead className="py-3 px-4 font-semibold text-[#425869]">Nama Lengkap</TableHead>
+                <TableHead className="py-3 px-4 font-semibold text-[#425869]">Nomor HP</TableHead>
+                <TableHead className="py-3 px-4 font-semibold text-[#425869]">Alamat</TableHead>
+                <TableHead className="py-3 px-4 font-semibold text-[#425869] text-right">Aksi</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-32 text-center text-xs text-[#475569]">
+                  <TableCell colSpan={5} className="h-32 text-center text-xs text-[#425869]">
                     Memuat data pelanggan...
                   </TableCell>
                 </TableRow>
               ) : customers.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-32 text-center text-xs text-[#475569]">
+                  <TableCell colSpan={5} className="h-32 text-center text-xs text-[#425869]">
                     Belum ada data pelanggan.
                   </TableCell>
                 </TableRow>
@@ -180,18 +180,18 @@ export const CustomersPage: React.FC = () => {
                 customers.map((c) => (
                   <TableRow
                     key={c.id_plgn}
-                    className="hover:bg-[#F8FAFC] border-b border-[#E2E8F0] last:border-b-0"
+                    className="hover:bg-[#F6FFFF] border-b border-[#D5E4E4] last:border-b-0"
                   >
-                    <TableCell className="font-mono text-xs font-semibold text-[#0369A1] py-3 px-4 tabular-nums whitespace-nowrap">
+                    <TableCell className="font-mono text-xs font-semibold text-[#006EB3] py-3 px-4 tabular-nums whitespace-nowrap">
                       {c.id_plgn}
                     </TableCell>
-                    <TableCell className="text-xs font-semibold text-[#020617] py-3 px-4">
+                    <TableCell className="text-xs font-semibold text-[#071422] py-3 px-4">
                       {c.nm_plgn}
                     </TableCell>
-                    <TableCell className="font-mono text-xs text-[#334155] tabular-nums py-3 px-4 whitespace-nowrap">
+                    <TableCell className="font-mono text-xs text-[#2D4659] tabular-nums py-3 px-4 whitespace-nowrap">
                       {c.no_hp}
                     </TableCell>
-                    <TableCell className="text-xs text-[#475569] py-3 px-4">
+                    <TableCell className="text-xs text-[#425869] py-3 px-4">
                       {c.alamat}
                     </TableCell>
                     <TableCell className="text-right py-3 px-4">
@@ -199,7 +199,7 @@ export const CustomersPage: React.FC = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => openEditDialog(c)}
-                        className="rounded-md text-[#0369A1] hover:text-[#0F172A] hover:bg-[#E8ECF1] h-8 px-2.5 text-xs gap-1.5 font-medium"
+                        className="rounded-md text-[#006EB3] hover:text-[#0B253B] hover:bg-[#E8F2F2] h-8 px-2.5 text-xs gap-1.5 font-medium"
                       >
                         <Edit2 className="size-3.5" aria-hidden="true" />
                         Ubah
@@ -215,9 +215,9 @@ export const CustomersPage: React.FC = () => {
 
       {/* Dialog Tambah / Ubah Pelanggan */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="rounded-lg max-w-sm border-[#E2E8F0]">
+        <DialogContent className="rounded-lg max-w-sm border-[#D5E4E4]">
           <DialogHeader>
-            <DialogTitle className="font-heading text-base font-bold text-[#0F172A]">
+            <DialogTitle className="font-heading text-base font-bold text-[#0B253B]">
               {isEdit ? 'Ubah Data Pelanggan' : 'Tambah Pelanggan Baru'}
             </DialogTitle>
           </DialogHeader>
@@ -231,7 +231,7 @@ export const CustomersPage: React.FC = () => {
                 placeholder="Contoh: Budi Santoso"
                 autoComplete="name"
                 required
-                className="rounded-md border-[#E2E8F0]"
+                className="rounded-md border-[#D5E4E4]"
               />
             </div>
             <div className="space-y-1">
@@ -245,7 +245,7 @@ export const CustomersPage: React.FC = () => {
                 onChange={(e) => setNoHp(e.target.value)}
                 placeholder="081234567890"
                 required
-                className="rounded-md border-[#E2E8F0] font-mono"
+                className="rounded-md border-[#D5E4E4] font-mono"
               />
             </div>
             <div className="space-y-1">
@@ -257,14 +257,14 @@ export const CustomersPage: React.FC = () => {
                 placeholder="Jl. Margonda Raya No. 12"
                 autoComplete="street-address"
                 required
-                className="rounded-md border-[#E2E8F0]"
+                className="rounded-md border-[#D5E4E4]"
               />
             </div>
             <DialogFooter className="pt-2">
               <Button
                 type="submit"
                 disabled={saving}
-                className="w-full bg-[#0369A1] hover:bg-[#0284C7] text-white rounded-md"
+                className="w-full bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md"
               >
                 {saving ? 'Menyimpan...' : isEdit ? 'Simpan Perubahan' : 'Tambah Pelanggan'}
               </Button>
