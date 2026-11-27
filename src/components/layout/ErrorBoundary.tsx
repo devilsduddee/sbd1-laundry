@@ -36,23 +36,23 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-[#F6FFFF] flex items-center justify-center p-4 font-sans">
-          <div className="max-w-md w-full bg-white rounded-lg border border-[#D5E4E4] p-6 text-center space-y-5">
-            <div className="mx-auto size-14 rounded-md bg-[#FEE2E2] border border-[#FECACA] text-[#DC2626] flex items-center justify-center">
+        <div className="min-h-screen bg-[#F8FAFA] flex items-center justify-center p-4 font-sans">
+          <div className="max-w-md w-full bg-white rounded-lg border border-[#E1E8EB] p-6 text-center space-y-5 shadow-[0_8px_24px_-8px_rgba(11,23,35,0.08)]">
+            <div className="mx-auto size-14 rounded-md bg-[#FEF2F2] border border-[#FECACA] text-[#DC2626] flex items-center justify-center">
               <AlertCircle className="size-8" aria-hidden="true" />
             </div>
 
             <div className="space-y-2">
-              <h1 className="font-heading text-lg font-bold text-[#0B253B]">
+              <h1 className="font-heading text-lg font-bold text-[#0B1723]">
                 Terjadi Kendala pada Tampilan
               </h1>
-              <p className="text-xs text-[#425869] leading-relaxed">
+              <p className="text-xs text-[#526474] leading-relaxed">
                 Aplikasi mengalami kendala saat memuat komponen ini. Anda dapat memuat ulang halaman atau kembali ke beranda.
               </p>
             </div>
 
             {this.state.error?.message && (
-              <div className="p-3 bg-[#FEE2E2] rounded-md text-xs font-mono text-[#B91C1C] text-left overflow-auto max-h-28 border border-[#FECACA]">
+              <div className="p-3 bg-[#FEF2F2] rounded-md text-xs font-mono text-[#B91C1C] text-left overflow-auto max-h-28 border border-[#FECACA]">
                 {this.state.error.message}
               </div>
             )}
@@ -60,14 +60,14 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex gap-2.5 pt-2">
               <Button
                 variant="outline"
-                className="flex-1 rounded-md text-xs h-10 border-[#D5E4E4] text-[#0B253B] hover:bg-[#E8F2F2]"
+                className="flex-1 text-xs h-10"
                 onClick={this.handleHome}
               >
                 <Home className="mr-1.5 size-3.5" aria-hidden="true" />
                 Beranda
               </Button>
               <Button
-                className="flex-1 rounded-md text-xs h-10 bg-[#006EB3] hover:bg-[#00588F] text-white"
+                className="flex-1 text-xs h-10"
                 onClick={this.handleReload}
               >
                 <RefreshCw className="mr-1.5 size-3.5" aria-hidden="true" />

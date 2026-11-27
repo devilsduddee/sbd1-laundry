@@ -123,23 +123,23 @@ export const PwaInstallPrompt: React.FC = () => {
     >
       <div
         ref={cardRef}
-        className="max-w-md mx-auto bg-white border border-[#D5E4E4] rounded-lg shadow-lg p-3.5 text-[#071422]"
+        className="max-w-md mx-auto bg-white border border-[#E1E8EB] rounded-lg shadow-[0_12px_32px_-8px_rgba(11,23,35,0.16)] p-3.5 text-[#0B1723]"
       >
         <div className="flex items-start gap-3">
-          <div className="size-10 rounded-md bg-[#0B253B] text-white flex items-center justify-center shrink-0">
+          <div className="size-10 rounded-md bg-[#006EB3] text-white flex items-center justify-center shrink-0">
             <Smartphone className="size-5 stroke-[1.75]" aria-hidden="true" />
           </div>
 
           <div className="flex-1 min-w-0 space-y-1">
             <div className="flex items-start justify-between gap-2">
-              <h2 className="font-heading text-xs font-bold text-[#0B253B] leading-tight">
+              <h2 className="font-heading text-xs font-bold text-[#0B1723] leading-tight">
                 Pasang Aplikasi Qwash di HP
               </h2>
               <button
                 type="button"
                 onClick={handleDismiss}
                 aria-label="Tutup pemberitahuan pasang aplikasi"
-                className="text-[#425869] hover:text-[#0B253B] p-1 -mr-1 -mt-1 rounded-sm"
+                className="text-[#526474] hover:text-[#0B1723] p-1 -mr-1 -mt-1 rounded-sm"
               >
                 <X className="size-4" aria-hidden="true" />
               </button>
@@ -147,7 +147,7 @@ export const PwaInstallPrompt: React.FC = () => {
 
             {deferredPrompt ? (
               <>
-                <p className="text-xs text-[#425869] leading-snug">
+                <p className="text-xs text-[#526474] leading-snug">
                   Tambahkan ke layar utama untuk akses lebih cepat tanpa membuka browser.
                 </p>
                 <div className="pt-1.5 flex items-center gap-2">
@@ -155,7 +155,7 @@ export const PwaInstallPrompt: React.FC = () => {
                     type="button"
                     size="sm"
                     onClick={handleInstallClick}
-                    className="h-8 px-3 bg-[#006EB3] hover:bg-[#00588F] text-white rounded-md text-xs font-semibold gap-1.5"
+                    className="h-8 px-3 text-xs font-semibold gap-1.5"
                   >
                     <Download className="size-3.5" aria-hidden="true" />
                     Pasang Sekarang
@@ -165,32 +165,32 @@ export const PwaInstallPrompt: React.FC = () => {
                     variant="ghost"
                     size="sm"
                     onClick={handleDismiss}
-                    className="h-8 px-2.5 text-xs text-[#425869] hover:text-[#0B253B]"
+                    className="h-8 px-2.5 text-xs"
                   >
                     Nanti
                   </Button>
                 </div>
               </>
             ) : isIos ? (
-              <p className="text-xs text-[#425869] leading-relaxed">
+              <p className="text-xs text-[#526474] leading-relaxed">
                 Ketuk ikon{' '}
                 <span className="inline-flex items-center font-semibold text-[#006EB3]">
                   <Share className="size-3.5 mx-0.5" aria-hidden="true" /> Bagikan
                 </span>{' '}
                 di Safari, lalu pilih{' '}
-                <span className="inline-flex items-center font-semibold text-[#0B253B]">
+                <span className="inline-flex items-center font-semibold text-[#0B1723]">
                   <PlusSquare className="size-3.5 mx-0.5" aria-hidden="true" /> Tambah ke Layar Utama
                 </span>
                 .
               </p>
             ) : (
-              <p className="text-xs text-[#425869] leading-relaxed">
+              <p className="text-xs text-[#526474] leading-relaxed">
                 Buka menu browser{' '}
-                <span className="inline-flex items-center font-semibold text-[#0B253B]">
+                <span className="inline-flex items-center font-semibold text-[#0B1723]">
                   <MoreVertical className="size-3.5 mx-0.5" aria-hidden="true" />
                 </span>{' '}
-                lalu pilih <strong className="text-[#0B253B]">Instal Aplikasi</strong> atau{' '}
-                <strong className="text-[#0B253B]">Tambahkan ke Layar Utama</strong>.
+                lalu pilih <strong className="text-[#0B1723]">Instal Aplikasi</strong> atau{' '}
+                <strong className="text-[#0B1723]">Tambahkan ke Layar Utama</strong>.
               </p>
             )}
           </div>

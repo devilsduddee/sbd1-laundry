@@ -60,7 +60,7 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
       className={cn('w-full py-4 px-2 relative select-none print:hidden', className)}
     >
       {/* Background Track Line */}
-      <div className="absolute top-[34px] left-[36px] right-[36px] h-[2px] bg-[#D5E4E4] -translate-y-1/2 z-0" />
+      <div className="absolute top-[34px] left-[36px] right-[36px] h-[2px] bg-[#E1E8EB] -translate-y-1/2 z-0" />
 
       {/* Active Progress Bar (Ocean Blue #006EB3) */}
       <div
@@ -86,10 +86,10 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
                   'size-9 rounded-md flex items-center justify-center border transition-colors duration-200',
                   isDone && 'bg-[#006EB3] border-[#006EB3] text-white',
                   isCurrent &&
-                    'bg-white border-2 border-[#0B253B] text-[#0B253B] ring-4 ring-[#D5ECEB] font-semibold',
+                    'bg-white border-2 border-[#006EB3] text-[#0B1723] ring-4 ring-[#EEF6FB] font-semibold',
                   !isDone &&
                     !isCurrent &&
-                    'bg-white border-[#D5E4E4] text-[#425869]'
+                    'bg-white border-[#E1E8EB] text-[#526474]'
                 )}
               >
                 {isDone ? (
@@ -101,9 +101,9 @@ export const OrderStepper: React.FC<OrderStepperProps> = ({
               <span
                 className={cn(
                   'mt-2 text-xs text-center font-sans transition-colors duration-200',
-                  isCurrent && 'text-[#0B253B] font-semibold',
+                  isCurrent && 'text-[#0B1723] font-semibold',
                   isDone && 'text-[#006EB3] font-medium',
-                  !isDone && !isCurrent && 'text-[#425869]'
+                  !isDone && !isCurrent && 'text-[#526474]'
                 )}
               >
                 {step.label}

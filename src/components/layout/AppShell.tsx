@@ -76,24 +76,24 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const mobileNavItems = getMobileNavItems(user?.level);
 
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-br from-[#F6FFFF] via-[#F2F9F9] to-[#FAF3E8] text-[#071422] flex flex-col md:flex-row font-sans">
+    <div className="min-h-[100dvh] bg-[#F8FAFA] text-[#0B1723] flex flex-col md:flex-row font-sans">
       {/* Desktop Sidebar (print:hidden) */}
-      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white/90 backdrop-blur-sm border-r border-[#D5E4E4] p-5 sticky top-0 h-screen shrink-0 justify-between">
+      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#E1E8EB] p-5 sticky top-0 h-screen shrink-0 justify-between">
         <div className="flex flex-col gap-6">
           {/* Brand Header */}
           <div className="flex items-center gap-3 px-2 py-1">
-            <div className="size-10 rounded-md bg-gradient-to-br from-[#00A2FF] to-[#006EB3] flex items-center justify-center text-white shrink-0">
+            <div className="size-10 rounded-md bg-[#006EB3] flex items-center justify-center text-white shrink-0">
               <QwashLogo variant="symbol" size="sm" className="text-white" />
             </div>
             <div>
-              <h1 className="font-heading font-bold text-sm text-[#0B253B] leading-tight tracking-tight">
+              <h1 className="font-heading font-bold text-sm text-[#0B1723] leading-tight tracking-tight">
                 Qwash Laundry
               </h1>
-              <p className="text-xs text-[#425869]">Sistem Pengelolaan</p>
+              <p className="text-xs text-[#526474]">Sistem Pengelolaan</p>
             </div>
           </div>
 
-          {/* Navigation Links (Airy Neat Aqua Mist Active Pill) */}
+          {/* Navigation Links (Swiss Neutral + Neat Azure Active Indicator) */}
           <nav className="flex flex-col gap-1" aria-label="Menu Utama">
             {desktopFilteredItems.map((item) => {
               const Icon = item.icon;
@@ -107,16 +107,16 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                   key={item.to}
                   to={item.to}
                   className={cn(
-                    'flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs transition-colors touch-manipulation active:scale-[0.98]',
+                    'flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs transition-colors duration-150 touch-manipulation',
                     isActive
-                      ? 'bg-[#D5ECEB] text-[#0B253B] font-semibold border border-[#B0D4D3]'
-                      : 'text-[#425869] font-medium border border-transparent hover:bg-[#EFE2CE]/50 hover:text-[#0B253B]'
+                      ? 'bg-[#EEF6FB] text-[#0B1723] font-semibold border border-[#C2DDF0]'
+                      : 'text-[#2E3E4E] font-medium border border-transparent hover:bg-[#F1F5F6] hover:text-[#0B1723]'
                   )}
                 >
                   <Icon
                     className={cn(
                       'size-4 shrink-0 stroke-[1.75]',
-                      isActive ? 'text-[#006EB3]' : 'text-[#425869]'
+                      isActive ? 'text-[#006EB3]' : 'text-[#526474]'
                     )}
                     aria-hidden="true"
                   />
@@ -128,13 +128,13 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
         </div>
 
         {/* User Info & Logout Desktop */}
-        <div className="pt-4 border-t border-[#D5E4E4] flex flex-col gap-3">
+        <div className="pt-4 border-t border-[#E1E8EB] flex flex-col gap-3">
           <div className="flex items-center justify-between px-2">
             <div className="flex flex-col min-w-0">
-              <span className="text-xs font-semibold text-[#071422] leading-tight truncate">
+              <span className="text-xs font-semibold text-[#0B1723] leading-tight truncate">
                 {user?.nm_ptgs}
               </span>
-              <span className="text-xs text-[#425869] font-mono mt-0.5 truncate">
+              <span className="text-xs text-[#526474] font-mono mt-0.5 truncate">
                 @{user?.usernm} |{' '}
                 <span className="font-semibold text-[#006EB3] font-sans">{user?.level}</span>
               </span>
@@ -144,7 +144,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             variant="outline"
             size="sm"
             onClick={handleLogout}
-            className="w-full justify-center gap-2 text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] hover:border-[#FCA5A5] border-[#FECACA] h-9 text-xs font-semibold"
+            className="w-full justify-center gap-2 text-[#2E3E4E] hover:text-[#B91C1C] hover:bg-[#FEF2F2] hover:border-[#FECACA] h-9 text-xs font-semibold"
           >
             <LogOut className="size-3.5 stroke-[1.75]" aria-hidden="true" />
             Keluar Sesi
@@ -153,16 +153,16 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       </aside>
 
       {/* Mobile Top Header (print:hidden) */}
-      <header className="print:hidden md:hidden flex items-center justify-between bg-white/95 backdrop-blur-sm border-b border-[#D5E4E4] px-4 h-14 sticky top-0 z-30 pt-safe">
+      <header className="print:hidden md:hidden flex items-center justify-between bg-white/95 backdrop-blur-sm border-b border-[#E1E8EB] px-4 h-14 sticky top-0 z-30 pt-safe">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="size-8 rounded-md bg-gradient-to-br from-[#00A2FF] to-[#006EB3] flex items-center justify-center text-white shrink-0">
+          <div className="size-8 rounded-md bg-[#006EB3] flex items-center justify-center text-white shrink-0">
             <QwashLogo variant="symbol" size="sm" className="text-white" />
           </div>
           <div className="leading-tight min-w-0">
-            <span className="font-semibold text-xs text-[#071422] block truncate">
+            <span className="font-semibold text-xs text-[#0B1723] block truncate">
               {user?.nm_ptgs}
             </span>
-            <span className="text-xs text-[#425869] font-medium block">
+            <span className="text-xs text-[#526474] font-medium block">
               Peran: <strong className="text-[#006EB3]">{user?.level}</strong>
             </span>
           </div>
@@ -173,10 +173,10 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             <NavLink
               to="/petugas"
               className={cn(
-                'flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-colors touch-manipulation active:scale-95 min-h-[36px]',
+                'flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-colors touch-manipulation min-h-[36px]',
                 location.pathname.startsWith('/petugas')
-                  ? 'bg-[#D5ECEB] text-[#0B253B] border border-[#B0D4D3]'
-                  : 'bg-[#F6FFFF] text-[#0B253B] hover:bg-[#E8F2F2] border border-[#D5E4E4]'
+                  ? 'bg-[#EEF6FB] text-[#006EB3] border border-[#C2DDF0]'
+                  : 'bg-[#F8FAFA] text-[#0B1723] hover:bg-[#F1F5F6] border border-[#E1E8EB]'
               )}
             >
               <ShieldCheck className="size-3.5 shrink-0 text-[#006EB3]" aria-hidden="true" />
@@ -188,7 +188,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             variant="ghost"
             size="sm"
             onClick={handleLogout}
-            className="text-[#DC2626] hover:text-[#B91C1C] hover:bg-[#FEE2E2] h-9 px-2.5 text-xs gap-1.5 font-medium"
+            className="text-[#526474] hover:text-[#B91C1C] hover:bg-[#FEF2F2] h-9 px-2.5 text-xs gap-1.5 font-medium"
             aria-label="Keluar dari sesi"
           >
             <LogOut className="size-3.5" aria-hidden="true" />
@@ -205,7 +205,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       {/* Mobile Bottom Navigation Bar (print:hidden) */}
       <nav
         aria-label="Navigasi Bawah Ponsel"
-        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-[#D5E4E4] pb-safe"
+        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-[#E1E8EB] pb-safe"
       >
         <div
           className={cn(
@@ -229,15 +229,15 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 to={item.to}
                 className={cn(
                   'group flex flex-col items-center justify-center h-full py-1.5 px-0.5 touch-manipulation select-none min-w-0 transition-transform duration-150 active:scale-[0.94]',
-                  isActive ? 'text-[#006EB3]' : 'text-[#425869] hover:text-[#071422]'
+                  isActive ? 'text-[#006EB3]' : 'text-[#526474] hover:text-[#0B1723]'
                 )}
               >
                 <div
                   className={cn(
                     'p-1.5 rounded-md transition-colors duration-150 flex items-center justify-center',
                     isActive
-                      ? 'bg-[#D5ECEB] text-[#006EB3] border border-[#B0D4D3]'
-                      : 'text-[#425869] group-hover:bg-[#EFE2CE]/50 group-hover:text-[#071422]'
+                      ? 'bg-[#EEF6FB] text-[#006EB3] border border-[#C2DDF0]'
+                      : 'text-[#526474] group-hover:bg-[#F1F5F6] group-hover:text-[#0B1723]'
                   )}
                 >
                   <Icon className="size-4 shrink-0 stroke-[1.8]" aria-hidden="true" />
@@ -245,7 +245,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 <span
                   className={cn(
                     'text-[11px] tracking-tight leading-none mt-1 text-center truncate max-w-full px-0.5 transition-colors',
-                    isActive ? 'font-bold text-[#0B253B]' : 'font-medium text-[#425869]'
+                    isActive ? 'font-bold text-[#0B1723]' : 'font-medium text-[#526474]'
                   )}
                 >
                   {item.shortLabel}

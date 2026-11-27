@@ -17,42 +17,42 @@ const config: Config = {
         mono: ['"Fira Code"', 'monospace'],
       },
       colors: {
-        // Unified Neat + Swiss Style Palette (05-design.md v2.2)
-        background: '#F6FFFF',
-        foreground: '#071422',
+        // Swiss Neutral + Neat Azure System (90-95% Neutral, 1 Accent)
+        background: '#F8FAFA',
+        foreground: '#0B1723',
         card: {
           DEFAULT: '#FFFFFF',
-          foreground: '#071422',
+          foreground: '#0B1723',
         },
         popover: {
           DEFAULT: '#FFFFFF',
-          foreground: '#071422',
+          foreground: '#0B1723',
         },
         primary: {
-          DEFAULT: '#0B253B',
+          DEFAULT: '#006EB3',
           foreground: '#FFFFFF',
         },
         secondary: {
-          DEFAULT: '#2D4659',
-          foreground: '#FFFFFF',
+          DEFAULT: '#F1F5F6',
+          foreground: '#0B1723',
         },
         muted: {
-          DEFAULT: '#E8F2F2',
-          foreground: '#425869',
+          DEFAULT: '#F1F5F6',
+          foreground: '#526474',
         },
         accent: {
-          DEFAULT: '#006EB3',
-          foreground: '#FFFFFF',
+          DEFAULT: '#EEF6FB',
+          foreground: '#006EB3',
         },
         destructive: {
           DEFAULT: '#DC2626',
           foreground: '#FFFFFF',
         },
-        border: '#D5E4E4',
-        input: '#D5E4E4',
+        border: '#E1E8EB',
+        input: '#E1E8EB',
         ring: '#0B253B',
 
-        // Neat Reference Accents
+        // Neat Shader Reference Tokens (khusus NeatBackground WebGL)
         neat: {
           azure: '#00A2FF',
           aqua: '#D5ECEB',
@@ -61,19 +61,19 @@ const config: Config = {
           mint: '#F6FFFF',
         },
 
-        // Semantic status tokens (kontras >= 4.5:1)
+        // Semantic status tokens (terbatas di StatusBadge & Alert)
         status: {
-          queueBg: '#E8F2F2',
-          queueText: '#2D4659',
-          washBg: '#D5ECEB',
+          queueBg: '#F1F5F6',
+          queueText: '#334155',
+          washBg: '#EEF6FB',
           washText: '#005A94',
-          ironBg: '#EFE2CE',
-          ironText: '#7C4D12',
-          readyBg: '#E0F2FE',
-          readyText: '#005A94',
-          doneBg: '#DCFCE7',
-          doneText: '#15803D',
-          unpaidBg: '#FEE2E2',
+          ironBg: '#FEF7EA',
+          ironText: '#92400E',
+          readyBg: '#ECFEFF',
+          readyText: '#0E7490',
+          doneBg: '#ECFDF5',
+          doneText: '#166534',
+          unpaidBg: '#FEF2F2',
           unpaidText: '#B91C1C',
         },
       },

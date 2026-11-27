@@ -22,36 +22,36 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   className,
   size = 'default',
 }) => {
-  let styleClass = 'bg-[#E8F2F2] text-[#2D4659] border-[#C7DBDB]';
+  let styleClass = 'bg-[#F1F5F6] text-[#334155] border-[#D5DEE2]';
   let Icon: React.ElementType = Clock;
 
   switch (status) {
     case 'Antrean':
-      styleClass = 'bg-[#E8F2F2] text-[#2D4659] border-[#C7DBDB]';
+      styleClass = 'bg-[#F1F5F6] text-[#334155] border-[#D5DEE2]';
       Icon = Clock;
       break;
     case 'Sedang Dicuci':
-      styleClass = 'bg-[#D5ECEB] text-[#005A94] border-[#B0D4D3]';
+      styleClass = 'bg-[#EEF6FB] text-[#005A94] border-[#C2DDF0]';
       Icon = Droplets;
       break;
     case 'Sedang Disetrika':
-      styleClass = 'bg-[#EFE2CE] text-[#7C4D12] border-[#DEC8A4]';
+      styleClass = 'bg-[#FEF7EA] text-[#92400E] border-[#F3D9A6]';
       Icon = Flame;
       break;
     case 'Siap Diambil':
-      styleClass = 'bg-[#E0F2FE] text-[#005A94] border-[#BAE6FD]';
+      styleClass = 'bg-[#ECFEFF] text-[#0E7490] border-[#A5E4EE]';
       Icon = PackageCheck;
       break;
     case 'Sudah Diambil':
-      styleClass = 'bg-[#DCFCE7] text-[#15803D] border-[#BBF7D0]';
+      styleClass = 'bg-[#ECFDF5] text-[#166534] border-[#A7E8C9]';
       Icon = CheckCircle2;
       break;
     case 'Lunas':
-      styleClass = 'bg-[#DCFCE7] text-[#15803D] border-[#BBF7D0]';
+      styleClass = 'bg-[#ECFDF5] text-[#166534] border-[#A7E8C9]';
       Icon = BadgeCheck;
       break;
     case 'Belum Lunas':
-      styleClass = 'bg-[#FEE2E2] text-[#B91C1C] border-[#FECACA]';
+      styleClass = 'bg-[#FEF2F2] text-[#B91C1C] border-[#FECACA]';
       Icon = AlertCircle;
       break;
   }

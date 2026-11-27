@@ -28,12 +28,12 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
   const currentStepIdx = STEPS.indexOf(data.sts_psn);
 
   return (
-    <Card className="rounded-lg border-[#D5E4E4] shadow-none bg-white overflow-hidden text-xs">
-      {/* Header Tiket (Unified Neat Aqua-Linen Gradient) */}
-      <div className="bg-gradient-to-r from-[#D5ECEB] to-[#EFE2CE] border-b border-[#C7DBDB] p-4 text-[#0B253B] flex justify-between items-center gap-2">
+    <Card className="rounded-lg border-[#E1E8EB] bg-white overflow-hidden text-xs">
+      {/* Header Tiket (Swiss Neutral Alt Ground) */}
+      <div className="bg-[#F8FAFA] border-b border-[#E1E8EB] p-4 text-[#0B1723] flex justify-between items-center gap-2">
         <div>
-          <span className="text-xs text-[#425869] block font-medium">Nomor Tiket Pesanan</span>
-          <span className="font-mono font-bold text-sm text-[#005A94] tracking-tight tabular-nums">
+          <span className="text-xs text-[#526474] block font-medium">Nomor Tiket Pesanan</span>
+          <span className="font-mono font-bold text-sm text-[#006EB3] tracking-tight tabular-nums">
             {data.id_psn}
           </span>
         </div>
@@ -45,8 +45,8 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
 
       <CardContent className="p-5 space-y-4">
         {/* Stepper Progres Ringkas */}
-        <div className="space-y-1.5 pb-3 border-b border-[#D5E4E4]">
-          <div className="flex justify-between text-xs text-[#425869] font-medium">
+        <div className="space-y-1.5 pb-3 border-b border-[#E1E8EB]">
+          <div className="flex justify-between text-xs text-[#526474] font-medium">
             <span>Tahap Pengerjaan</span>
             <span className="font-semibold text-[#006EB3]">{data.sts_psn}</span>
           </div>
@@ -59,15 +59,15 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
                   <div
                     className={`h-1.5 rounded-sm transition-colors ${
                       isCurrent
-                        ? 'bg-[#006EB3] ring-2 ring-[#D5ECEB]'
+                        ? 'bg-[#006EB3] ring-2 ring-[#EEF6FB]'
                         : isPastOrCurrent
                         ? 'bg-[#006EB3]'
-                        : 'bg-[#D5E4E4]'
+                        : 'bg-[#E1E8EB]'
                     }`}
                   />
                   <span
                     className={`block text-xs truncate ${
-                      isCurrent ? 'font-bold text-[#0B253B]' : 'text-[#425869]'
+                      isCurrent ? 'font-bold text-[#0B1723]' : 'text-[#526474]'
                     }`}
                   >
                     {step.replace('Sedang ', '')}
@@ -79,14 +79,14 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
         </div>
 
         {/* Info Pemesan & Waktu */}
-        <div className="grid grid-cols-2 gap-3 pb-3 border-b border-[#D5E4E4]">
+        <div className="grid grid-cols-2 gap-3 pb-3 border-b border-[#E1E8EB]">
           <div>
-            <span className="text-[#425869] block text-xs">Nama Pemesan</span>
-            <span className="font-semibold text-[#071422] text-xs">{data.nm_plgn}</span>
+            <span className="text-[#526474] block text-xs">Nama Pemesan</span>
+            <span className="font-semibold text-[#0B1723] text-xs">{data.nm_plgn}</span>
           </div>
           <div>
-            <span className="text-[#425869] block text-xs">Estimasi Selesai</span>
-            <span className="font-mono font-semibold text-[#071422] text-xs flex items-center gap-1 tabular-nums">
+            <span className="text-[#526474] block text-xs">Estimasi Selesai</span>
+            <span className="font-mono font-semibold text-[#0B1723] text-xs flex items-center gap-1 tabular-nums">
               <Clock className="size-3.5 text-[#006EB3] shrink-0" aria-hidden="true" />
               {formatDateTime(data.est_sls)}
             </span>
@@ -95,19 +95,19 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
 
         {/* Rincian Layanan Cucian */}
         <div className="space-y-1.5">
-          <span className="text-xs text-[#425869] font-medium block">Rincian Paket & Berat:</span>
+          <span className="text-xs text-[#526474] font-medium block">Rincian Paket & Berat:</span>
           <div className="space-y-1.5">
             {data.items.map((it, idx) => (
               <div
                 key={idx}
-                className="flex justify-between items-center py-2 px-3 bg-[#F6FFFF] rounded-md border border-[#D5E4E4]"
+                className="flex justify-between items-center py-2 px-3 bg-[#F8FAFA] rounded-md border border-[#E1E8EB]"
               >
                 <div className="flex items-center gap-2">
                   <Shirt className="size-3.5 text-[#006EB3] shrink-0" aria-hidden="true" />
-                  <span className="font-medium text-[#071422]">{it.nm_lyn}</span>
-                  <span className="font-mono text-xs text-[#425869] tabular-nums">({it.brt_kg} kg)</span>
+                  <span className="font-medium text-[#0B1723]">{it.nm_lyn}</span>
+                  <span className="font-mono text-xs text-[#526474] tabular-nums">({it.brt_kg} kg)</span>
                 </div>
-                <span className="font-mono font-semibold tabular-nums text-[#0B253B]">
+                <span className="font-mono font-semibold tabular-nums text-[#0B1723]">
                   {formatRupiah(it.hrg_trans)}
                 </span>
               </div>
@@ -116,14 +116,14 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
         </div>
 
         {/* Total Pembayaran */}
-        <div className="pt-2 flex justify-between items-center bg-[#F6FFFF] p-3 rounded-md border border-[#D5E4E4]">
+        <div className="pt-2 flex justify-between items-center bg-[#F8FAFA] p-3 rounded-md border border-[#E1E8EB]">
           <div>
-            <span className="text-xs text-[#425869] block">Total Biaya Cucian</span>
-            <span className="text-xs text-[#425869] font-medium">
+            <span className="text-xs text-[#526474] block">Total Biaya Cucian</span>
+            <span className="text-xs text-[#2E3E4E] font-medium">
               Metode: {data.sts_byr === 'Lunas' ? 'Lunas Dikonfirmasi' : 'Bayar saat ambil'}
             </span>
           </div>
-          <span className="font-heading font-bold text-base text-[#071422] tabular-nums">
+          <span className="font-heading font-bold text-base text-[#0B1723] tabular-nums">
             {formatRupiah(data.tot_hrg)}
           </span>
         </div>
