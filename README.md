@@ -4,7 +4,7 @@
   <h1>Sistem Pengelolaan Laundry (Qwash)</h1>
   <p>
     <strong>Realisasi Rancangan ERD Mata Kuliah Sistem Basis Data 1 (SBD 1) — Kelas 3IA01</strong><br />
-    Aplikasi Web Operasional Laundry Full-Stack dengan Arsitektur Relasional Turso (libSQL), Drizzle ORM, Hono API, React + Tailwind CSS (Minimalism &amp; Swiss Style), dan PWA.
+    Aplikasi Web Operasional Laundry Full-Stack dengan Arsitektur Relasional Turso (libSQL), Drizzle ORM, Hono API, React + Tailwind CSS (Glassy UI + @firecms/neat + Swiss Precision), dan PWA.
   </p>
 
   <p>
@@ -19,6 +19,7 @@
     <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
     <img src="https://img.shields.io/badge/shadcn/ui-0F172A?style=for-the-badge&logo=shadcnui&logoColor=white" alt="shadcn/ui" />
     <img src="https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=black" alt="GSAP" />
+    <img src="https://img.shields.io/badge/Neat_WebGL-006EB3?style=for-the-badge&logo=webgl&logoColor=white" alt="@firecms/neat" />
   </p>
   <p>
     <img src="https://img.shields.io/badge/Hono-E36002?style=for-the-badge&logo=hono&logoColor=white" alt="Hono" />
@@ -156,7 +157,7 @@ flowchart LR
 
 ## Arsitektur & Keamanan
 
-- **Visual Theme (Unified Neat & Swiss Style v2.2):** Diselaraskan langsung dengan latar WebGL **`@firecms/neat`** (Opsi A pada `LandingPage` & `LoginPage`), menggunakan kanvas `#F6FFFF`, Deep Oceanic Navy `#0B253B`, CTA Deep Neat Azure `#006EB3`, border `#D5E4E4`, aksen `#D5ECEB` / `#EFE2CE`, serta pasangan tipografi **`Fira Code`** (judul, ID tiket, nominal `tabular-nums`) dan **`Fira Sans`**.
+- **Visual Theme (Glassy UI + `@firecms/neat` + Swiss Precision v2.3.1):** Diselaraskan dengan latar WebGL **`@firecms/neat`** (Opsi A pada `LandingPage` & `LoginPage`), menggunakan kanvas `#F4F8FA`, Deep Oceanic Navy `#0B253B`, CTA Neat Azure `#006EB3`, hairline `#E1E8EB`, material **Liquid Glass** (`rgba(255, 255, 255, 0.72)` + specular bevel rim + WAAPI pointer bloom) secara selektif pada kartu hero/login/KPI & floating overlay, permukaan solid bersih untuk navigasi dan tabel data padat, serta pasangan tipografi **`Fira Code`** (judul, ID tiket, nominal `tabular-nums`) dan **`Fira Sans`**.
 - **Server-Side Pricing & Atomic Batch:** Seluruh kalkulasi harga `hrg_trans`, `tot_hrg`, dan estimasi `est_sls` dihitung di backend Hono menggunakan `db.batch([...], 'write')`.
 - **Stateless Auth & Security Hardening:** Autentikasi JWT via `HttpOnly` cookie, *constant-time password check* menggunakan `bcryptjs`, proteksi *brute-force rate limiting*, dan pemblokiran eksposur kolom `PTGS.passwd` di seluruh endpoint.
 - **Progressive Web App (PWA):** Dilengkapi `public/sw.js` (strategi *Network-Only* untuk `/api/*`) dan banner instalasi otomatis ketika dibuka melalui browser HP Android maupun iOS Safari.
@@ -238,7 +239,7 @@ Halaman `/login` menyediakan tombol *Quick Fill* untuk menguji masing-masing tin
 ```text
 ├── api/
 │   └── index.ts                  # Entrypoint Vercel Serverless Function (@hono/node-server/vercel)
-├── docs/                         # Dokumen spesifikasi PRD, Design System v2.0, Spec & Guardrails
+├── docs/                         # Dokumen spesifikasi PRD, Design System v2.3.1, Spec & Guardrails
 ├── public/
 │   ├── branding/kit/             # Master aset vektor & ikon PWA Qwash
 │   ├── site.webmanifest          # Konfigurasi manifest Progressive Web App (PWA)
@@ -270,6 +271,6 @@ Halaman `/login` menyediakan tombol *Quick Fill* untuk menguji masing-masing tin
 │   ├── index.css                 # Base styles, focus ring a11y, mobile-native & print CSS
 │   └── main.tsx                  # Entrypoint React & registrasi Service Worker PWA
 ├── drizzle.config.ts             # Konfigurasi Drizzle Kit
-├── tailwind.config.ts            # Token tema Minimalism & Swiss Style (v2.0)
+├── tailwind.config.ts            # Token tema Glassy UI + Neat & Swiss Precision (v2.3.1)
 └── vercel.json                   # Konfigurasi header Service Worker & rewrite routing Vercel
 ```

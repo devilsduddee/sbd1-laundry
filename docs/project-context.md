@@ -28,7 +28,7 @@
 - **Alternatif yang ada hari ini:** `[ASUMSI]` Pencatatan manual berbasis kertas/nota atau spreadsheet sebelum adanya sistem web terintegrasi database.
 
 ## 4. Konteks teknis
-- **Stack:** **Dikunci (Gate 2 & Spec):** Vite + React + Tailwind CSS + `shadcn/ui` + GSAP (`@gsap/react`) (Frontend) + Hono (Backend API) + Turso / libSQL (`@libsql/client`) + **Vercel** (Deployment).
+- **Stack:** **Dikunci (Gate 2 & Spec):** Vite 6 + React 18 + TypeScript + Tailwind CSS + `shadcn/ui` + GSAP (`@gsap/react`) + `@firecms/neat` + React Router v7 (Frontend) + Hono + Zod + `bcryptjs` (Backend API) + Turso / libSQL (`@libsql/client`) + Drizzle ORM (Database) + **Vercel** (Deployment).
 - **Coding agent:** Antigravity
 - **Folder project (repo):** Belum dibuat (terpisah dari workspace PM ini).
 - **Integrasi eksternal:** Belum ada (standalone web app + Turso cloud/local SQLite).
