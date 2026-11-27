@@ -171,12 +171,12 @@ export const OrdersPage: React.FC = () => {
 
         <Card className="kpi-card hover-lift border-[#D5E4E4] rounded-lg shadow-none bg-white h-full">
           <CardContent className="p-4 flex items-center gap-3.5 h-full">
-            <div className="size-10 rounded-md bg-[#EDE9FE] border border-[#DDD6FE] flex items-center justify-center text-[#6D28D9] shrink-0">
+            <div className="size-10 rounded-md bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center text-[#005A94] shrink-0">
               <PackageCheck className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <div className="min-w-0">
               <p className="text-xs text-[#425869] font-medium truncate">Siap Diambil</p>
-              <p className="font-mono text-2xl font-bold text-[#6D28D9] tabular-nums">
+              <p className="font-mono text-2xl font-bold text-[#005A94] tabular-nums">
                 {countSiap}
               </p>
             </div>

@@ -198,7 +198,7 @@ export const OrderDetailPage: React.FC = () => {
                   size="sm"
                   disabled={updatingStatus}
                   onClick={() => handleAdvanceStatus('Siap Diambil')}
-                  className="bg-[#6D28D9] hover:bg-[#5B21B6] text-white rounded-md gap-1.5 text-xs h-9"
+                  className="bg-[#005A94] hover:bg-[#004470] text-white rounded-md gap-1.5 text-xs h-9"
                 >
                   <CheckCircle2 className="size-3.5" aria-hidden="true" />
                   Tandai Siap Diambil

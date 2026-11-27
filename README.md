@@ -156,7 +156,7 @@ flowchart LR
 
 ## Arsitektur & Keamanan
 
-- **Visual Theme (Minimalism & Swiss Style v2.0):** Palet *Deep Slate Navy* (`#0F172A`), *Ocean Action Blue* (`#0369A1`), kanvas dingin (`#F8FAFC`), border presisi `1px` (`#E2E8F0`), serta pasangan tipografi **`Fira Code`** (judul, ID tiket, nominal `tabular-nums`) dan **`Fira Sans`**.
+- **Visual Theme (Unified Neat & Swiss Style v2.2):** Diselaraskan langsung dengan latar WebGL **`@firecms/neat`** (Opsi A pada `LandingPage` & `LoginPage`), menggunakan kanvas `#F6FFFF`, Deep Oceanic Navy `#0B253B`, CTA Deep Neat Azure `#006EB3`, border `#D5E4E4`, aksen `#D5ECEB` / `#EFE2CE`, serta pasangan tipografi **`Fira Code`** (judul, ID tiket, nominal `tabular-nums`) dan **`Fira Sans`**.
 - **Server-Side Pricing & Atomic Batch:** Seluruh kalkulasi harga `hrg_trans`, `tot_hrg`, dan estimasi `est_sls` dihitung di backend Hono menggunakan `db.batch([...], 'write')`.
 - **Stateless Auth & Security Hardening:** Autentikasi JWT via `HttpOnly` cookie, *constant-time password check* menggunakan `bcryptjs`, proteksi *brute-force rate limiting*, dan pemblokiran eksposur kolom `PTGS.passwd` di seluruh endpoint.
 - **Progressive Web App (PWA):** Dilengkapi `public/sw.js` (strategi *Network-Only* untuk `/api/*`) dan banner instalasi otomatis ketika dibuka melalui browser HP Android maupun iOS Safari.
