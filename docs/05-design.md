@@ -1,31 +1,30 @@
 # 05 - Design System: Sistem Pengelolaan Laundry
 
-- **Versi:** 2.0
-- **Tanggal:** 2026-11-26
+- **Versi:** 2.1
+- **Tanggal:** 2026-11-27
 - **Status:** Approved
-- **Sumber input:** `04-prd.md` v1.1 (Approved), riset `ui-ux-pro-max` (`--design-system`, `--tokens css`, `--domain ux`, `--domain gsap`, `--stack shadcn`, `--stack react`), dan keputusan Lead PM memilih tema **Minimalism & Swiss Style**.
-- **Skill digunakan:** `ui-ux-pro-max`
+- **Sumber input:** `04-prd.md` v1.1 (Approved), riset `ui-ux-pro-max`, dan keputusan Lead PM menerapkan **Minimalism & Swiss Style + Ambient `@firecms/neat` (Opsi A)**.
+- **Skill digunakan:** `ui-ux-pro-max`, `design-taste-frontend`
 
 ## TL;DR
 
-Design system v2.0 mengganti arah visual sebelumnya (*Qwash*) menjadi **Minimalism & Swiss Style** hasil riset `ui-ux-pro-max` yang jauh lebih tegas, berwibawa, dan optimal untuk operasional kasir/dashboard data. Palet menggunakan jangkar **Deep Slate Navy** (`#0F172A`), CTA **Ocean Blue** (`#0369A1`), kanvas dingin (`#F8FAFC`), kartu putih bersih (`#FFFFFF`), serta pasangan tipografi presisi **`Fira Code`** (heading, ID tiket, nominal angka) + **`Fira Sans`** (teks UI & form).
+Design system v2.1 mempertahankan **Minimalism & Swiss Style** (v2.0) untuk seluruh area kerja operasional kasir, serta mengintegrasikan **`@firecms/neat` (`NeatGradient`) melalui pendekatan Hybrid (Opsi A)** pada **Hero `LandingPage`** dan latar **`LoginPage`**.
 
-Seluruh komponen dibangun memakai **`shadcn/ui` + Tailwind CSS + `lucide-react`** ditambah animasi **`gsap` (`@gsap/react`)** terkontrol, sambil menegakkan aturan prioritas `ui-ux-pro-max` (kontras >= 4.5:1, *preserve input* saat error submit, semantic `<Table>` dengan `overflow-x-auto`, dan *Pre-Delivery Checklist*).
+Palet gradient WebGL menggunakan warna air bersih & kain linen (`#FFFFFF`, `#EFE2CE`, `#D5ECEB`, `#E4E4E4`, `#F6FFFF` di atas `#00A2FF` dengan *grain* halus `0.05` dan `speed: 2`), sementara dashboard data internal (`/pesanan`, `/pelanggan`, `/layanan`, `/laporan`, `/petugas`) serta layout cetak struk tetap menggunakan latar Swiss solid (`#F8FAFC` + `#FFFFFF`), jangkar **Deep Slate Navy (`#0F172A`)**, CTA **Ocean Blue (`#0369A1`)**, serta pasangan tipografi **`Fira Code`** + **`Fira Sans`**.
 
 ---
 
-## Konteks Perubahan Arah Desain (v1.1 → v2.0)
+## Konteks Perubahan Arah Desain (v2.0 -> v2.1)
 
-Pada evaluasi ulang menggunakan alur wajib `ui-ux-pro-max`, gaya *Qwash* (v1.0–v1.1) dinilai kurang kuat dan terlalu menyerupai aplikasi konsumen mobile, sementara produk ini adalah **sistem basis data & operasional kasir/admin berbasis tabel dan tiket**. Oleh karena itu:
+Pada pembaruan v2.1, dipilih **Opsi A (Hybrid Swiss + Neat Ambient WebGL)** (dengan opsi evaluasi ke Opsi B bila diperlukan):
 
-- **Diadopsi (Minimalism & Swiss Style):**
-  - Hierarki kontras tajam (`#0F172A` navy gelap, `#0369A1` ocean blue CTA, `#F8FAFC` kanvas, `#E2E8F0` border presisi `1px`).
-  - Tipografi teknis-presisi (`Fira Code` + `Fira Sans`) dengan `tabular-nums` agar ID tiket (`PSN-...`), berat (`brt_kg`), dan harga (`tot_hrg`) sejajar sempurna.
-  - Bentuk kartu & input lebih tegas (`8px–12px` radius) dibanding *pill* membulat besar, memberi kesan software operasional profesional (*enterprise POS*).
-  - **Order Status Stepper** dipertahankan sebagai komponen kunci pelacakan `sts_psn`, namun kini mengikuti estetika Swiss (garis presisi + badge kontras tinggi dengan ikon).
+- **Area Publik & Gerbang (`LandingPage` Hero & `LoginPage`):**
+  - Menggunakan kanvas WebGL `<NeatBackground />` berbasis `@firecms/neat` dengan `yOffset` reaktif terhadap `window.scrollY`.
+  - Kartu/teks di atas kanvas dibungkus permukaan putih semi-transparan (`bg-white/90 backdrop-blur-sm border border-[#E2E8F0]`) atau teks `#0F172A` agar kontras tetap >= 4.5:1 di mana pun gelombang `#00A2FF` muncul.
+- **Area Operasional Kasir & Produksi (`/pesanan`, tabel data, form tiket, cetak nota):**
+  - Tetap **Swiss Style solid** (`#F8FAFC` canvas, `#FFFFFF` card, `1px solid #E2E8F0`) demi kecepatan baca tabel padat, efisiensi baterai HP/laptop kasir, dan zero GPU distraction.
 - **Ditolak (Out of Scope):**
-  - Dekorasi consumer app (gradient header berat, sudut ultra-bulat `24px`, foto/3D render mesin cuci, AI search, promo banners).
-  - Animasi *overshoot* (`back.out`) pada tabel data padat agar tampilan tetap profesional dan cepat dibaca.
+  - Animasi *overshoot* (`back.out`) pada tabel data padat atau menampilkan kanvas WebGL saat mencetak struk (`@media print`).
 
 ---
 
@@ -165,6 +164,24 @@ Mengacu hasil riset `--domain gsap` dan `--motion 4` dari `ui-ux-pro-max`:
 
 ---
 
+## 4c. Ambient WebGL Background (`@firecms/neat` — Opsi A)
+
+Untuk halaman publik dan login (`LandingPage` Hero & `LoginPage`), antarmuka menggunakan `<NeatBackground />` berbasis `@firecms/neat`:
+
+- **Konfigurasi Preset Resmi:**
+  - **Colors:** `#FFFFFF`, `#EFE2CE`, `#D5ECEB`, `#E4E4E4`, `#F6FFFF` (background `#00A2FF`, `backgroundAlpha: 1`, `colorBlending: 7`, `highlights: 7`, `shadows: 5`).
+  - **Motion & Flow:** `speed: 2`, `horizontalPressure: 4`, `verticalPressure: 5`, `waveFrequencyX: 4`, `waveFrequencyY: 3`, `waveAmplitude: 2`, `flowEnabled: true`, `flowScale: 3.3`, `flowEase: 0.53`, `domainWarpEnabled: true`, `domainWarpIntensity: 0.05`.
+  - **Rendering Ringan:** `resolution: 0.35`, `antialias: false`, `bloomIntensity: 0`, `grainIntensity: 0.05`, `grainScale: 100`, `flatShading: true`, `shapeType: 'plane'`.
+  - **Scroll Reactivity:** `yOffset` dasar `600`, bereaksi ke `window.scrollY` melalui listener `{ passive: true }`.
+- **Guardrails Implementasi Wajib:**
+  1. **Lazy Load:** Muat komponen `<NeatBackground />` via `React.lazy()` + `Suspense` dengan fallback CSS gradient ringan agar rute kasir (`/pesanan`) tidak terbebani bundle WebGL.
+  2. **Lifecycle Cleanup:** Wajib memanggil `gradient.destroy()` pada cleanup `useEffect` untuk mencegah kebocoran WebGL context saat StrictMode atau pindah halaman.
+  3. **WebGL Safe Fallback:** Bungkus inisialisasi `new NeatGradient(...)` dalam `try/catch`; jika browser/device tidak mendukung WebGL, tampilkan fallback CSS gradient statis `#D5ECEB` -> `#FFFFFF` -> `#EFE2CE`.
+  4. **Reduced Motion:** Jika `prefers-reduced-motion: reduce` aktif, set `speed: 0` atau tampilkan fallback CSS statis tanpa listener scroll.
+  5. **Print Safety & Contrast:** `<canvas>` wajib memiliki `print:hidden` dan `pointer-events-none`. Seluruh teks/formulir di atasnya tetap memakai surface kontras tinggi (`bg-white/90 backdrop-blur-sm` atau teks `#0F172A`).
+
+---
+
 ## 5. Layout Principles & Pemetaan Layar
 
 - **Breakpoint & Container (`375px`, `768px`, `1024px`, `1440px`):**
@@ -213,3 +230,4 @@ Checklist wajib sebelum UI dinyatakan selesai di repo implementasi:
 | 1.0 | 2026-11-20 | Penyusunan awal `05-design.md` mengadaptasi referensi Dribbble *Qwash* (#27031424) dengan `shadcn/ui` dan `lucide-react`. |
 | 1.1 | 2026-11-20 | Menambahkan panduan **Motion & Animation (GSAP + `@gsap/react`)** beserta guardrail kecepatan input kasir, `prefers-reduced-motion`, dan print safety. |
 | 2.0 | 2026-11-26 | **Major Design Update (`ui-ux-pro-max`):** Mengganti tema visual ke **Minimalism & Swiss Style** (`#0F172A` navy, `#0369A1` accent, `#F8FAFC` canvas, `Fira Code` + `Fira Sans`), mengekspor CSS Design Tokens, serta menambahkan aturan prioritas UX, semantic `<Table>`, *Preserve Input After Failed Submit*, GSAP anti-overshoot rule, dan *Pre-Delivery Checklist* `ui-ux-pro-max`. |
+| 2.1 | 2026-11-27 | **Ambient WebGL Integration (Opsi A):** Mengintegrasikan `@firecms/neat` (`NeatGradient`) pada Hero `LandingPage` & `LoginPage` dengan palet fresh-water/linen, lifecycle `destroy()`, lazy loading, `prefers-reduced-motion` guard, dan `{ passive: true }` scroll reactivity, sambil mempertahankan Swiss solid untuk area operasional kasir. |

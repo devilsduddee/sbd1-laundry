@@ -9,7 +9,7 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
 ### Aturan 1: Patuh Mutlak pada Dokumen Spesifikasi & Skema Proposal
 - Baca dan jadikan dokumen berikut sebagai sumber kebenaran tunggal:
   1. `docs/04-prd.md`: Functional requirements (`FR-01` s.d. `FR-08`) & batasan scope.
-  2. `docs/05-design.md`: Visual theme **Minimalism & Swiss Style** (`ui-ux-pro-max`), design tokens, tipografi `Fira Code` + `Fira Sans`, dan UX/a11y checklist.
+  2. `docs/05-design.md`: Visual theme **Minimalism & Swiss Style + Ambient `@firecms/neat` Opsi A** (`v2.1`), design tokens, tipografi `Fira Code` + `Fira Sans`, dan UX/a11y checklist.
   3. `docs/06-spec.md`: Use case, alur proses, kontrak API Hono, edge cases, dan arsitektur Vercel.
   4. `docs/07-vibe-rules.md` & `schema.sql`: Guardrails & skema database Turso.
 - **ATURAN KERAS DATABASE PROPOSAL:** Nama tabel (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) dan nama seluruh kolom **TIDAK BOLEH diubah, diganti bahasa Inggris, atau ditambah kolom baru** di luar `schema.sql`:
@@ -37,12 +37,13 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
 - **Semantic Table & Forms UX:** Tabel wajib memakai `<TableHeader><TableBody><TableRow>` dalam `overflow-x-auto` (bukan `div grid`). Semua input wajib punya `<Label htmlFor>` dan **dilarang me-reset form saat submit/validasi error**.
 - Stepper status pesanan disusun ringan dari `Badge` + utility classes Tailwind CSS.
 - **Animasi GSAP:** Gunakan `gsap` + `@gsap/react` (`useGSAP()` dengan `scope` ref) untuk stagger kartu (`power2.out`, jangan `back.out` di tabel padat), hover `quickTo`, dan transisi stepper `sts_psn`. Durasi wajib singkat (`0.2s–0.35s`), wajib menghormati `prefers-reduced-motion: reduce`, dan tidak boleh menyembunyikan elemen pada `@media print`.
+- **Ambient WebGL (`@firecms/neat` — Opsi A):** `<NeatBackground />` hanya dipasang di `LandingPage` Hero dan `LoginPage` via `React.lazy()`, wajib memanggil `gradient.destroy()` saat unmount, `print:hidden`, passive scroll listener, serta fallback statis bila reduced motion / WebGL tidak tersedia.
 
 ---
 
 ## 2. Tech Stack & Arsitektur (Vite + React + Hono + Turso + Vercel)
 
-- **Frontend:** Vite + React (TypeScript) + Tailwind CSS + `shadcn/ui` + `gsap` (`@gsap/react`) + `react-router-dom` + `react-hook-form` + `zod`.
+- **Frontend:** Vite + React (TypeScript) + Tailwind CSS + `shadcn/ui` + `gsap` (`@gsap/react`) + `@firecms/neat` (khusus Opsi A di Landing & Login) + `react-router-dom` + `zod`.
 - **Backend API:** Hono (TypeScript) di `server/`, diekspor sebagai Vercel Serverless Function via `api/index.ts` (`hono/vercel`).
 - **Database:** Turso / libSQL (`@libsql/client`).
 - **Auth:** Stateless JWT (`hono/jwt`) di *HttpOnly Cookie* (`auth_token`) + password hashing dengan `bcryptjs` (pure JS agar aman di Vercel Serverless).
@@ -79,7 +80,7 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
 
 ---
 
-## 4. Token Desain (`05-design.md` v2.0 — Minimalism & Swiss Style)
+## 4. Token Desain (`05-design.md` v2.1 — Minimalism & Swiss Style + Neat Opsi A)
 
 - **Canvas:** `#F8FAFC` | **Card:** `#FFFFFF` | **Ink Utama:** `#020617` | **Muted:** `#475569`
 - **Primary Slate Navy:** `#0F172A` | **Accent / CTA Ocean Blue:** `#0369A1` | **Secondary:** `#334155` | **Border:** `#E2E8F0` | **Danger:** `#DC2626`

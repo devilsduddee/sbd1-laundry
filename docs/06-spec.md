@@ -1,9 +1,9 @@
 # Spec Teknis: Sistem Pengelolaan Laundry
 
-- **Versi:** 1.2
-- **Tanggal:** 2026-11-26
+- **Versi:** 1.3
+- **Tanggal:** 2026-11-27
 - **Status:** Approved (Gate 3)
-- **Sumber input:** `04-prd.md` v1.1 (Approved), `05-design.md` v2.0, `project-context.md`, dan dokumen ERD Proposal Tugas Kuliah Sistem Basis Data.
+- **Sumber input:** `04-prd.md` v1.1 (Approved), `05-design.md` v2.1, `project-context.md`, dan dokumen ERD Proposal Tugas Kuliah Sistem Basis Data.
 - **Skill digunakan:** `spec-writer`
 
 ## TL;DR
@@ -440,8 +440,9 @@ Seluruh endpoint selain `/api/auth/login` wajib memverifikasi **HttpOnly JWT Coo
 | Pencarian Pelanggan Cepat | `shadcn/ui` (`Popover` + `Command` / Combobox) | Cari `nm_plgn` atau `no_hp` + tombol *"+ Pelanggan Baru"* via `Dialog`. |
 | Modal Bayar & Konfirmasi | `shadcn/ui` (`Dialog`, `AlertDialog`) | Untuk modal input `BYR` dan konfirmasi penutupan pesanan. |
 | Notifikasi Toast | `sonner` (via `shadcn/ui`) | Feedback sukses/error API instan. |
-| Order Status Stepper | Komposisi `Badge` + utilitas Tailwind CSS + `gsap` | Stepper horizontal presisi Swiss Style (`05-design.md` v2.0) dengan animasi progres `power2.out`. |
+| Order Status Stepper | Komposisi `Badge` + utilitas Tailwind CSS + `gsap` | Stepper horizontal presisi Swiss Style (`05-design.md` v2.1) dengan animasi progres `power2.out`. |
 | Animasi UI | `gsap` + `@gsap/react` (`useGSAP`) | Stagger kartu (`grid: 'auto'`), hover `quickTo`, dan stepper; dilarang `back.out` di tabel data padat; hormati `prefers-reduced-motion`. |
+| Ambient WebGL Background | `@firecms/neat` (`NeatGradient`) | Khusus Opsi A pada `LandingPage` Hero & `LoginPage` (`React.lazy`, `destroy()` saat unmount, `print:hidden`, fallback statis bila reduced motion / no WebGL). |
 | Ikon | `lucide-react` | Satu paket ikon garis konsisten. |
 | Database Client & Hashing | `@libsql/client` + `bcryptjs` + `@hono/zod-validator` | Ringan & kompatibel penuh dengan runtime Vercel Serverless. |
 
@@ -529,8 +530,9 @@ sistem-laundry/
   - Turso (`@libsql/client`) memakai koneksi HTTP/WebSocket ke Turso Cloud yang ramah lingkungan serverless (tidak ada masalah *connection pool exhaustion* seperti PostgreSQL tradisional di serverless).
   - Jalankan `PRAGMA foreign_keys = ON;` pada transaksi/koneksi penulisan di SQLite/Turso agar constraint FK aktif.
 - **Print Compatibility & Motion:**
-  - Halaman detail tiket dan bukti bayar menyertakan CSS `@media print` (`print:hidden` untuk sidebar, navigasi, dan tombol non-struk) agar Output 3 dan Output 4 siap cetak langsung dari browser.
+  - Halaman detail tiket dan bukti bayar menyertakan CSS `@media print` (`print:hidden` untuk sidebar, navigasi, canvas WebGL, dan tombol non-struk) agar Output 3 dan Output 4 siap cetak langsung dari browser.
   - Seluruh animasi GSAP wajib memakai `useGSAP()` (cleanup aman di React StrictMode), durasi `<= 0.35s`, dan menghormati `prefers-reduced-motion: reduce`.
+  - Latar WebGL `@firecms/neat` (`<NeatBackground />`) wajib di-lazy-load khusus halaman publik/login, memanggil `gradient.destroy()` saat unmount, memakai listener scroll `{ passive: true }`, dan memiliki fallback statis untuk perangkat tanpa WebGL atau mode `prefers-reduced-motion`.
 
 ---
 
@@ -576,3 +578,4 @@ sistem-laundry/
 | 1.0 | 2026-11-20 | Draft awal Spec Teknis (`06-spec.md`) dengan stack Vite + React + `shadcn/ui` + Hono + Turso (Vercel deployment) dan kepatuhan penuh pada 6 tabel & nama field asli proposal. |
 | 1.1 | 2026-11-20 | Menambahkan `gsap` + `@gsap/react` untuk animasi UI halus sesuai pembaruan `05-design.md` v1.1. |
 | 1.2 | 2026-11-26 | Menyelaraskan spec komponen & error handling dengan `05-design.md` v2.0 (Minimalism & Swiss Style dari `ui-ux-pro-max`, aturan *Preserve Input After Failed Submit*, dan GSAP anti-overshoot). |
+| 1.3 | 2026-11-27 | Menambahkan integrasi `@firecms/neat` (Opsi A Hybrid pada `LandingPage` & `LoginPage`) sesuai pembaruan `05-design.md` v2.1 beserta aturan lazy loading, lifecycle cleanup, dan print/motion safety. |

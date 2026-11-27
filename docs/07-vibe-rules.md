@@ -1,9 +1,9 @@
 # 07 - Vibe Rules: Sistem Pengelolaan Laundry
 
-- **Versi:** 1.2
-- **Tanggal:** 2026-11-26
+- **Versi:** 1.3
+- **Tanggal:** 2026-11-27
 - **Status:** Approved
-- **Sumber input:** `04-prd.md` v1.1, `05-design.md` v2.0, `06-spec.md` v1.2 (Gate 3 Approved), dan `profile.md` bagian 9.
+- **Sumber input:** `04-prd.md` v1.1, `05-design.md` v2.1, `06-spec.md` v1.3 (Gate 3 Approved), dan `profile.md` bagian 9.
 - **Skill digunakan:** `vibe-rules`
 
 ---
@@ -39,6 +39,7 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 - Tabel data **wajib** memakai semantic `<Table><TableHeader><TableBody><TableRow>` dalam wrapper `overflow-x-auto` (jangan diganti `div grid`).
 - **Forms UX:** Setiap input wajib punya `<Label htmlFor>`, dan **dilarang me-reset form** saat validasi/request gagal (*Preserve Input After Failed Submit*).
 - **Animasi GSAP (`gsap` + `@gsap/react`):** Seluruh animasi transisi halus (stagger kartu KPI/layanan, progress bar stepper `sts_psn`, hover `quickTo`) wajib menggunakan hook `useGSAP()` dengan `scope` ref, `ease: 'power2.out'` (dilarang `back.out` di tabel data padat), durasi singkat (`0.2s–0.35s`), menghormati `prefers-reduced-motion: reduce`, dan tidak boleh memblokir tampilan cetak (`@media print`).
+- **Ambient WebGL (`@firecms/neat` — Opsi A):** Khusus dipakai pada Hero `LandingPage` dan latar `LoginPage` melalui komponen `<NeatBackground />` yang di-lazy-load (`React.lazy`), wajib memanggil `gradient.destroy()` pada unmount, menggunakan `{ passive: true }` pada scroll listener, menghormati `prefers-reduced-motion`, memiliki fallback CSS statis bila WebGL gagal, dan memakai `print:hidden`. Area kerja kasir tetap menggunakan latar Swiss Style solid `#F8FAFC`.
 
 ---
 
@@ -68,6 +69,7 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 3. **Fase 3 — UI Shell, Login, & Master Data:** Implementasi tema warna **Minimalism & Swiss Style** (`tailwind.config.ts` & `index.css` + font `Fira Code` & `Fira Sans`), App Shell responsif (`Sidebar` + `Sheet` + `print:hidden`), `LoginPage`, `CustomersPage` (`PLGN`), `ServicesPage` (`LYN`), dan `StaffPage` (`PTGS`).
 4. **Fase 4 — Alur Inti Pesanan, Status, Bayar & Ambil:** Implementasi `OrdersPage`, `CreateOrderPage` (auto-merge item `id_lyn` duplikat, *preserve input* saat error), `OrderDetailPage` (Stepper status presisi Swiss + GSAP, modal bayar `BYR`, blokir ambil sebelum `Lunas`).
 5. **Fase 5 — Cetak Struk, Laporan, & Deploy Vercel:** Tambahkan CSS `@media print` untuk Output 3 (Tiket Pesanan) & Output 4 (Bukti Pembayaran), buat `ReportPage` (Output 5 + CSV opsional), verifikasi `npm run build`, lalu siap deploy ke Vercel.
+6. **Fase 6 — Ambient WebGL `@firecms/neat` (Opsi A) & PWA:** Implementasi `<NeatBackground />` (Opsi A pada `LandingPage` Hero & `LoginPage` dengan lazy load, cleanup `destroy()`, fallback WebGL/reduced-motion) serta dukungan penuh PWA (`sw.js`, `site.webmanifest`, dan prompt install mobile).
 
 ---
 
@@ -93,3 +95,4 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 | 1.0 | 2026-11-20 | Penyusunan `07-vibe-rules.md` dan paket `handoff/` untuk stack Vite + React + `shadcn/ui` + Hono + Turso (Vercel). |
 | 1.1 | 2026-11-20 | Menambahkan aturan GSAP (`gsap` + `@gsap/react`) untuk animasi halus dengan `useGSAP`, durasi singkat, dan print safety. |
 | 1.2 | 2026-11-26 | Menyelaraskan dengan `05-design.md` v2.0 (Minimalism & Swiss Style dari `ui-ux-pro-max`, semantic `<Table>`, *Preserve Input After Failed Submit*, larangan emoji icon, dan anti-overshoot GSAP di tabel). |
+| 1.3 | 2026-11-27 | Menambahkan aturan `@firecms/neat` Opsi A (`<NeatBackground />` di `LandingPage` & `LoginPage` + guardrails WebGL/reduced-motion/cleanup) sesuai `05-design.md` v2.1. |

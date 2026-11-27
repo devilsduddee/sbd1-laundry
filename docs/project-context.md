@@ -46,6 +46,7 @@
 | 2026-11-20 | **Gate 3 Approved (`06-spec.md` v1.0)** & Tahap 6 selesai: menyusun `07-vibe-rules.md` dan paket `handoff/` (`AGENTS.md`, `schema.sql`, `tailwind.config.ts`, `SETUP.md`). | Menegakkan guardrails coding agent (kepatuhan 100% skema ERD, batas 500 baris/file, wajib `shadcn/ui`, larangan `git push` otomatis) untuk stack Vite + React + Hono + Turso on Vercel. | Eksekusi langsung tanpa skema SQL Turso dan aturan batas file. |
 | 2026-11-20 | Menambahkan **GSAP (`gsap` + `@gsap/react`)** ke `05-design.md` v1.1, `06-spec.md` v1.1, `07-vibe-rules.md` v1.1, dan `handoff/` (`AGENTS.md`, `SETUP.md`). | Permintaan user untuk animasi UI yang lebih *smooth* dengan tetap menjaga kecepatan input kasir (`0.2s–0.35s`), `prefers-reduced-motion`, dan keamanan `@media print`. | Memasang animasi berat/panjang atau library animasi besar lain. |
 | 2026-11-26 | **Design Upgrade (`05-design.md` v2.0):** Mengganti tema visual dari *Qwash* ke **Minimalism & Swiss Style** hasil riset `ui-ux-pro-max` (`#0F172A`, `#0369A1`, `#F8FAFC`, `Fira Code` + `Fira Sans`), serta menyelaraskan `06-spec.md` v1.2, `07-vibe-rules.md` v1.2, dan paket `handoff/`. | Keputusan Lead PM memilih Opsi B karena desain *Qwash* dirasa kurang kuat untuk web operasional kasir & sistem basis data. | Tetap memakai palet *Qwash* v1.1. |
+| 2026-11-27 | **Design Upgrade (`05-design.md` v2.1 — Opsi A):** Menambahkan latar WebGL `@firecms/neat` pada `LandingPage` Hero & `LoginPage` sambil menjaga area operasional kasir tetap Swiss solid (`#F8FAFC` + `#FFFFFF`), menyelaraskan `06-spec.md` v1.3, `07-vibe-rules.md` v1.3, dan `AGENTS.md`. | Memberi *first impression* modern bertema air/kain bersih tanpa mengorbankan keterbacaan tabel dan baterai di area kerja kasir. | Memasang WebGL backdrop di seluruh halaman tabel kasir (Opsi B — disimpan sebagai opsi cadangan). |
 
 ## 6. Pertanyaan terbuka dan asumsi
 - `[PERTANYAAN]` Apa deadline pengumpulan tugas dan detail rubrik penilaian dari dosen?
@@ -62,6 +63,6 @@
 | 02-opportunity.md | dilewati (fast-track) | - |
 | 03-scope.md | dilewati (fast-track) | - |
 | 04-prd.md | Approved (Gate 2) | 1.1 |
-| 05-design.md | Approved | 2.0 |
-| 06-spec.md | Approved (Gate 3) | 1.2 |
-| 07-vibe-rules.md | Approved (+ `handoff/`) | 1.2 |
+| 05-design.md | Approved | 2.1 |
+| 06-spec.md | Approved (Gate 3) | 1.3 |
+| 07-vibe-rules.md | Approved (+ `handoff/`) | 1.3 |
