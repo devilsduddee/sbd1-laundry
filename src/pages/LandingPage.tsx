@@ -98,9 +98,9 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFA] text-[#0B1723] flex flex-col font-sans overflow-x-clip">
-      {/* Navbar Publik Sticky */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#E1E8EB] pt-safe">
+    <div className="min-h-screen ambient-workspace text-[#0B1723] flex flex-col font-sans overflow-x-clip">
+      {/* Navbar Publik Sticky (Glassy UI) */}
+      <header className="sticky top-0 z-40 bg-white/72 backdrop-blur-xl border-b border-white/70 shadow-[0_1px_0_rgba(11,23,35,0.07)] pt-safe">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <QwashLogo variant="lockup" size="md" className="text-[#0B1723]" />
@@ -150,7 +150,7 @@ export const LandingPage: React.FC = () => {
         <div ref={heroScope} className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Kolom Kiri: Headline & Form Lacak */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="hero-enter inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-white/95 backdrop-blur-sm border border-[#E1E8EB] text-xs font-mono font-medium text-[#0B1723] select-none">
+            <div className="hero-enter inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 backdrop-blur-md border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_2px_rgba(11,23,35,0.06)] text-xs font-mono font-medium text-[#0B1723] select-none">
               <ShieldCheck className="size-3.5 text-[#006EB3] shrink-0" aria-hidden="true" />
               <span>QWASH_STANDARD: HIGIENIS &amp; PRESISI</span>
             </div>
@@ -230,10 +230,10 @@ export const LandingPage: React.FC = () => {
                 <PublicTrackingCard data={trackingResult} />
               </div>
             ) : (
-              <div className="p-6 md:p-8 rounded-lg bg-white/95 backdrop-blur-md border border-[#E1E8EB] space-y-5 shadow-[0_8px_24px_-8px_rgba(11,23,35,0.08)]">
-                <div className="flex items-center justify-between pb-4 border-b border-[#E1E8EB]">
+              <div className="glass-card p-6 md:p-8 rounded-2xl space-y-5">
+                <div className="flex items-center justify-between pb-4 border-b border-[#0B1723]/[0.08]">
                   <div className="flex items-center gap-2.5">
-                    <div className="size-9 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] font-bold">
+                    <div className="size-9 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] font-bold">
                       <Clock className="size-4" aria-hidden="true" />
                     </div>
                     <div>
@@ -311,10 +311,10 @@ export const LandingPage: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((lyn) => (
-              <Card key={lyn.id_lyn} className="rounded-lg border-[#E1E8EB] hover-lift bg-white">
+              <Card key={lyn.id_lyn} className="hover-lift">
                 <CardContent className="p-5 flex flex-col justify-between h-full space-y-4">
                   <div className="space-y-2">
-                    <div className="size-10 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] mb-2">
+                    <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] mb-2">
                       <Shirt className="size-5 stroke-[1.75]" aria-hidden="true" />
                     </div>
                     <h3 className="font-bold text-base text-[#0B1723]">{lyn.nm_lyn}</h3>
@@ -322,7 +322,7 @@ export const LandingPage: React.FC = () => {
                       Pencucian menyeluruh, sanitasi serat kain, dan pengemasan rapi.
                     </p>
                   </div>
-                  <div className="pt-3 border-t border-[#E1E8EB] flex justify-between items-end">
+                  <div className="pt-3 border-t border-[#0B1723]/[0.08] flex justify-between items-end">
                     <div>
                       <span className="text-xs text-[#526474] block">Estimasi</span>
                       <span className="font-mono text-xs font-semibold text-[#0B1723] flex items-center gap-1 tabular-nums">
@@ -345,7 +345,7 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Standar Higienis 5 Langkah Qwash */}
-      <section id="higienis" className="py-16 px-4 bg-[#F1F5F6] border-y border-[#E1E8EB]">
+      <section id="higienis" className="py-16 px-4 bg-[#EEF3F6]/65 border-y border-white/75 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto space-y-10">
           <div className="text-center space-y-2 max-w-2xl mx-auto">
             <h2 className="font-heading text-2xl md:text-3xl font-bold tracking-tight text-[#0B1723]">
@@ -386,9 +386,9 @@ export const LandingPage: React.FC = () => {
             ].map((step) => (
               <div
                 key={step.num}
-                className="p-4 rounded-lg border border-[#E1E8EB] bg-white space-y-2"
+                className="glass-card p-4 rounded-xl space-y-2 hover-lift"
               >
-                <div className="inline-flex px-2 py-0.5 rounded-sm font-mono font-bold text-xs border bg-[#EEF6FB] text-[#006EB3] border-[#C2DDF0]">
+                <div className="inline-flex px-2 py-0.5 rounded-full font-mono font-bold text-xs border bg-[#EEF6FB]/85 text-[#006EB3] border-[#C2DDF0]">
                   {step.num}
                 </div>
                 <h4 className="font-semibold text-sm text-[#0B1723] pt-1">{step.title}</h4>
@@ -401,9 +401,9 @@ export const LandingPage: React.FC = () => {
 
       {/* Lokasi & Jam Buka Outlet */}
       <section id="lokasi" className="py-16 px-4 max-w-6xl mx-auto w-full">
-        <div className="bg-white rounded-lg border border-[#E1E8EB] p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="glass-card rounded-2xl p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-2">
-            <div className="size-10 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] mb-2">
+            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] mb-2">
               <MapPin className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B1723]">Lokasi Outlet</h3>
@@ -414,7 +414,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <div className="size-10 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] mb-2">
+            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] mb-2">
               <Clock className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B1723]">Jam Operasional</h3>
@@ -428,7 +428,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <div className="size-10 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] mb-2">
+            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] mb-2">
               <Phone className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <h3 className="font-heading font-bold text-base text-[#0B1723]">Layanan Pelanggan</h3>

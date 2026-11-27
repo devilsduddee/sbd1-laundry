@@ -3,7 +3,7 @@
 - **Versi:** 1.3
 - **Tanggal:** 2026-11-27
 - **Status:** Approved (Gate 3)
-- **Sumber input:** `04-prd.md` v1.1 (Approved), `05-design.md` v2.1, `project-context.md`, dan dokumen ERD Proposal Tugas Kuliah Sistem Basis Data.
+- **Sumber input:** `04-prd.md` v1.1 (Approved), `05-design.md` v2.3, `project-context.md`, dan dokumen ERD Proposal Tugas Kuliah Sistem Basis Data.
 - **Skill digunakan:** `spec-writer`
 
 ## TL;DR
@@ -579,3 +579,4 @@ sistem-laundry/
 | 1.1 | 2026-11-20 | Menambahkan `gsap` + `@gsap/react` untuk animasi UI halus sesuai pembaruan `05-design.md` v1.1. |
 | 1.2 | 2026-11-26 | Menyelaraskan spec komponen & error handling dengan `05-design.md` v2.0 (Minimalism & Swiss Style dari `ui-ux-pro-max`, aturan *Preserve Input After Failed Submit*, dan GSAP anti-overshoot). |
 | 1.3 | 2026-11-27 | Menambahkan integrasi `@firecms/neat` (Opsi A Hybrid pada `LandingPage` & `LoginPage`) sesuai pembaruan `05-design.md` v2.1 beserta aturan lazy loading, lifecycle cleanup, dan print/motion safety. |
+| 1.4 | 2026-11-27 | Menyelaraskan sistem visual ke `05-design.md` v2.3: perpaduan `@firecms/neat` + *ambient mesh* workspace dengan komponen **Glassy UI (`glassyui.com`)** untuk `Card` & `Button` beserta fallback `prefers-reduced-transparency` dan `@media print`. |

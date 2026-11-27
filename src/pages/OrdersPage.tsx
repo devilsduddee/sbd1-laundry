@@ -125,11 +125,11 @@ export const OrdersPage: React.FC = () => {
         )}
       </div>
 
-      {/* KPI Cards Ringkas (Swiss Neutral Uniform) */}
+      {/* KPI Cards Ringkas (Glassy UI Frosted Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
-        <Card className="kpi-card hover-lift border-[#E1E8EB] rounded-lg bg-white h-full">
+        <Card className="kpi-card hover-lift h-full">
           <CardContent className="p-4 flex items-center gap-3.5 h-full">
-            <div className="size-10 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#526474] shrink-0">
+            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#526474] shrink-0">
               <Clock className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <div className="min-w-0">
@@ -141,9 +141,9 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card hover-lift border-[#E1E8EB] rounded-lg bg-white h-full">
+        <Card className="kpi-card hover-lift h-full">
           <CardContent className="p-4 flex items-center gap-3.5 h-full">
-            <div className="size-10 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] shrink-0">
+            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] shrink-0">
               <Droplets className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <div className="min-w-0">
@@ -155,9 +155,9 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card hover-lift border-[#E1E8EB] rounded-lg bg-white h-full">
+        <Card className="kpi-card hover-lift h-full">
           <CardContent className="p-4 flex items-center gap-3.5 h-full">
-            <div className="size-10 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3] shrink-0">
+            <div className="size-10 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3] shrink-0">
               <Flame className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <div className="min-w-0">
@@ -169,9 +169,9 @@ export const OrdersPage: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="kpi-card hover-lift border-[#E1E8EB] rounded-lg bg-white h-full">
+        <Card className="kpi-card hover-lift h-full">
           <CardContent className="p-4 flex items-center gap-3.5 h-full">
-            <div className="size-10 rounded-md bg-[#EEF6FB] border border-[#C2DDF0] flex items-center justify-center text-[#006EB3] shrink-0">
+            <div className="size-10 rounded-lg bg-[#EEF6FB]/85 border border-[#C2DDF0] shadow-[0_1px_3px_rgba(0,110,179,0.1)] flex items-center justify-center text-[#006EB3] shrink-0">
               <PackageCheck className="size-5 stroke-[1.75]" aria-hidden="true" />
             </div>
             <div className="min-w-0">
@@ -187,12 +187,12 @@ export const OrdersPage: React.FC = () => {
       {/* Filter Tabs & Search Bar */}
       <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-3">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">
-          <TabsList className="bg-[#F1F5F6] border border-[#E1E8EB] p-1 rounded-md flex-wrap h-auto gap-1">
+          <TabsList className="flex-wrap h-auto gap-1">
             {STATUS_TABS.map((tab) => (
               <TabsTrigger
                 key={tab}
                 value={tab}
-                className="text-xs rounded-sm px-3 py-1.5 text-[#2E3E4E] data-[state=active]:bg-white data-[state=active]:text-[#0B1723] data-[state=active]:font-semibold data-[state=active]:shadow-[0_1px_2px_rgba(11,23,35,0.06)]"
+                className="text-xs px-3 py-1.5"
               >
                 {tab}
               </TabsTrigger>
@@ -206,7 +206,7 @@ export const OrdersPage: React.FC = () => {
               Cari nomor tiket, nama pelanggan, atau nomor HP
             </Label>
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-[#526474]"
+              className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-[#526474] z-10"
               aria-hidden="true"
             />
             <Input
@@ -215,7 +215,7 @@ export const OrdersPage: React.FC = () => {
               placeholder="Cari ID / Pelanggan / HP..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 text-xs h-9 bg-white"
+              className="pl-9 text-xs h-9"
             />
           </div>
           <Button
@@ -230,11 +230,11 @@ export const OrdersPage: React.FC = () => {
         </form>
       </div>
 
-      {/* Semantic Tabel Pesanan dengan overflow-x-auto */}
-      <div className="bg-white border border-[#E1E8EB] rounded-lg overflow-hidden">
+      {/* Semantic Tabel Pesanan dalam Glassy Card */}
+      <div className="glass-card rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#F8FAFA]">
+            <TableHeader className="bg-[#0B1723]/[0.025]">
               <TableRow className="border-b border-[#E1E8EB] text-xs hover:bg-transparent">
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">ID Tiket</TableHead>
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">Pelanggan</TableHead>

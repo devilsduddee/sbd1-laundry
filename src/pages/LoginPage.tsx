@@ -147,30 +147,30 @@ export const LoginPage: React.FC = () => {
               </p>
             </div>
 
-            {/* Frosted Swiss Technical Matrix Card */}
-            <div className="p-5 rounded-lg bg-white/90 backdrop-blur-md border border-[#E1E8EB] space-y-4 shadow-[0_4px_16px_-6px_rgba(11,23,35,0.08)]">
-              <div className="flex items-center justify-between pb-3 border-b border-[#E1E8EB] text-xs">
+            {/* Frosted Glassy UI Technical Matrix Card */}
+            <div className="glass-card p-5 rounded-2xl space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#0B1723]/[0.08] text-xs">
                 <div className="flex items-center gap-2.5">
                   <span className="size-2 rounded-full bg-[#166534]" />
                   <span className="font-mono text-[#0B1723] text-xs font-semibold">
                     SYSTEM_STATUS: READY
                   </span>
                 </div>
-                <span className="px-2 py-0.5 rounded-sm bg-[#F1F5F6] text-[#2E3E4E] border border-[#E1E8EB] text-xs font-mono font-semibold">
+                <span className="px-2.5 py-0.5 rounded-full bg-white/70 text-[#2E3E4E] border border-white/80 text-xs font-mono font-semibold">
                   Turso libSQL
                 </span>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
-                <div className="p-3 rounded-md bg-[#F8FAFA] border border-[#E1E8EB] space-y-1">
+                <div className="p-3 rounded-xl bg-white/55 border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] space-y-1">
                   <span className="text-xs text-[#526474] block">Antrean</span>
                   <span className="text-sm font-bold text-[#0B1723] font-mono block">Real-time</span>
                 </div>
-                <div className="p-3 rounded-md bg-[#F8FAFA] border border-[#E1E8EB] space-y-1">
+                <div className="p-3 rounded-xl bg-white/55 border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] space-y-1">
                   <span className="text-xs text-[#526474] block">Kalkulasi</span>
                   <span className="text-sm font-bold text-[#0B1723] font-mono block">Server-side</span>
                 </div>
-                <div className="p-3 rounded-md bg-[#F8FAFA] border border-[#E1E8EB] space-y-1">
+                <div className="p-3 rounded-xl bg-white/55 border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] space-y-1">
                   <span className="text-xs text-[#526474] block">Keamanan</span>
                   <span className="text-sm font-bold text-[#0B1723] font-mono block">Stateless JWT</span>
                 </div>
@@ -184,15 +184,15 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* Bottom Academic Credits */}
-          <div className="pt-4 border-t border-[#E1E8EB] flex justify-between items-center text-xs text-[#526474] font-mono font-medium">
+          <div className="pt-4 border-t border-[#0B1723]/[0.08] flex justify-between items-center text-xs text-[#526474] font-mono font-medium">
             <span>Tugas Besar Sistem Basis Data 1</span>
             <span>Kelas 3IA01</span>
           </div>
         </div>
 
-        {/* Kolom Kanan: Kartu Form Autentikasi Staf */}
+        {/* Kolom Kanan: Kartu Form Autentikasi Staf (Glassy UI) */}
         <div className="col-span-1 lg:col-span-6 xl:col-span-5 flex justify-center lg:justify-end w-full">
-          <div className="w-full max-w-md bg-white/95 backdrop-blur-md border border-[#E1E8EB] rounded-lg p-6 sm:p-8 shadow-[0_12px_32px_-12px_rgba(11,23,35,0.12)] flex flex-col justify-between space-y-6">
+          <div className="glass-card w-full max-w-md rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6">
             {/* Header Bar dengan Tombol Kembali ke Landing Page */}
             <div className="flex items-center justify-between">
               <Button
@@ -317,10 +317,10 @@ export const LoginPage: React.FC = () => {
                           key={acc.role}
                           type="button"
                           onClick={() => handleSelectDemo(acc)}
-                          className={`p-2.5 rounded-md border text-left flex flex-col justify-between transition-[transform,background-color,border-color,box-shadow] duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-[1px] active:translate-y-[1px] active:scale-[0.985] active:duration-75 touch-manipulation cursor-pointer ${
+                          className={`p-2.5 rounded-xl text-left flex flex-col justify-between transition-[transform,background-color,border-color,box-shadow] duration-150 [transition-timing-function:cubic-bezier(0.22,0.8,0.3,1)] [@media(hover:hover)_and_(pointer:fine)]:hover:-translate-y-[1px] active:translate-y-[1px] active:scale-[0.985] active:duration-75 touch-manipulation cursor-pointer ${
                             isSelected
-                              ? 'border-[#006EB3] bg-[#EEF6FB] text-[#0B1723] ring-1 ring-[#006EB3]'
-                              : 'border-[#E1E8EB] bg-[#F8FAFA] text-[#2E3E4E] hover:border-[#CBD5D9] hover:bg-white'
+                              ? 'glass-btn-tonal text-[#0B1723] ring-1 ring-[#006EB3]'
+                              : 'glass-btn-soft text-[#2E3E4E]'
                           }`}
                         >
                           <span className="text-xs font-bold leading-tight truncate text-[#0B1723]">

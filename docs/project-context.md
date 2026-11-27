@@ -47,6 +47,7 @@
 | 2026-11-20 | Menambahkan **GSAP (`gsap` + `@gsap/react`)** ke `05-design.md` v1.1, `06-spec.md` v1.1, `07-vibe-rules.md` v1.1, dan `handoff/` (`AGENTS.md`, `SETUP.md`). | Permintaan user untuk animasi UI yang lebih *smooth* dengan tetap menjaga kecepatan input kasir (`0.2s–0.35s`), `prefers-reduced-motion`, dan keamanan `@media print`. | Memasang animasi berat/panjang atau library animasi besar lain. |
 | 2026-11-26 | **Design Upgrade (`05-design.md` v2.0):** Mengganti tema visual dari *Qwash* ke **Minimalism & Swiss Style** hasil riset `ui-ux-pro-max` (`#0F172A`, `#0369A1`, `#F8FAFC`, `Fira Code` + `Fira Sans`), serta menyelaraskan `06-spec.md` v1.2, `07-vibe-rules.md` v1.2, dan paket `handoff/`. | Keputusan Lead PM memilih Opsi B karena desain *Qwash* dirasa kurang kuat untuk web operasional kasir & sistem basis data. | Tetap memakai palet *Qwash* v1.1. |
 | 2026-11-27 | **Design Upgrade (`05-design.md` v2.1 — Opsi A):** Menambahkan latar WebGL `@firecms/neat` pada `LandingPage` Hero & `LoginPage` sambil menjaga area operasional kasir tetap Swiss solid (`#F8FAFC` + `#FFFFFF`), menyelaraskan `06-spec.md` v1.3, `07-vibe-rules.md` v1.3, dan `AGENTS.md`. | Memberi *first impression* modern bertema air/kain bersih tanpa mengorbankan keterbacaan tabel dan baterai di area kerja kasir. | Memasang WebGL backdrop di seluruh halaman tabel kasir (Opsi B — disimpan sebagai opsi cadangan). |
+| 2026-11-27 | **Glassy UI Fusion (`05-design.md` v2.3):** Memadukan gradien `@firecms/neat` & *ambient mesh* kasir dengan komponen kaca frosted **Glassy UI (`glassyui.com`)** pada `Card`, `Dialog`, dan `Button` (*specular rim* + *pointer bloom*), serta mengunci netralitas agar tidak belang. | Gradien lembut `@firecms/neat` tampil jauh lebih menyatu dengan kartu dan tombol bergaya kaca optik (*Liquid Glass*) sekaligus tetap cepat dibaca dan aman saat cetak struk. | Memakai kartu solid dengan banyak kotak pastel berwarna berbeda (*belang*). |
 
 ## 6. Pertanyaan terbuka dan asumsi
 - `[PERTANYAAN]` Apa deadline pengumpulan tugas dan detail rubrik penilaian dari dosen?
@@ -63,6 +64,6 @@
 | 02-opportunity.md | dilewati (fast-track) | - |
 | 03-scope.md | dilewati (fast-track) | - |
 | 04-prd.md | Approved (Gate 2) | 1.1 |
-| 05-design.md | Approved | 2.1 |
-| 06-spec.md | Approved (Gate 3) | 1.3 |
-| 07-vibe-rules.md | Approved (+ `handoff/`) | 1.3 |
+| 05-design.md | Approved | 2.3 |
+| 06-spec.md | Approved (Gate 3) | 1.4 |
+| 07-vibe-rules.md | Approved (+ `handoff/`) | 1.4 |

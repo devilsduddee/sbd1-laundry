@@ -1,34 +1,27 @@
 # 05 - Design System: Sistem Pengelolaan Laundry
 
-- **Versi:** 2.2
+- **Versi:** 2.3
 - **Tanggal:** 2026-11-27
 - **Status:** Approved
-- **Sumber input:** `04-prd.md` v1.1 (Approved), riset `ui-ux-pro-max`, serta penyelarasan palet warna seluruh web dengan preset **`@firecms/neat` (Opsi A)**.
-- **Skill digunakan:** `ui-ux-pro-max`, `design-taste-frontend`
+- **Sumber input:** `04-prd.md` v1.1 (Approved), riset `ui-ux-pro-max`, preset WebGL **`@firecms/neat` (Opsi A)**, sistem Liquid Glass **`glassyui.com` (`@glassyui/glassy-theme` & `GlassButton`)**, serta kaidah `emil-design-eng` & `design-taste-frontend`.
+- **Skill digunakan:** `ui-ux-pro-max`, `design-taste-frontend`, `emil-design-eng`
 
 ## TL;DR
 
-Design system v2.2 menyelaraskan seluruh palet warna antarmuka web agar lahir dari satu kesatuan harmonis bersama latar WebGL **`@firecms/neat` (`NeatGradient`)**.
+Design system **v2.3** memadukan latar fluid gradient **`@firecms/neat`** (dan *ambient mesh* halus di workspace kasir) dengan permukaan **Liquid Glass / Glassmorphism (`glassyui.com`)** di atas struktur grid **Swiss Precision**.
 
-Kanvas aplikasi menggunakan **`#F6FFFF` (*Icy Mint White*)**, permukaan kartu **`#FFFFFF`**, aksen semantik lembut **`#D5ECEB` (*Aqua Mist*)** & **`#EFE2CE` (*Warm Linen*)** langsung dari preset Neat, dipadukan dengan jangkar **Deep Oceanic Navy (`#0B253B`)**, CTA **Deep Neat Azure (`#006EB3` — turunan aksesibel dari `#00A2FF` dengan rasio kontras 5.41:1)**, serta tipografi presisi **`Fira Code`** + **`Fira Sans`**.
+Mengapa perpaduan ini tepat? Gradien lembut `@firecms/neat` (`#FFFFFF`, `#EFE2CE`, `#D5ECEB`, `#E4E4E4`, `#F6FFFF`) menciptakan pencahayaan latar yang hidup; ketika dilapisi **`Card` dan `Button` bergaya Glassy UI** (`backdrop-filter: blur(14px–20px) saturate(160%)`, opasitas frosted `68%–78%`, *specular top-edge rim highlight*, dan efek *pointer bloom* saat tombol ditekan), kartu dan tombol terasa menyatu secara optik dengan gradien di belakangnya tanpa terlihat *belang-belang* sekaligus tetap menjaga kontras teks `>= 7:1` (`#0B1723`).
 
 ---
 
-## Konteks Perubahan Arah Desain (v2.0 -> v2.2)
+## Konteks Perubahan Arah Desain (v2.2 -> v2.3)
 
-Pada evaluasi desain v2.2, tema **Minimalism & Swiss Style** diselaraskan sepenuhnya dengan DNA warna `@firecms/neat` (*fresh water, clean linen, airy daylight*):
-
-- **Penyelarasan Warna Menyeluruh (Unified Neat Palette):**
-  - Kanvas dasar memakai `#F6FFFF` (diambil langsung dari Neat) dan border `#D5E4E4` (perpaduan `#D5ECEB` dan `#E4E4E4`).
-  - Aksi utama (`--accent`) memakai `#006EB3` (hue identik dengan `#00A2FF` di Neat namun dipergelap agar teks putih memenuhi kontras WCAG AA `>= 4.5:1`), sedangkan `#00A2FF` dipakai sebagai aksen highlight di atas latar gelap `#0B253B`.
-  - Status *Sedang Dicuci* menggunakan `#D5ECEB` (*Aqua Mist* Neat) dan *Sedang Disetrika* menggunakan `#EFE2CE` (*Warm Linen* Neat).
-- **Area Publik & Gerbang (`LandingPage` Hero & `LoginPage` — Opsi A):**
-  - Menggunakan kanvas WebGL `<NeatBackground />` dengan `yOffset` reaktif terhadap `window.scrollY`.
-  - Kartu/teks di atas kanvas dibungkus permukaan putih semi-transparan (`bg-white/90 backdrop-blur-md border border-[#D5E4E4]`) atau teks `#0B253B`.
-- **Area Operasional Kasir & Produksi (`/pesanan`, tabel data, form tiket, cetak nota):**
-  - Tetap **Swiss Style solid** di atas `#F6FFFF` + `#FFFFFF` demi kecepatan baca tabel padat, efisiensi baterai HP/laptop kasir, dan zero GPU distraction.
-- **Ditolak (Out of Scope):**
-  - Animasi *overshoot* (`back.out`) pada tabel data padat atau menampilkan kanvas WebGL saat mencetak struk (`@media print`).
+- **Permukaan Netral + Liquid Glass (`glassyui.com` Light Theme):**
+  - Menghilangkan seluruh gradien pelangi pada header tabel/kartu maupun warna-warni kotak pastel yang membuat UI terkesan belang.
+  - Kanvas dasar memakai **Swiss Cool Canvas `#F4F8FA`** dengan *soft ambient radial wash* halus (`#D5ECEB/35` & `#EFE2CE/25`) di belakang `AppShell` dan kanvas WebGL `<NeatBackground />` di `LandingPage` & `LoginPage`.
+  - Seluruh **`Card`** memakai material kaca frosted (`.glass-card`: `rgba(255, 255, 255, 0.72)`, `backdrop-filter: blur(16px) saturate(160%)`, sheen diagonal lembut di `::before`, dan *bevel specular rim* di `::after`).
+  - Seluruh **`Button`** mengadopsi **Glassy UI (`glassy-theme` & `GlassButton`)**: bentuk kapsul/pill (`rounded-full`) atau rounded bersih dengan lapisan kilau kaca (`inset` top rim highlight, translucent azure `#006EB3/92` untuk Primary CTA, frosted translucent `bg-white/65` untuk `outline`/`secondary`, serta efek *pointer bloom* dari titik klik dengan durasi halus).
+  - **Guardrail Keterbacaan & Print (`@media print` & `prefers-reduced-transparency`):** Pada mode cetak struk (`PrintTicketView`) atau preferensi `prefers-reduced-transparency: reduce`, seluruh `backdrop-filter` dimatikan otomatis dan jatuh kembali ke putih solid `#FFFFFF` + border `#E1E8EB` agar struk tercetak tajam.
 
 ---
 
@@ -239,3 +232,4 @@ Checklist wajib sebelum UI dinyatakan selesai di repo implementasi:
 | 2.0 | 2026-11-26 | **Major Design Update (`ui-ux-pro-max`):** Mengganti tema visual ke **Minimalism & Swiss Style** (`#0F172A` navy, `#0369A1` accent, `#F8FAFC` canvas, `Fira Code` + `Fira Sans`), mengekspor CSS Design Tokens, serta menambahkan aturan prioritas UX, semantic `<Table>`, *Preserve Input After Failed Submit*, GSAP anti-overshoot rule, dan *Pre-Delivery Checklist* `ui-ux-pro-max`. |
 | 2.1 | 2026-11-27 | **Ambient WebGL Integration (Opsi A):** Mengintegrasikan `@firecms/neat` (`NeatGradient`) pada Hero `LandingPage` & `LoginPage` dengan palet fresh-water/linen, lifecycle `destroy()`, lazy loading, `prefers-reduced-motion` guard, dan `{ passive: true }` scroll reactivity, sambil mempertahankan Swiss solid untuk area operasional kasir. |
 | 2.2 | 2026-11-27 | **Unified Neat Color Harmonization:** Menyelaraskan palet warna seluruh web langsung dari acuan `@firecms/neat`: kanvas `#F6FFFF`, Deep Oceanic Navy `#0B253B`, CTA Deep Neat Azure `#006EB3` (kontras 5.41:1 turunan `#00A2FF`), border `#D5E4E4`, serta badge *Sedang Dicuci* `#D5ECEB` & *Sedang Disetrika* `#EFE2CE`. |
+| 2.3 | 2026-11-27 | **Glassy UI (`glassyui.com`) + Swiss Neutral Fusion:** Memadukan latar gradien `@firecms/neat` dan *ambient mesh* kasir dengan kartu kaca frosted (`.glass-card`, `blur(16px) saturate(160%)` + specular bevel rim) serta tombol Glassy UI (`rounded-full`, specular highlight, & *pointer bloom*), sambil menjaga kontras teks `#0B1723`, `prefers-reduced-transparency`, dan mode cetak solid. |

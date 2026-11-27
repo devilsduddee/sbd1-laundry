@@ -8,7 +8,7 @@ export const PublicFooter: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="mt-auto bg-[#F1F5F6] text-[#0B1723] border-t border-[#E1E8EB] pb-safe">
+    <footer className="mt-auto bg-white/60 backdrop-blur-xl text-[#0B1723] border-t border-white/75 shadow-[inset_0_1px_0_rgba(11,23,35,0.07)] pb-safe">
       <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* Kolom 1: Brand & Filosofi (5 Kolom) */}

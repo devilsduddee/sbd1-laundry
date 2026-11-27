@@ -3,7 +3,7 @@
 - **Versi:** 1.3
 - **Tanggal:** 2026-11-27
 - **Status:** Approved
-- **Sumber input:** `04-prd.md` v1.1, `05-design.md` v2.1, `06-spec.md` v1.3 (Gate 3 Approved), dan `profile.md` bagian 9.
+- **Sumber input:** `04-prd.md` v1.1, `05-design.md` v2.3, `06-spec.md` v1.4 (Gate 3 Approved), dan `profile.md` bagian 9.
 - **Skill digunakan:** `vibe-rules`
 
 ---
@@ -39,7 +39,7 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 - Tabel data **wajib** memakai semantic `<Table><TableHeader><TableBody><TableRow>` dalam wrapper `overflow-x-auto` (jangan diganti `div grid`).
 - **Forms UX:** Setiap input wajib punya `<Label htmlFor>`, dan **dilarang me-reset form** saat validasi/request gagal (*Preserve Input After Failed Submit*).
 - **Animasi GSAP (`gsap` + `@gsap/react`):** Seluruh animasi transisi halus (stagger kartu KPI/layanan, progress bar stepper `sts_psn`, hover `quickTo`) wajib menggunakan hook `useGSAP()` dengan `scope` ref, `ease: 'power2.out'` (dilarang `back.out` di tabel data padat), durasi singkat (`0.2s–0.35s`), menghormati `prefers-reduced-motion: reduce`, dan tidak boleh memblokir tampilan cetak (`@media print`).
-- **Ambient WebGL (`@firecms/neat` — Opsi A):** Khusus dipakai pada Hero `LandingPage` dan latar `LoginPage` melalui komponen `<NeatBackground />` yang di-lazy-load (`React.lazy`), wajib memanggil `gradient.destroy()` pada unmount, menggunakan `{ passive: true }` pada scroll listener, menghormati `prefers-reduced-motion`, memiliki fallback CSS statis bila WebGL gagal, dan memakai `print:hidden`. Area kerja kasir tetap menggunakan latar Swiss Style solid `#F8FAFC`.
+- **Ambient WebGL (`@firecms/neat`) & Glassy UI (`glassyui.com`):** Halaman Hero `LandingPage` dan `LoginPage` memakai `<NeatBackground />` via `React.lazy()` (`destroy()` saat unmount, `{ passive: true }` scroll, fallback WebGL). Seluruh `Card`, `Dialog`, dan `Button` memakai material Liquid Glass (`backdrop-filter: blur(14px–20px) saturate(160%)`, specular top-edge rim highlight, serta efek *pointer bloom* saat klik sesuai `glassyui.com`) di atas *ambient mesh* ringan pada `AppShell`, dengan fallback solid otomatis saat `@media print` atau `prefers-reduced-transparency: reduce`.
 
 ---
 
@@ -96,3 +96,4 @@ Empat prinsip utamanya: patuh mutlak pada dokumen spesifikasi dan **larangan ker
 | 1.1 | 2026-11-20 | Menambahkan aturan GSAP (`gsap` + `@gsap/react`) untuk animasi halus dengan `useGSAP`, durasi singkat, dan print safety. |
 | 1.2 | 2026-11-26 | Menyelaraskan dengan `05-design.md` v2.0 (Minimalism & Swiss Style dari `ui-ux-pro-max`, semantic `<Table>`, *Preserve Input After Failed Submit*, larangan emoji icon, dan anti-overshoot GSAP di tabel). |
 | 1.3 | 2026-11-27 | Menambahkan aturan `@firecms/neat` Opsi A (`<NeatBackground />` di `LandingPage` & `LoginPage` + guardrails WebGL/reduced-motion/cleanup) sesuai `05-design.md` v2.1. |
+| 1.4 | 2026-11-27 | Memadukan gradien `@firecms/neat` & *ambient mesh* dengan **Glassy UI (`glassyui.com`)** pada `Card`, `Dialog`, dan `Button` (`05-design.md` v2.3), lengkap dengan fallback `prefers-reduced-transparency` & `@media print`. |

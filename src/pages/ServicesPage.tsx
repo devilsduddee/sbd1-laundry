@@ -164,14 +164,14 @@ export const ServicesPage: React.FC = () => {
           services.map((l) => (
             <Card
               key={l.id_lyn}
-              className="swiss-card-item hover-lift rounded-lg border-[#E1E8EB] bg-white overflow-hidden flex flex-col justify-between"
+              className="swiss-card-item hover-lift overflow-hidden flex flex-col justify-between"
             >
               <CardHeader className="p-4 pb-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-semibold text-[#0B1723] bg-[#F1F5F6] border border-[#E1E8EB] px-2 py-0.5 rounded-sm tabular-nums">
+                  <span className="font-mono text-xs font-semibold text-[#0B1723] bg-white/75 border border-white/90 px-2 py-0.5 rounded-full tabular-nums">
                     {l.id_lyn}
                   </span>
-                  <div className="flex items-center gap-1 text-xs text-[#526474] bg-[#F8FAFA] border border-[#E1E8EB] px-2 py-0.5 rounded-sm font-mono font-medium tabular-nums">
+                  <div className="flex items-center gap-1 text-xs text-[#526474] bg-white/60 border border-white/80 px-2 py-0.5 rounded-full font-mono font-medium tabular-nums">
                     <Clock className="size-3 text-[#006EB3]" aria-hidden="true" />
                     <span>{l.est_hari} Hari</span>
                   </div>

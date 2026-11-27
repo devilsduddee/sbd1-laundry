@@ -76,9 +76,9 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const mobileNavItems = getMobileNavItems(user?.level);
 
   return (
-    <div className="min-h-[100dvh] bg-[#F8FAFA] text-[#0B1723] flex flex-col md:flex-row font-sans">
-      {/* Desktop Sidebar (print:hidden) */}
-      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#E1E8EB] p-5 sticky top-0 h-screen shrink-0 justify-between">
+    <div className="min-h-[100dvh] ambient-workspace text-[#0B1723] flex flex-col md:flex-row font-sans">
+      {/* Desktop Sidebar (Glassy UI Frosted Panel, print:hidden) */}
+      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white/70 backdrop-blur-xl border-r border-white/75 shadow-[inset_-1px_0_0_rgba(11,23,35,0.07)] p-5 sticky top-0 h-screen shrink-0 justify-between">
         <div className="flex flex-col gap-6">
           {/* Brand Header */}
           <div className="flex items-center gap-3 px-2 py-1">
@@ -153,7 +153,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       </aside>
 
       {/* Mobile Top Header (print:hidden) */}
-      <header className="print:hidden md:hidden flex items-center justify-between bg-white/95 backdrop-blur-sm border-b border-[#E1E8EB] px-4 h-14 sticky top-0 z-30 pt-safe">
+      <header className="print:hidden md:hidden flex items-center justify-between bg-white/75 backdrop-blur-xl border-b border-white/75 shadow-[0_1px_0_rgba(11,23,35,0.07)] px-4 h-14 sticky top-0 z-30 pt-safe">
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="size-8 rounded-md bg-[#006EB3] flex items-center justify-center text-white shrink-0">
             <QwashLogo variant="symbol" size="sm" className="text-white" />
@@ -205,7 +205,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       {/* Mobile Bottom Navigation Bar (print:hidden) */}
       <nav
         aria-label="Navigasi Bawah Ponsel"
-        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-[#E1E8EB] pb-safe"
+        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-xl border-t border-white/80 shadow-[0_-1px_0_rgba(11,23,35,0.07)] pb-safe"
       >
         <div
           className={cn(

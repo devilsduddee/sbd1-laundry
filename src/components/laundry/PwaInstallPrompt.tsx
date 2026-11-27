@@ -123,7 +123,7 @@ export const PwaInstallPrompt: React.FC = () => {
     >
       <div
         ref={cardRef}
-        className="max-w-md mx-auto bg-white border border-[#E1E8EB] rounded-lg shadow-[0_12px_32px_-8px_rgba(11,23,35,0.16)] p-3.5 text-[#0B1723]"
+        className="glass-float max-w-md mx-auto rounded-2xl p-3.5 text-[#0B1723]"
       >
         <div className="flex items-start gap-3">
           <div className="size-10 rounded-md bg-[#006EB3] text-white flex items-center justify-center shrink-0">

@@ -28,9 +28,9 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
   const currentStepIdx = STEPS.indexOf(data.sts_psn);
 
   return (
-    <Card className="rounded-lg border-[#E1E8EB] bg-white overflow-hidden text-xs">
-      {/* Header Tiket (Swiss Neutral Alt Ground) */}
-      <div className="bg-[#F8FAFA] border-b border-[#E1E8EB] p-4 text-[#0B1723] flex justify-between items-center gap-2">
+    <Card className="overflow-hidden text-xs">
+      {/* Header Tiket (Glassy UI Frost Header) */}
+      <div className="bg-white/45 border-b border-[#0B1723]/[0.08] p-4 text-[#0B1723] flex justify-between items-center gap-2">
         <div>
           <span className="text-xs text-[#526474] block font-medium">Nomor Tiket Pesanan</span>
           <span className="font-mono font-bold text-sm text-[#006EB3] tracking-tight tabular-nums">
@@ -100,7 +100,7 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
             {data.items.map((it, idx) => (
               <div
                 key={idx}
-                className="flex justify-between items-center py-2 px-3 bg-[#F8FAFA] rounded-md border border-[#E1E8EB]"
+                className="flex justify-between items-center py-2 px-3 bg-white/55 rounded-lg border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]"
               >
                 <div className="flex items-center gap-2">
                   <Shirt className="size-3.5 text-[#006EB3] shrink-0" aria-hidden="true" />
@@ -116,7 +116,7 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
         </div>
 
         {/* Total Pembayaran */}
-        <div className="pt-2 flex justify-between items-center bg-[#F8FAFA] p-3 rounded-md border border-[#E1E8EB]">
+        <div className="pt-2 flex justify-between items-center bg-white/55 p-3 rounded-lg border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
           <div>
             <span className="text-xs text-[#526474] block">Total Biaya Cucian</span>
             <span className="text-xs text-[#2E3E4E] font-medium">

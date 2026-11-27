@@ -134,10 +134,10 @@ export const ReportPage: React.FC = () => {
         </Button>
       </div>
 
-      {/* Filter Periode Tanggal */}
+      {/* Filter Periode Tanggal (Glassy Card) */}
       <form
         onSubmit={handleFilterSubmit}
-        className="bg-white p-4 rounded-lg border border-[#E1E8EB] flex flex-wrap items-end gap-3"
+        className="glass-card p-4 rounded-xl flex flex-wrap items-end gap-3"
       >
         <div className="space-y-1">
           <Label htmlFor="start-date" className="text-xs font-medium text-[#526474]">
@@ -173,12 +173,12 @@ export const ReportPage: React.FC = () => {
         </Button>
       </form>
 
-      {/* 3 KPI Summary Cards */}
+      {/* 3 KPI Summary Cards (Glassy UI) */}
       {report && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="rounded-lg border-[#E1E8EB] bg-white hover-lift">
+          <Card className="hover-lift">
             <CardContent className="p-5 flex items-center gap-4">
-              <div className="size-11 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3]">
+              <div className="size-11 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3]">
                 <BarChart3 className="size-5 stroke-[1.75]" aria-hidden="true" />
               </div>
               <div>
@@ -190,9 +190,9 @@ export const ReportPage: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="rounded-lg border-[#E1E8EB] bg-white hover-lift">
+          <Card className="hover-lift">
             <CardContent className="p-5 flex items-center gap-4">
-              <div className="size-11 rounded-md bg-[#F1F5F6] border border-[#E1E8EB] flex items-center justify-center text-[#006EB3]">
+              <div className="size-11 rounded-lg bg-white/75 border border-white/90 shadow-[0_1px_3px_rgba(11,23,35,0.06)] flex items-center justify-center text-[#006EB3]">
                 <CheckCircle2 className="size-5 stroke-[1.75]" aria-hidden="true" />
               </div>
               <div>
@@ -204,9 +204,9 @@ export const ReportPage: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="rounded-lg border-[#E1E8EB] bg-white hover-lift">
+          <Card className="hover-lift">
             <CardContent className="p-5 flex items-center gap-4">
-              <div className="size-11 rounded-md bg-[#EEF6FB] border border-[#C2DDF0] flex items-center justify-center text-[#006EB3]">
+              <div className="size-11 rounded-lg bg-[#EEF6FB]/85 border border-[#C2DDF0] shadow-[0_1px_3px_rgba(0,110,179,0.1)] flex items-center justify-center text-[#006EB3]">
                 <Calendar className="size-5 stroke-[1.75]" aria-hidden="true" />
               </div>
               <div>
@@ -220,11 +220,11 @@ export const ReportPage: React.FC = () => {
         </div>
       )}
 
-      {/* Semantic Tabel Rincian Transaksi Periode */}
-      <div className="bg-white border border-[#E1E8EB] rounded-lg overflow-hidden">
+      {/* Semantic Tabel Rincian Transaksi Periode (Glassy Card) */}
+      <div className="glass-card rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#F8FAFA]">
+            <TableHeader className="bg-[#0B1723]/[0.025]">
               <TableRow className="border-b border-[#E1E8EB] text-xs hover:bg-transparent">
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">ID Tiket</TableHead>
                 <TableHead className="py-3 px-4 font-semibold text-[#526474]">Tanggal Masuk</TableHead>

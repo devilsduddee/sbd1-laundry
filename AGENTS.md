@@ -9,7 +9,7 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
 ### Aturan 1: Patuh Mutlak pada Dokumen Spesifikasi & Skema Proposal
 - Baca dan jadikan dokumen berikut sebagai sumber kebenaran tunggal:
   1. `docs/04-prd.md`: Functional requirements (`FR-01` s.d. `FR-08`) & batasan scope.
-  2. `docs/05-design.md`: Visual theme **Minimalism & Swiss Style + Ambient `@firecms/neat` Opsi A** (`v2.1`), design tokens, tipografi `Fira Code` + `Fira Sans`, dan UX/a11y checklist.
+  2. `docs/05-design.md`: Visual theme **Glassy UI (`glassyui.com`) + Ambient `@firecms/neat` + Swiss Precision** (`v2.3`), design tokens, tipografi `Fira Code` + `Fira Sans`, dan UX/a11y checklist.
   3. `docs/06-spec.md`: Use case, alur proses, kontrak API Hono, edge cases, dan arsitektur Vercel.
   4. `docs/07-vibe-rules.md` & `schema.sql`: Guardrails & skema database Turso.
 - **ATURAN KERAS DATABASE PROPOSAL:** Nama tabel (`PLGN`, `PTGS`, `LYN`, `PSN`, `DTL_PSN`, `BYR`) dan nama seluruh kolom **TIDAK BOLEH diubah, diganti bahasa Inggris, atau ditambah kolom baru** di luar `schema.sql`:
@@ -37,7 +37,7 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
 - **Semantic Table & Forms UX:** Tabel wajib memakai `<TableHeader><TableBody><TableRow>` dalam `overflow-x-auto` (bukan `div grid`). Semua input wajib punya `<Label htmlFor>` dan **dilarang me-reset form saat submit/validasi error**.
 - Stepper status pesanan disusun ringan dari `Badge` + utility classes Tailwind CSS.
 - **Animasi GSAP:** Gunakan `gsap` + `@gsap/react` (`useGSAP()` dengan `scope` ref) untuk stagger kartu (`power2.out`, jangan `back.out` di tabel padat), hover `quickTo`, dan transisi stepper `sts_psn`. Durasi wajib singkat (`0.2s–0.35s`), wajib menghormati `prefers-reduced-motion: reduce`, dan tidak boleh menyembunyikan elemen pada `@media print`.
-- **Ambient WebGL (`@firecms/neat` — Opsi A):** `<NeatBackground />` hanya dipasang di `LandingPage` Hero dan `LoginPage` via `React.lazy()`, wajib memanggil `gradient.destroy()` saat unmount, `print:hidden`, passive scroll listener, serta fallback statis bila reduced motion / WebGL tidak tersedia.
+- **Ambient WebGL (`@firecms/neat`) & Glassy UI (`glassyui.com`):** `<NeatBackground />` dipasang di `LandingPage` Hero dan `LoginPage` via `React.lazy()`, wajib memanggil `gradient.destroy()` saat unmount, `print:hidden`, passive scroll listener, serta fallback statis bila reduced motion / WebGL tidak tersedia. Komponen `Card`, `Dialog`, dan `Button` (`shadcn/ui`) menggunakan material Liquid Glass (`backdrop-filter`, *specular rim highlight*, dan *pointer bloom*) dengan fallback solid otomatis untuk `prefers-reduced-transparency` dan `@media print`.
 
 ---
 
@@ -80,10 +80,10 @@ Dokumen ini adalah aturan wajib bagi coding agent (Antigravity atau coding agent
 
 ---
 
-## 4. Token Desain (`05-design.md` v2.2 — Unified Neat & Swiss Style)
+## 4. Token Desain (`05-design.md` v2.3 — Glassy UI + Neat & Swiss Precision)
 
-- **Canvas:** `#F6FFFF` | **Card:** `#FFFFFF` | **Ink Utama:** `#071422` | **Muted:** `#425869`
-- **Primary Oceanic Navy:** `#0B253B` | **Accent / CTA Neat Azure:** `#006EB3` | **Secondary:** `#2D4659` | **Border:** `#D5E4E4` | **Danger:** `#DC2626`
-- **Neat Surface Accents:** Aqua Mist `#D5ECEB`, Warm Linen `#EFE2CE`, Soft Silver `#E4E4E4`, Decorative Azure `#00A2FF`
+- **Canvas & Ambient Mesh:** `#F4F8FA` (dengan wash lembut `#D5ECEB/35` & `#EFE2CE/25`) | **Glass Card:** `rgba(255, 255, 255, 0.72)` (`blur(16px) saturate(160%)` + specular bevel rim) | **Ink Utama:** `#0B1723` | **Sekunder:** `#2E3E4E` | **Muted:** `#526474`
+- **Primary Focus Navy:** `#0B253B` | **Accent / CTA Neat Azure:** `#006EB3` | **Glass Hairline Fallback:** `#E1E8EB` | **Danger:** `#DC2626`
+- **Neat Shader Colors (`NeatBackground`):** `#FFFFFF`, `#EFE2CE`, `#D5ECEB`, `#E4E4E4`, `#F6FFFF`, `#00A2FF`
 - **Font:** Heading & angka/ID tiket memakai `Fira Code` (`tabular-nums`), teks UI & form memakai `Fira Sans`.
-- **Aturan Kontras & Aksesibilitas:** Rasio kontras minimal `4.5:1`, visible focus ring (`2px` `#0B253B`, `outline-offset: 2px`), dan badge status wajib menyertakan teks + ikon Lucide (*never color alone*).
+- **Aturan Kontras & Aksesibilitas:** Rasio kontras minimal `4.5:1`, visible focus ring (`2px` `#0B253B`, `outline-offset: 2px`), fallback solid pada `prefers-reduced-transparency: reduce` & `@media print`, dan badge status wajib menyertakan teks + ikon Lucide (*never color alone*).

@@ -157,8 +157,8 @@ export const CreateOrderPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         {/* Kolom Kiri: Form Pelanggan & Layanan */}
         <div className="lg:col-span-2 space-y-5">
-          <Card className="rounded-lg border-[#E1E8EB] bg-white overflow-hidden">
-            <CardHeader className="pb-3 border-b border-[#E1E8EB] bg-[#F8FAFA]">
+          <Card className="overflow-hidden">
+            <CardHeader className="pb-3 border-b border-[#0B1723]/[0.07] bg-white/40">
               <CardTitle className="text-sm font-semibold text-[#0B1723] flex justify-between items-center">
                 <span>1. Data Pelanggan</span>
                 <Button
@@ -181,7 +181,7 @@ export const CreateOrderPage: React.FC = () => {
                 <Select value={selectedPlgnId} onValueChange={setSelectedPlgnId}>
                   <SelectTrigger
                     id="select-pelanggan"
-                    className="text-xs h-10 bg-white"
+                    className="text-xs h-10"
                   >
                     <SelectValue placeholder="-- Pilih Pelanggan --" />
                   </SelectTrigger>
@@ -196,7 +196,7 @@ export const CreateOrderPage: React.FC = () => {
               </div>
 
               {selectedPlgn && (
-                <div className="p-3 bg-[#F8FAFA] rounded-md border border-[#E1E8EB] text-xs space-y-1">
+                <div className="p-3 bg-white/55 rounded-lg border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)] text-xs space-y-1">
                   <p className="font-semibold text-[#0B1723]">{selectedPlgn.nm_plgn}</p>
                   <p className="font-mono text-[#526474] tabular-nums">{selectedPlgn.no_hp}</p>
                   <p className="text-[#526474]">{selectedPlgn.alamat}</p>
@@ -205,8 +205,8 @@ export const CreateOrderPage: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="rounded-lg border-[#E1E8EB] bg-white overflow-hidden">
-            <CardHeader className="pb-3 border-b border-[#E1E8EB] bg-[#F8FAFA]">
+          <Card className="overflow-hidden">
+            <CardHeader className="pb-3 border-b border-[#0B1723]/[0.07] bg-white/40">
               <CardTitle className="text-sm font-semibold text-[#0B1723] flex justify-between items-center">
                 <span>2. Rincian Layanan & Berat Cucian</span>
                 <Button
@@ -229,7 +229,7 @@ export const CreateOrderPage: React.FC = () => {
                 return (
                   <div
                     key={idx}
-                    className="flex flex-col sm:flex-row items-start sm:items-end gap-3 p-3 bg-[#F8FAFA] rounded-md border border-[#E1E8EB]"
+                    className="flex flex-col sm:flex-row items-start sm:items-end gap-3 p-3 bg-white/55 rounded-lg border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]"
                   >
                     <div className="flex-1 w-full space-y-1">
                       <Label htmlFor={`lyn-${idx}`} className="text-xs text-[#526474]">
@@ -241,7 +241,7 @@ export const CreateOrderPage: React.FC = () => {
                       >
                         <SelectTrigger
                           id={`lyn-${idx}`}
-                          className="bg-white text-xs h-9"
+                          className="text-xs h-9"
                         >
                           <SelectValue placeholder="Pilih Layanan" />
                         </SelectTrigger>
@@ -270,7 +270,7 @@ export const CreateOrderPage: React.FC = () => {
                           onChange={(e) =>
                             handleItemChange(idx, 'brt_kg', parseFloat(e.target.value) || 0)
                           }
-                          className="bg-white font-mono text-xs h-9 pr-7 tabular-nums"
+                          className="font-mono text-xs h-9 pr-7 tabular-nums"
                         />
                         <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-[#526474]">
                           kg
@@ -304,10 +304,10 @@ export const CreateOrderPage: React.FC = () => {
           </Card>
         </div>
 
-        {/* Kolom Kanan: Sticky Summary Card */}
+        {/* Kolom Kanan: Sticky Summary Card (Glassy UI) */}
         <div className="space-y-4 sticky top-6">
-          <Card className="rounded-lg border-[#E1E8EB] bg-white overflow-hidden">
-            <CardHeader className="bg-[#F8FAFA] border-b border-[#E1E8EB] text-[#0B1723] p-4">
+          <Card className="overflow-hidden">
+            <CardHeader className="bg-white/40 border-b border-[#0B1723]/[0.07] text-[#0B1723] p-4">
               <CardTitle className="font-heading text-sm font-bold flex items-center gap-2">
                 <ShoppingBag className="size-4 text-[#006EB3]" aria-hidden="true" />
                 Ringkasan Pesanan
