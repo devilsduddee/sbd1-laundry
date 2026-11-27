@@ -150,10 +150,12 @@ export const OrderDetailPage: React.FC = () => {
 
       {/* Stepper Progress & Aksi Cepat Operasional (print:hidden) */}
       <Card className="print:hidden rounded-lg border-[#D5E4E4] shadow-none bg-white overflow-hidden">
-        <CardHeader className="bg-[#0B253B] text-white p-4">
-          <CardTitle className="font-heading text-sm font-semibold flex justify-between items-center">
+        <CardHeader className="bg-gradient-to-r from-[#D5ECEB] to-[#EFE2CE] border-b border-[#C7DBDB] text-[#0B253B] p-4">
+          <CardTitle className="font-heading text-sm font-bold flex justify-between items-center gap-2">
             <span>Pelacakan Progres Pengerjaan Cucian</span>
-            <span className="font-mono text-xs text-[#00A2FF] tabular-nums">{psn.id_psn}</span>
+            <span className="font-mono text-xs px-2 py-0.5 rounded-sm bg-white/85 text-[#005A94] border border-[#B0D4D3] tabular-nums">
+              {psn.id_psn}
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 md:p-6 space-y-5">

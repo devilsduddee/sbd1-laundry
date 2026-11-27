@@ -222,7 +222,7 @@ export const ReportPage: React.FC = () => {
       <div className="bg-white border border-[#D5E4E4] rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#F6FFFF]">
+            <TableHeader className="bg-gradient-to-r from-[#D5ECEB]/55 to-[#EFE2CE]/45">
               <TableRow className="border-b border-[#D5E4E4] text-xs hover:bg-transparent">
                 <TableHead className="py-3 px-4 font-semibold text-[#425869]">ID Tiket</TableHead>
                 <TableHead className="py-3 px-4 font-semibold text-[#425869]">Tanggal Masuk</TableHead>

@@ -29,11 +29,13 @@ export const PublicTrackingCard: React.FC<{ data: PublicTrackingData }> = ({ dat
 
   return (
     <Card className="rounded-lg border-[#D5E4E4] shadow-none bg-white overflow-hidden text-xs">
-      {/* Header Tiket */}
-      <div className="bg-[#0B253B] p-4 text-white flex justify-between items-center gap-2">
+      {/* Header Tiket (Unified Neat Aqua-Linen Gradient) */}
+      <div className="bg-gradient-to-r from-[#D5ECEB] to-[#EFE2CE] border-b border-[#C7DBDB] p-4 text-[#0B253B] flex justify-between items-center gap-2">
         <div>
-          <span className="text-xs text-slate-300 block font-medium">Nomor Tiket Pesanan</span>
-          <span className="font-mono font-bold text-sm tracking-tight tabular-nums">{data.id_psn}</span>
+          <span className="text-xs text-[#425869] block font-medium">Nomor Tiket Pesanan</span>
+          <span className="font-mono font-bold text-sm text-[#005A94] tracking-tight tabular-nums">
+            {data.id_psn}
+          </span>
         </div>
         <div className="flex items-center gap-1.5 flex-wrap justify-end">
           <StatusBadge status={data.sts_psn} size="sm" />

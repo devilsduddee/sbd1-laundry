@@ -215,7 +215,7 @@ export const LandingPage: React.FC = () => {
               <div className="p-6 md:p-8 rounded-lg bg-white/90 backdrop-blur-md border border-[#D5E4E4] space-y-5 shadow-sm">
                 <div className="flex items-center justify-between pb-4 border-b border-[#D5E4E4]">
                   <div className="flex items-center gap-2.5">
-                    <div className="size-9 rounded-md bg-[#0B253B] flex items-center justify-center text-white font-bold">
+                    <div className="size-9 rounded-md bg-[#D5ECEB] border border-[#B0D4D3] flex items-center justify-center text-[#005A94] font-bold">
                       <Clock className="size-4" aria-hidden="true" />
                     </div>
                     <div>
@@ -232,19 +232,19 @@ export const LandingPage: React.FC = () => {
 
                 <div className="space-y-3 text-xs text-[#2D4659]">
                   <div className="flex items-start gap-2.5">
-                    <div className="size-5 rounded-sm bg-[#0B253B] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
+                    <div className="size-5 rounded-sm bg-[#D5ECEB] text-[#005A94] border border-[#B0D4D3] flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
                       1
                     </div>
                     <p>Serahkan pakaian di kasir dan terima nomor tiket bukti penyerahan.</p>
                   </div>
                   <div className="flex items-start gap-2.5">
-                    <div className="size-5 rounded-sm bg-[#0B253B] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
+                    <div className="size-5 rounded-sm bg-[#EFE2CE] text-[#7C4D12] border border-[#DEC8A4] flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
                       2
                     </div>
                     <p>Ketik nomor tiket di kolom pelacakan untuk memantau status cuci dan setrika.</p>
                   </div>
                   <div className="flex items-start gap-2.5">
-                    <div className="size-5 rounded-sm bg-[#0B253B] text-white flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
+                    <div className="size-5 rounded-sm bg-[#D5ECEB] text-[#005A94] border border-[#B0D4D3] flex items-center justify-center shrink-0 font-mono font-bold text-xs mt-0.5">
                       3
                     </div>
                     <p>
@@ -362,9 +362,22 @@ export const LandingPage: React.FC = () => {
                 title: 'Pengemasan Segel',
                 desc: 'Pengemasan plastik rapi menjaga aroma harum dan kebersihan hingga ke lemari.',
               },
-            ].map((step) => (
-              <div key={step.num} className="p-4 rounded-lg bg-[#F6FFFF] border border-[#D5E4E4] space-y-2">
-                <div className="inline-flex px-2 py-0.5 rounded-sm bg-[#0B253B] text-white font-mono font-bold text-xs">
+            ].map((step, idx) => (
+              <div
+                key={step.num}
+                className={`p-4 rounded-lg border space-y-2 ${
+                  idx % 2 === 0
+                    ? 'bg-[#F6FFFF] border-[#D5E4E4]'
+                    : 'bg-[#EFE2CE]/35 border-[#DEC8A4]'
+                }`}
+              >
+                <div
+                  className={`inline-flex px-2 py-0.5 rounded-sm font-mono font-bold text-xs border ${
+                    idx % 2 === 0
+                      ? 'bg-[#D5ECEB] text-[#005A94] border-[#B0D4D3]'
+                      : 'bg-[#EFE2CE] text-[#7C4D12] border-[#DEC8A4]'
+                  }`}
+                >
                   {step.num}
                 </div>
                 <h4 className="font-semibold text-xs text-[#071422] pt-1">{step.title}</h4>

@@ -187,12 +187,12 @@ export const OrdersPage: React.FC = () => {
       {/* Filter Tabs & Search Bar */}
       <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-3">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full lg:w-auto">
-          <TabsList className="bg-[#E8F2F2] p-1 rounded-md flex-wrap h-auto gap-1">
+          <TabsList className="bg-[#D5ECEB]/70 border border-[#C7DBDB] p-1 rounded-md flex-wrap h-auto gap-1">
             {STATUS_TABS.map((tab) => (
               <TabsTrigger
                 key={tab}
                 value={tab}
-                className="text-xs rounded-sm px-3 py-1.5 text-[#425869] data-[state=active]:bg-white data-[state=active]:text-[#0B253B] data-[state=active]:font-semibold shadow-none"
+                className="text-xs rounded-sm px-3 py-1.5 text-[#2D4659] data-[state=active]:bg-white data-[state=active]:text-[#006EB3] data-[state=active]:font-semibold shadow-none"
               >
                 {tab}
               </TabsTrigger>
@@ -234,7 +234,7 @@ export const OrdersPage: React.FC = () => {
       <div className="bg-white border border-[#D5E4E4] rounded-lg overflow-hidden">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-[#F6FFFF]">
+            <TableHeader className="bg-gradient-to-r from-[#D5ECEB]/55 to-[#EFE2CE]/45">
               <TableRow className="border-b border-[#D5E4E4] text-xs hover:bg-transparent">
                 <TableHead className="py-3 px-4 font-semibold text-[#425869]">ID Tiket</TableHead>
                 <TableHead className="py-3 px-4 font-semibold text-[#425869]">Pelanggan</TableHead>
@@ -270,7 +270,7 @@ export const OrdersPage: React.FC = () => {
                 orders.map((o) => (
                   <TableRow
                     key={o.id_psn}
-                    className="hover:bg-[#F6FFFF] cursor-pointer transition-colors border-b border-[#D5E4E4] last:border-b-0"
+                    className="hover:bg-[#D5ECEB]/25 cursor-pointer transition-colors border-b border-[#D5E4E4] last:border-b-0"
                     onClick={() => navigate(`/pesanan/${o.id_psn}`)}
                   >
                     <TableCell className="font-mono font-semibold text-xs text-[#006EB3] py-3 px-4 tabular-nums whitespace-nowrap">

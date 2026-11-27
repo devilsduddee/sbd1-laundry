@@ -53,7 +53,6 @@ const getMobileNavItems = (role?: LevelPtgs): NavItem[] => {
     ];
   }
 
-  // Operasional: Khusus Pantau Cucian & Katalog Layanan (Tanpa Akses Pembuatan Tiket)
   return [
     { to: '/pesanan', label: 'Daftar Pesanan', shortLabel: 'Pesanan', icon: ClipboardList },
     { to: '/layanan', label: 'Data Layanan', shortLabel: 'Layanan', icon: Shirt },
@@ -77,13 +76,13 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const mobileNavItems = getMobileNavItems(user?.level);
 
   return (
-    <div className="min-h-[100dvh] bg-[#F6FFFF] text-[#071422] flex flex-col md:flex-row font-sans">
+    <div className="min-h-[100dvh] bg-gradient-to-br from-[#F6FFFF] via-[#F2F9F9] to-[#FAF3E8] text-[#071422] flex flex-col md:flex-row font-sans">
       {/* Desktop Sidebar (print:hidden) */}
-      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white border-r border-[#D5E4E4] p-5 sticky top-0 h-screen shrink-0 justify-between">
+      <aside className="print:hidden hidden md:flex flex-col w-64 bg-white/90 backdrop-blur-sm border-r border-[#D5E4E4] p-5 sticky top-0 h-screen shrink-0 justify-between">
         <div className="flex flex-col gap-6">
           {/* Brand Header */}
           <div className="flex items-center gap-3 px-2 py-1">
-            <div className="size-10 rounded-md bg-[#0B253B] flex items-center justify-center text-white shrink-0">
+            <div className="size-10 rounded-md bg-gradient-to-br from-[#00A2FF] to-[#006EB3] flex items-center justify-center text-white shrink-0">
               <QwashLogo variant="symbol" size="sm" className="text-white" />
             </div>
             <div>
@@ -94,7 +93,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             </div>
           </div>
 
-          {/* Navigation Links */}
+          {/* Navigation Links (Airy Neat Aqua Mist Active Pill) */}
           <nav className="flex flex-col gap-1" aria-label="Menu Utama">
             {desktopFilteredItems.map((item) => {
               const Icon = item.icon;
@@ -108,14 +107,17 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                   key={item.to}
                   to={item.to}
                   className={cn(
-                    'flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs font-medium transition-colors touch-manipulation active:scale-[0.98]',
+                    'flex items-center gap-3 px-3.5 py-2.5 rounded-md text-xs transition-colors touch-manipulation active:scale-[0.98]',
                     isActive
-                      ? 'bg-[#0B253B] text-white font-semibold'
-                      : 'text-[#425869] hover:bg-[#E8F2F2] hover:text-[#071422]'
+                      ? 'bg-[#D5ECEB] text-[#0B253B] font-semibold border border-[#B0D4D3]'
+                      : 'text-[#425869] font-medium border border-transparent hover:bg-[#EFE2CE]/50 hover:text-[#0B253B]'
                   )}
                 >
                   <Icon
-                    className={cn('size-4 shrink-0 stroke-[1.75]', isActive ? 'text-white' : 'text-[#425869]')}
+                    className={cn(
+                      'size-4 shrink-0 stroke-[1.75]',
+                      isActive ? 'text-[#006EB3]' : 'text-[#425869]'
+                    )}
                     aria-hidden="true"
                   />
                   <span>{item.label}</span>
@@ -150,10 +152,10 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
         </div>
       </aside>
 
-      {/* Mobile Top Header (Ramping & Bersih, print:hidden) */}
-      <header className="print:hidden md:hidden flex items-center justify-between bg-white border-b border-[#D5E4E4] px-4 h-14 sticky top-0 z-30 pt-safe">
+      {/* Mobile Top Header (print:hidden) */}
+      <header className="print:hidden md:hidden flex items-center justify-between bg-white/95 backdrop-blur-sm border-b border-[#D5E4E4] px-4 h-14 sticky top-0 z-30 pt-safe">
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="size-8 rounded-md bg-[#0B253B] flex items-center justify-center text-white shrink-0">
+          <div className="size-8 rounded-md bg-gradient-to-br from-[#00A2FF] to-[#006EB3] flex items-center justify-center text-white shrink-0">
             <QwashLogo variant="symbol" size="sm" className="text-white" />
           </div>
           <div className="leading-tight min-w-0">
@@ -173,11 +175,11 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
               className={cn(
                 'flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-colors touch-manipulation active:scale-95 min-h-[36px]',
                 location.pathname.startsWith('/petugas')
-                  ? 'bg-[#0B253B] text-white'
-                  : 'bg-[#E8F2F2] text-[#0B253B] hover:bg-[#E8F2F2] border border-[#D5E4E4]'
+                  ? 'bg-[#D5ECEB] text-[#0B253B] border border-[#B0D4D3]'
+                  : 'bg-[#F6FFFF] text-[#0B253B] hover:bg-[#E8F2F2] border border-[#D5E4E4]'
               )}
             >
-              <ShieldCheck className="size-3.5 shrink-0" aria-hidden="true" />
+              <ShieldCheck className="size-3.5 shrink-0 text-[#006EB3]" aria-hidden="true" />
               <span className="text-xs">Petugas</span>
             </NavLink>
           )}
@@ -195,7 +197,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
         </div>
       </header>
 
-      {/* Main Content Area (diberi pb-24 pada mobile agar tidak tertutup Bottom Bar) */}
+      {/* Main Content Area */}
       <main className="flex-1 p-4 sm:p-6 md:p-8 max-w-7xl mx-auto w-full pb-24 md:pb-8 overflow-x-hidden">
         {children}
       </main>
@@ -203,7 +205,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       {/* Mobile Bottom Navigation Bar (print:hidden) */}
       <nav
         aria-label="Navigasi Bawah Ponsel"
-        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-[#D5E4E4] pb-safe"
+        className="print:hidden md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-t border-[#D5E4E4] pb-safe"
       >
         <div
           className={cn(
@@ -227,15 +229,15 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 to={item.to}
                 className={cn(
                   'group flex flex-col items-center justify-center h-full py-1.5 px-0.5 touch-manipulation select-none min-w-0 transition-transform duration-150 active:scale-[0.94]',
-                  isActive ? 'text-[#0B253B]' : 'text-[#425869] hover:text-[#071422]'
+                  isActive ? 'text-[#006EB3]' : 'text-[#425869] hover:text-[#071422]'
                 )}
               >
                 <div
                   className={cn(
                     'p-1.5 rounded-md transition-colors duration-150 flex items-center justify-center',
                     isActive
-                      ? 'bg-[#0B253B] text-white'
-                      : 'text-[#425869] group-hover:bg-[#E8F2F2] group-hover:text-[#071422]'
+                      ? 'bg-[#D5ECEB] text-[#006EB3] border border-[#B0D4D3]'
+                      : 'text-[#425869] group-hover:bg-[#EFE2CE]/50 group-hover:text-[#071422]'
                   )}
                 >
                   <Icon className="size-4 shrink-0 stroke-[1.8]" aria-hidden="true" />

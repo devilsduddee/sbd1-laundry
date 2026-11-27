@@ -36,7 +36,7 @@ export const PrintTicketView: React.FC<PrintTicketViewProps> = ({ data }) => {
         {/* Header Usaha */}
         <div className="flex justify-between items-start pb-6 border-b border-[#D5E4E4]">
           <div className="flex items-start gap-3">
-            <div className="size-10 rounded-md bg-[#0B253B] flex items-center justify-center text-white shrink-0 print:border print:border-[#0B253B] print:text-[#0B253B] print:bg-white">
+            <div className="size-10 rounded-md bg-gradient-to-br from-[#00A2FF] to-[#006EB3] flex items-center justify-center text-white shrink-0 print:border print:border-[#0B253B] print:text-[#0B253B] print:bg-white">
               <QwashLogo variant="symbol" size="sm" />
             </div>
             <div>

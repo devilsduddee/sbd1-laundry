@@ -155,7 +155,7 @@ export const CreateOrderPage: React.FC = () => {
         {/* Kolom Kiri: Form Pelanggan & Layanan */}
         <div className="lg:col-span-2 space-y-5">
           <Card className="rounded-lg border-[#D5E4E4] shadow-none bg-white">
-            <CardHeader className="pb-3 border-b border-[#D5E4E4]">
+            <CardHeader className="pb-3 border-b border-[#D5E4E4] bg-gradient-to-r from-[#D5ECEB]/40 to-transparent">
               <CardTitle className="text-sm font-semibold text-[#0B253B] flex justify-between items-center">
                 <span>1. Data Pelanggan</span>
                 <Button
@@ -203,7 +203,7 @@ export const CreateOrderPage: React.FC = () => {
           </Card>
 
           <Card className="rounded-lg border-[#D5E4E4] shadow-none bg-white">
-            <CardHeader className="pb-3 border-b border-[#D5E4E4]">
+            <CardHeader className="pb-3 border-b border-[#D5E4E4] bg-gradient-to-r from-[#EFE2CE]/40 to-transparent">
               <CardTitle className="text-sm font-semibold text-[#0B253B] flex justify-between items-center">
                 <span>2. Rincian Layanan & Berat Cucian</span>
                 <Button
@@ -304,9 +304,9 @@ export const CreateOrderPage: React.FC = () => {
         {/* Kolom Kanan: Sticky Summary Card */}
         <div className="space-y-4 sticky top-6">
           <Card className="rounded-lg border-[#D5E4E4] shadow-none bg-white overflow-hidden">
-            <CardHeader className="bg-[#0B253B] text-white p-4">
-              <CardTitle className="font-heading text-sm font-semibold flex items-center gap-2">
-                <ShoppingBag className="size-4" aria-hidden="true" />
+            <CardHeader className="bg-gradient-to-r from-[#D5ECEB] to-[#EFE2CE] border-b border-[#C7DBDB] text-[#0B253B] p-4">
+              <CardTitle className="font-heading text-sm font-bold flex items-center gap-2">
+                <ShoppingBag className="size-4 text-[#006EB3]" aria-hidden="true" />
                 Ringkasan Pesanan
               </CardTitle>
             </CardHeader>
